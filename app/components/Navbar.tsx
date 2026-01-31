@@ -534,105 +534,143 @@ export default function Navbar() {
               {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
             </button>
           </div>
+
+          {/* Mobile Controls - Right Side (Hamburger + Theme) */}
+          <div className="lg:hidden ">
+            {/* Theme Toggle on Mobile */}
+           
+
+            {/* Mobile Menu Button - Hamburger */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 rounded-full"
+              style={{
+                background: 'rgba(34, 211, 238, 0.1)',
+                color: 'var(--accent)',
+                transition: 'all 0.3s ease',
+              }}
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+            </button>
+          </div>
         </div>
       </nav>
 
       {/* Mobile Menu Overlay */}
-      {/* <div
+      <div
         ref={mobileMenuRef}
-        className="fixed inset-0 z-30 lg:hidden"
+        className="mt-16 m-4 rounded-2xl fixed inset-0 z-30 lg:hidden opacity-0 pointer-events-none transition-opacity duration-300"
         style={{
-          background: 'rgba(11, 14, 15, 0.98)',
-          backdropFilter: 'blur(10px)',
-          paddingTop: '80px',
-          opacity: 0,
-          pointerEvents: 'none',
-          transition: 'opacity 0.3s ease',
+          background: 'var(--accent)',
+          opacity: isOpen ? 1 : 0,
+          pointerEvents: isOpen ? 'auto' : 'none',
         }}
         onClick={() => setIsOpen(false)}
-      > */}
-
-      <div
-  ref={mobileMenuRef}
-  className="fixed inset-0 z-30 lg:hidden bg-black/5 backdrop-blur-3xl pt-[80px] opacity-0 pointer-events-none transition-opacity"
-  onClick={() => setIsOpen(false)}
->
-
+      >
         {/* Menu Content */}
-        <div className="container px-4 md:px-6" onClick={(e) => e.stopPropagation()}>
-          <div className="flex flex-col gap-6">
-            {/* Navigation Links */}
-            {NAV_LINKS.map((link) => (
+        <div className="h-full flex flex-col px-6 pt-6 pb-12" onClick={(e) => e.stopPropagation()}>
+          {/* Top Bar - Profile + Close */}
+         
+          {/* Navigation Items with Numbers */}
+          <div className="flex-1 space-y-8 mt-12">
+            {NAV_LINKS.map((link, idx) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-2xl font-bold cursor-pointer hover:text-cyan-400 transition-colors"
+                className="flex items-baseline gap-6 group cursor-pointer transition-all"
                 style={{
-                  color: 'var(--accent)',
-                  textTransform: 'uppercase',
+                  color: 'var(--bg)',
                 }}
                 onClick={() => setIsOpen(false)}
               >
-                {link.label}
+                <span className="text-3xl font-black opacity-40 group-hover:opacity-100 transition-opacity">
+                  {String(idx + 1).padStart(2, '0')}
+                </span>
+                <span className="text-3xl font-bold group-hover:scale-105 transition-transform origin-left">
+                  {link.label}
+                </span>
               </Link>
             ))}
-
-            {/* More Dropdown in Mobile */}
-            <div className="space-y-2">
-              <button
-                className="text-2xl font-bold w-full text-left"
-                style={{
-                  color: 'var(--accent)',
-                  textTransform: 'uppercase',
-                  transition: 'color 0.3s ease',
-                }}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIsDropdownOpen(!isDropdownOpen);
-                }}
-              >
+            
+            {/* More Item */}
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="flex items-baseline gap-6 group w-full text-left cursor-pointer transition-all"
+              style={{
+                color: 'var(--bg)',
+                background: 'transparent',
+                border: 'none',
+              }}
+            >
+              <span className="text-3xl font-black opacity-40 group-hover:opacity-100 transition-opacity">
+                05
+              </span>
+              <span className="text-3xl font-bold group-hover:scale-105 transition-transform origin-left">
                 More
-              </button>
-              {isDropdownOpen && (
-                <div className="pl-4 space-y-2 border-l border-opacity-30" style={{ borderColor: 'var(--accent)' }}>
-                  {MORE_ITEMS.map((item) => {
-                    // Theme toggle for mobile
-                    if (item.isThemeToggle) {
-                      return (
-                        <button
-                          key="theme-toggle-mobile"
-                          onClick={() => {
-                            toggleTheme();
-                            setIsOpen(false);
-                          }}
-                          className="text-lg font-semibold block hover:text-cyan-400 cursor-pointer transition-colors duration-300 w-full text-left"
-                          style={{
-                            color: 'var(--text-secondary)',
-                            background: 'transparent',
-                            border: 'none',
-                          }}
-                        >
-                          {isDark ? '☀️ Light Mode' : '🌙 Dark Mode'}
-                        </button>
-                      );
-                    }
+              </span>
+            </button>
+
+            {/* More Dropdown */}
+            {isDropdownOpen && (
+              <div className="pl-20 space-y-3">
+                {MORE_ITEMS.map((item) => {
+                  if (item.isThemeToggle) {
                     return (
-                      <Link
-                        key={item.href || 'theme-toggle'}
-                        href={item.href || '#'}
-                        className="text-lg font-semibold block hover:text-cyan-400 cursor-pointer transition-colors duration-300"
-                        style={{
-                          color: 'var(--text-secondary)',
+                      <button
+                        key="theme-toggle-mobile"
+                        onClick={() => {
+                          toggleTheme();
                         }}
-                        onClick={() => setIsOpen(false)}
+                        className="text-lg font-semibold block hover:scale-105 cursor-pointer transition-transform origin-left"
+                        style={{
+                          color: 'var(--bg)',
+                          background: 'transparent',
+                          border: 'none',
+                        }}
                       >
-                        {item.label}
-                      </Link>
+                        {isDark ? '☀️ Light Mode' : '🌙 Dark Mode'}
+                      </button>
                     );
-                  })}
-                </div>
-              )}
-            </div>
+                  }
+                  return (
+                    <Link
+                      key={item.href || 'theme-toggle'}
+                      href={item.href || '#'}
+                      className="text-lg font-semibold block hover:scale-105 cursor-pointer transition-transform origin-left"
+                      style={{
+                        color: 'var(--bg)',
+                      }}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Social Links - Bottom */}
+          <div className="flex gap-8">
+            <a
+              href="https://github.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold hover:scale-110 transition-transform"
+              style={{ color: 'var(--bg)' }}
+            >
+              Github
+            </a>
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold hover:scale-110 transition-transform"
+              style={{ color: 'var(--bg)' }}
+            >
+              LinkedIn
+            </a>
           </div>
         </div>
       </div>
