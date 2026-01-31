@@ -440,8 +440,7 @@ export default function Navbar() {
                 ? '1px solid rgba(34, 211, 238, 0.1)'
                 : 'none',
           }}
-          onClick={(e) => {
-            e.preventDefault();
+          onClick={() => {
             // Close dropdown and unlock when clicking a menu item
             setIsDropdownOpen(false);
             setIsDropdownLocked(false);
