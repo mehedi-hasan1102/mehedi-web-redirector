@@ -21,6 +21,7 @@ const MORE_ITEMS = [
   { label: 'Feedback', href: '/feedback' },
   { label: 'Snippets', href: '/snippets' },
   { label: 'Social corner', href: '/social-corner' },
+  { label: 'Light Mode', isThemeToggle: true },
 ];
 
 export default function Navbar() {
@@ -385,43 +386,84 @@ export default function Navbar() {
       boxShadow: '0 10px 30px rgba(34, 211, 238, 0.15)',
     }}
   >
-    {MORE_ITEMS.map((item, idx) => (
-      <Link
-        key={item.href}
-        href={item.href}
-        role="menuitem"
-        tabIndex={isDropdownOpen ? 0 : -1}
-        className="block px-4 py-3 text-sm transition-all duration-300 hover:pl-5 cursor-pointer"
-        style={{
-          color: 'var(--text)',
-          borderBottom:
-            idx < MORE_ITEMS.length - 1
-              ? '1px solid rgba(34, 211, 238, 0.1)'
-              : 'none',
-        }}
-        onClick={() => {
-          // Close dropdown and unlock when clicking a menu item
-          setIsDropdownOpen(false);
-          setIsDropdownLocked(false);
-        }}
-        onMouseEnter={(e) =>
-          gsap.to(e.currentTarget, {
-            background: 'rgba(34, 211, 238, 0.1)',
-            color: 'var(--accent)',
-            duration: 0.2,
-          })
-        }
-        onMouseLeave={(e) =>
-          gsap.to(e.currentTarget, {
-            background: 'transparent',
+    {MORE_ITEMS.map((item, idx) => {
+      // Theme toggle item
+      if (item.isThemeToggle) {
+        return (
+          <button
+            key="theme-toggle"
+            onClick={() => {
+              toggleTheme();
+              setIsDropdownOpen(false);
+              setIsDropdownLocked(false);
+            }}
+            className="w-full text-left block px-4 py-3 text-sm transition-all duration-300 hover:pl-5 cursor-pointer"
+            style={{
+              color: 'var(--text)',
+              borderTop: '1px solid rgba(34, 211, 238, 0.1)',
+              background: 'transparent',
+              border: 'none',
+            }}
+            onMouseEnter={(e) => {
+              gsap.to(e.currentTarget, {
+                background: 'rgba(34, 211, 238, 0.1)',
+                color: 'var(--accent)',
+                duration: 0.2,
+              });
+            }}
+            onMouseLeave={(e) => {
+              gsap.to(e.currentTarget, {
+                background: 'transparent',
+                color: 'var(--text)',
+                duration: 0.2,
+              });
+            }}
+          >
+            {isDark ? '☀️ Light Mode' : '🌙 Dark Mode'}
+          </button>
+        );
+      }
+
+      // Regular link items
+      return (
+        <Link
+          key={item.href || 'theme-toggle'}
+          href={item.href || '#'}
+          role="menuitem"
+          tabIndex={isDropdownOpen ? 0 : -1}
+          className="block px-4 py-3 text-sm transition-all duration-300 hover:pl-5 cursor-pointer"
+          style={{
             color: 'var(--text)',
-            duration: 0.2,
-          })
-        }
-      >
-        {item.label}
-      </Link>
-    ))}
+            borderBottom:
+              idx < MORE_ITEMS.length - 1
+                ? '1px solid rgba(34, 211, 238, 0.1)'
+                : 'none',
+          }}
+          onClick={(e) => {
+            e.preventDefault();
+            // Close dropdown and unlock when clicking a menu item
+            setIsDropdownOpen(false);
+            setIsDropdownLocked(false);
+          }}
+          onMouseEnter={(e) =>
+            gsap.to(e.currentTarget, {
+              background: 'rgba(34, 211, 238, 0.1)',
+              color: 'var(--accent)',
+              duration: 0.2,
+            })
+          }
+          onMouseLeave={(e) =>
+            gsap.to(e.currentTarget, {
+              background: 'transparent',
+              color: 'var(--text)',
+              duration: 0.2,
+            })
+          }
+        >
+          {item.label}
+        </Link>
+      );
+    })}
   </div>
 </div>
 
@@ -461,31 +503,11 @@ export default function Navbar() {
           {/* Right Side - Theme Toggle & Mobile Menu */}
           <div className="flex items-center gap-3 md:gap-6 flex-shrink-0">
 
-            <button
-              data-theme-toggle-btn
-              onClick={toggleTheme}
-              className="p-2 rounded-lg hover:scale-110 active:scale-95 hidden md:block"
-              style={{
-                background: 'rgba(34, 211, 238, 0.1)',
-                color: 'var(--accent)',
-                transition: 'transform 0.3s ease, background 0.3s ease',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(34, 211, 238, 0.15)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(34, 211, 238, 0.1)';
-              }}
-              aria-label="Toggle theme"
-            >
-              {isDark ? <FaSun size={18} /> : <FaMoon size={18} />}
-            </button>
-
-            {/* Theme Toggle on Mobile */}
+            {/* Theme Toggle on Mobile Only */}
             <button
               data-theme-toggle-mobile
               onClick={toggleTheme}
-              className="p-2 rounded-lg md:hidden"
+              className="p-2 rounded-lg lg:hidden"
               style={{
                 background: 'rgba(34, 211, 238, 0.1)',
                 color: 'var(--accent)',
@@ -577,19 +599,41 @@ export default function Navbar() {
               </button>
               {isDropdownOpen && (
                 <div className="pl-4 space-y-2 border-l border-opacity-30" style={{ borderColor: 'var(--accent)' }}>
-                  {MORE_ITEMS.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="text-lg font-semibold block hover:text-cyan-400 cursor-pointer transition-colors duration-300"
-                      style={{
-                        color: 'var(--text-secondary)',
-                      }}
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
+                  {MORE_ITEMS.map((item) => {
+                    // Theme toggle for mobile
+                    if (item.isThemeToggle) {
+                      return (
+                        <button
+                          key="theme-toggle-mobile"
+                          onClick={() => {
+                            toggleTheme();
+                            setIsOpen(false);
+                          }}
+                          className="text-lg font-semibold block hover:text-cyan-400 cursor-pointer transition-colors duration-300 w-full text-left"
+                          style={{
+                            color: 'var(--text-secondary)',
+                            background: 'transparent',
+                            border: 'none',
+                          }}
+                        >
+                          {isDark ? '☀️ Light Mode' : '🌙 Dark Mode'}
+                        </button>
+                      );
+                    }
+                    return (
+                      <Link
+                        key={item.href || 'theme-toggle'}
+                        href={item.href || '#'}
+                        className="text-lg font-semibold block hover:text-cyan-400 cursor-pointer transition-colors duration-300"
+                        style={{
+                          color: 'var(--text-secondary)',
+                        }}
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    );
+                  })}
                 </div>
               )}
             </div>
