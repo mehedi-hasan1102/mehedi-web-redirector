@@ -8,19 +8,33 @@ import { FaMoon, FaSun } from 'react-icons/fa';
 
 // Navigation links
 const NAV_LINKS = [
-  { label: 'Work', href: '#works' },
-  { label: 'About', href: '#about' },
-  { label: 'Process', href: '#process' },
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+  { label: 'Work', href: '/work' },
+  { label: 'Blog', href: '/blog' },
+];
+
+// Dropdown menu items
+const MORE_ITEMS = [
+  { label: 'Dashboard', href: '/dashboard' },
+  { label: 'Spotify', href: '/spotify' },
+  { label: 'Feedback', href: '/feedback' },
+  { label: 'Snippets', href: '/snippets' },
+  { label: 'Social corner', href: '/social-corner' },
 ];
 
 export default function Navbar() {
   const navRef = useRef<HTMLElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const themeInitRef = useRef(false);
   
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isDark, setIsDark] = useState(true);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDropdownLocked, setIsDropdownLocked] = useState(false);
 
   // ============================================
   // THEME TOGGLE EFFECT
@@ -106,6 +120,7 @@ export default function Navbar() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
       clearTimeout(scrollTimeout);
+      if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
     };
   }, []);
 
@@ -245,6 +260,49 @@ export default function Navbar() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const openDropdown = () => {
+    if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+    setIsDropdownOpen(true);
+  };
+
+  const closeDropdownWithDelay = () => {
+    // Only auto-close if not locked by click
+    if (isDropdownLocked) return;
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setIsDropdownOpen(false);
+    }, 3000);
+  };
+
+  const toggleDropdownLock = () => {
+    setIsDropdownLocked((prev) => {
+      const newLocked = !prev;
+      setIsDropdownOpen(newLocked ? true : false);
+      return newLocked;
+    });
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsDropdownOpen(false);
+        setIsDropdownLocked(false);
+      }
+    };
+
+    if (isDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [isDropdownOpen]);
+
+
+
+
+
+
+
+
   return (
     <>
       {/* Main Navbar */}
@@ -273,13 +331,12 @@ export default function Navbar() {
           {/* Desktop Navigation Links - Center */}
           <div className="hidden lg:flex items-center gap-8">
             {NAV_LINKS.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
                 onMouseEnter={handleLinkHover}
                 onMouseLeave={handleLinkHoverEnd}
-                className="relative font-medium text-sm"
+                className="relative font-medium text-sm cursor-pointer"
                 style={{
                   color: 'var(--text)',
                   letterSpacing: '0.025em',
@@ -298,8 +355,108 @@ export default function Navbar() {
                     transition: 'transform 0.4s ease',
                   }}
                 />
-              </a>
+              </Link>
             ))}
+
+            {/* More Dropdown */}
+<div
+  ref={dropdownRef}
+  className="relative"
+  onMouseEnter={openDropdown}
+  onMouseLeave={closeDropdownWithDelay}
+>
+  {/* Trigger Button */}
+  <button
+    type="button"
+    aria-haspopup="true"
+    aria-expanded={isDropdownOpen}
+    className="relative font-medium text-sm flex items-center gap-1 hover:scale-105 transition-transform"
+    style={{
+      color: isDropdownOpen ? 'var(--accent)' : 'var(--text)',
+      letterSpacing: '0.025em',
+      textTransform: 'uppercase',
+      transition: 'color 0.3s ease, transform 0.2s ease',
+    }}
+    onClick={toggleDropdownLock}
+    onFocus={openDropdown}
+    onBlur={closeDropdownWithDelay}
+    onMouseEnter={(e) =>
+      gsap.to(e.currentTarget, { color: 'var(--accent)', duration: 0.3 })
+    }
+    onMouseLeave={(e) => {
+      if (!isDropdownOpen) {
+        gsap.to(e.currentTarget, { color: 'var(--text)', duration: 0.3 });
+      }
+    }}
+  >
+    More
+    <span
+      aria-hidden
+      style={{
+        display: 'inline-block',
+        transition: 'transform 0.3s ease',
+        transform: isDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+      }}
+    >
+      ▼
+    </span>
+  </button>
+
+  {/* Menu */}
+  <div
+    role="menu"
+    onMouseEnter={openDropdown}
+    onMouseLeave={closeDropdownWithDelay}
+    className="absolute top-full left-0 mt-2 w-48 rounded-lg border"
+    style={{
+      background: 'var(--bg)',
+      borderColor: 'rgba(34, 211, 238, 0.2)',
+      opacity: isDropdownOpen ? 1 : 0,
+      pointerEvents: isDropdownOpen ? 'auto' : 'none',
+      transition: 'opacity 0.3s ease',
+      boxShadow: '0 10px 30px rgba(34, 211, 238, 0.15)',
+    }}
+  >
+    {MORE_ITEMS.map((item, idx) => (
+      <Link
+        key={item.href}
+        href={item.href}
+        role="menuitem"
+        tabIndex={isDropdownOpen ? 0 : -1}
+        className="block px-4 py-3 text-sm transition-all duration-300 hover:pl-5 cursor-pointer"
+        style={{
+          color: 'var(--text)',
+          borderBottom:
+            idx < MORE_ITEMS.length - 1
+              ? '1px solid rgba(34, 211, 238, 0.1)'
+              : 'none',
+        }}
+        onClick={() => {
+          // Close dropdown and unlock when clicking a menu item
+          setIsDropdownOpen(false);
+          setIsDropdownLocked(false);
+        }}
+        onMouseEnter={(e) =>
+          gsap.to(e.currentTarget, {
+            background: 'rgba(34, 211, 238, 0.1)',
+            color: 'var(--accent)',
+            duration: 0.2,
+          })
+        }
+        onMouseLeave={(e) =>
+          gsap.to(e.currentTarget, {
+            background: 'transparent',
+            color: 'var(--text)',
+            duration: 0.2,
+          })
+        }
+      >
+        {item.label}
+      </Link>
+    ))}
+  </div>
+</div>
+
           </div>
 
           {/* Right Side - Book a Call, Theme Toggle & Mobile Menu */}
@@ -391,42 +548,54 @@ export default function Navbar() {
           <div className="flex flex-col gap-6">
             {/* Navigation Links */}
             {NAV_LINKS.map((link) => (
-              <a
+              <Link
                 key={link.href}
-                data-menu-link
                 href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="text-2xl font-bold"
+                className="text-2xl font-bold cursor-pointer hover:text-cyan-400 transition-colors"
+                style={{
+                  color: 'var(--accent)',
+                  textTransform: 'uppercase',
+                }}
+                onClick={() => setIsOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+
+            {/* More Dropdown in Mobile */}
+            <div className="space-y-2">
+              <button
+                className="text-2xl font-bold w-full text-left"
                 style={{
                   color: 'var(--accent)',
                   textTransform: 'uppercase',
                   transition: 'color 0.3s ease',
                 }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsDropdownOpen(!isDropdownOpen);
+                }}
               >
-                {link.label}
-              </a>
-            ))}
-
-            {/* Divider */}
-            {/* <div
-              className="my-6 h-px w-full"
-              style={{ background: 'rgba(34, 211, 238, 0.2)' }}
-            /> */}
-
-            {/* Contact CTA */}
-            {/* <a
-              href="#contact"
-              onClick={(e) => handleNavClick(e, '#contact')}
-              data-menu-link
-              className="px-6 py-3 rounded-lg font-semibold text-center hover:scale-105 active:scale-95"
-              style={{
-                background: 'var(--accent)',
-                color: 'var(--bg)',
-                transition: 'transform 0.3s ease',
-              }}
-            >
-              Get in Touch
-            </a> */}
+                More
+              </button>
+              {isDropdownOpen && (
+                <div className="pl-4 space-y-2 border-l border-opacity-30" style={{ borderColor: 'var(--accent)' }}>
+                  {MORE_ITEMS.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="text-lg font-semibold block hover:text-cyan-400 cursor-pointer transition-colors duration-300"
+                      style={{
+                        color: 'var(--text-secondary)',
+                      }}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
