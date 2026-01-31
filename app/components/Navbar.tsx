@@ -420,7 +420,7 @@ export default function Navbar() {
               });
             }}
           >
-            {isDark ? '☀️ Light Mode' : '🌙 Dark Mode'}
+            {isDark ? 'Light Mode' : 'Dark Mode'}
           </button>
         );
       }
@@ -634,7 +634,7 @@ export default function Navbar() {
                           border: 'none',
                         }}
                       >
-                        {isDark ? '☀️ Light Mode' : '🌙 Dark Mode'}
+                        {isDark ? 'Light Mode' : 'Dark Mode'}
                       </button>
                     );
                   }
@@ -659,7 +659,7 @@ export default function Navbar() {
           {/* Social Links - Bottom */}
           <div className="flex gap-8">
             <a
-              href="https://github.com"
+              href="https://github.com/mehedi-hasan1102"
               target="_blank"
               rel="noopener noreferrer"
               className="font-semibold hover:scale-110 transition-transform"
@@ -668,13 +668,22 @@ export default function Navbar() {
               Github
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/mehedi-hasan1102"
               target="_blank"
               rel="noopener noreferrer"
               className="font-semibold hover:scale-110 transition-transform"
               style={{ color: 'var(--bg)' }}
             >
               LinkedIn
+            </a>
+            <a
+              href="https://x.com/mehedihasan1102"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold hover:scale-110 transition-transform"
+              style={{ color: 'var(--bg)' }}
+            >
+              X
             </a>
           </div>
         </div>
