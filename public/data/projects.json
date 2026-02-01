@@ -1,0 +1,254 @@
+[
+  {
+    "id": 1,
+    "slug": "digital-canvas",
+    "title": "Digital Canvas",
+    "category": "Web Design",
+    "shortDescription": "Interactive art gallery with GSAP animations and smooth scrolling",
+    "fullDescription": "A cutting-edge interactive art gallery platform that showcases the power of modern web animations. Built with React and GSAP, this project features seamless scroll-triggered animations, parallax effects, and advanced ScrollTrigger implementations.",
+    "image": "from-cyan-400 to-blue-500",
+    "color": "#06b6d4",
+    "tags": ["GSAP", "ScrollTrigger", "React"],
+    "technologies": {
+      "frontend": ["React", "Next.js", "TypeScript", "Tailwind CSS"],
+      "animation": ["GSAP", "ScrollTrigger"],
+      "tools": ["Figma", "Git"]
+    },
+    "features": [
+      "Real-time scroll animations with GSAP ScrollTrigger",
+      "Parallax effects and smooth transitions",
+      "Responsive design with mobile optimization",
+      "Performance-optimized animations",
+      "Interactive hover states with advanced animations"
+    ],
+    "challenges": [
+      "Implementing smooth parallax effects across different screen sizes",
+      "Optimizing animation performance for 60fps",
+      "Creating seamless scroll-driven animations",
+      "Mobile-first responsive design"
+    ],
+    "solutions": [
+      "Used GSAP's ScrollTrigger for efficient scroll-driven animations",
+      "Implemented requestAnimationFrame for smooth 60fps performance",
+      "Mobile-optimized animations with adaptive timings",
+      "Performance profiling and optimization"
+    ],
+    "liveUrl": "https://example.com/digital-canvas",
+    "githubUrl": "https://github.com/example/digital-canvas",
+    "images": [
+      "/projects/digital-canvas-1.jpg",
+      "/projects/digital-canvas-2.jpg",
+      "/projects/digital-canvas-3.jpg"
+    ]
+  },
+  {
+    "id": 2,
+    "slug": "motion-studio",
+    "title": "Motion Studio",
+    "category": "Animation",
+    "shortDescription": "Full-stack animation framework for modern web applications",
+    "fullDescription": "A comprehensive animation framework designed to streamline the creation of complex web animations. This full-stack application combines Node.js backend with React frontend, providing developers with powerful tools to build stunning motion graphics.",
+    "image": "from-purple-400 to-pink-500",
+    "color": "#ec4899",
+    "tags": ["GSAP", "TypeScript", "Performance"],
+    "technologies": {
+      "frontend": ["React", "TypeScript", "Tailwind CSS"],
+      "backend": ["Node.js", "Express", "MongoDB"],
+      "animation": ["GSAP", "Three.js"]
+    },
+    "features": [
+      "Animation timeline editor with real-time preview",
+      "Preset animation library with 50+ animations",
+      "Real-time collaboration features",
+      "Export animations to multiple formats",
+      "Performance monitoring dashboard"
+    ],
+    "challenges": [
+      "Building a real-time animation editor",
+      "Handling complex timeline states",
+      "Performance optimization for large animations",
+      "Implementing real-time collaboration"
+    ],
+    "solutions": [
+      "Redux for state management and timeline control",
+      "WebSocket for real-time collaboration",
+      "Web Workers for animation calculations",
+      "Lazy loading and code splitting"
+    ],
+    "liveUrl": "https://example.com/motion-studio",
+    "githubUrl": "https://github.com/example/motion-studio",
+    "images": [
+      "/projects/motion-studio-1.jpg",
+      "/projects/motion-studio-2.jpg"
+    ]
+  },
+  {
+    "id": 3,
+    "slug": "creative-agency",
+    "title": "Creative Agency",
+    "category": "Development",
+    "shortDescription": "Award-nominated agency portfolio with cinematic transitions",
+    "fullDescription": "A stunning agency portfolio website that won recognition for its innovative design and smooth animations. Featuring cinematic transitions, interactive elements, and a beautiful showcase of creative work.",
+    "image": "from-orange-400 to-red-500",
+    "color": "#f97316",
+    "tags": ["Next.js", "Tailwind", "GSAP"],
+    "technologies": {
+      "frontend": ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+      "animation": ["GSAP", "ScrollTrigger", "Framer Motion"],
+      "backend": ["Node.js", "MongoDB"]
+    },
+    "features": [
+      "Cinematic landing page transitions",
+      "Portfolio grid with interactive filters",
+      "Client testimonials carousel",
+      "Blog integration with CMS",
+      "Contact form with backend integration"
+    ],
+    "challenges": [
+      "Creating cinematic transitions without performance loss",
+      "Implementing complex portfolio filtering",
+      "SEO optimization for Next.js",
+      "CMS integration"
+    ],
+    "solutions": [
+      "GSAP for performant animations with GPU acceleration",
+      "React Context API for filter state management",
+      "Next.js Static Generation with ISR",
+      "Integrated Strapi CMS for content management"
+    ],
+    "liveUrl": "https://example.com/creative-agency",
+    "githubUrl": "https://github.com/example/creative-agency",
+    "images": [
+      "/projects/creative-agency-1.jpg",
+      "/projects/creative-agency-2.jpg",
+      "/projects/creative-agency-3.jpg",
+      "/projects/creative-agency-4.jpg"
+    ]
+  },
+  {
+    "id": 4,
+    "slug": "e-commerce-platform",
+    "title": "E-Commerce Platform",
+    "category": "Full Stack",
+    "shortDescription": "Modern MERN stack e-commerce with advanced filtering and animations",
+    "fullDescription": "A complete e-commerce platform built with the MERN stack, featuring real-time product filtering, shopping cart management, payment integration, and smooth animations throughout the user journey.",
+    "image": "from-green-400 to-emerald-500",
+    "color": "#10b981",
+    "tags": ["MERN", "MongoDB", "Stripe"],
+    "technologies": {
+      "frontend": ["React", "Redux", "Tailwind CSS"],
+      "backend": ["Node.js", "Express", "MongoDB"],
+      "payment": ["Stripe", "JWT Auth"]
+    },
+    "features": [
+      "Product search and advanced filtering",
+      "User authentication with JWT",
+      "Shopping cart management",
+      "Stripe payment integration",
+      "Order tracking system",
+      "Admin dashboard for product management"
+    ],
+    "challenges": [
+      "Payment gateway integration",
+      "Real-time cart synchronization",
+      "Complex product filtering logic",
+      "Secure authentication implementation"
+    ],
+    "solutions": [
+      "Stripe API for secure payment processing",
+      "Redux for global state management",
+      "MongoDB aggregation for complex queries",
+      "JWT tokens with refresh token rotation"
+    ],
+    "liveUrl": "https://example.com/e-commerce",
+    "githubUrl": "https://github.com/example/e-commerce-platform",
+    "images": [
+      "/projects/ecommerce-1.jpg",
+      "/projects/ecommerce-2.jpg"
+    ]
+  },
+  {
+    "id": 5,
+    "slug": "real-time-chat",
+    "title": "Real-Time Chat App",
+    "category": "Web App",
+    "shortDescription": "WebSocket-powered chat application with real-time notifications",
+    "fullDescription": "A fully functional real-time chat application with WebSocket integration, user presence indicators, typing notifications, and message persistence in MongoDB.",
+    "image": "from-blue-400 to-indigo-500",
+    "color": "#3b82f6",
+    "tags": ["Socket.io", "Node.js", "React"],
+    "technologies": {
+      "frontend": ["React", "Socket.io", "Tailwind CSS"],
+      "backend": ["Node.js", "Express", "Socket.io", "MongoDB"],
+      "database": ["MongoDB"]
+    },
+    "features": [
+      "Real-time messaging with WebSockets",
+      "User presence indicators",
+      "Typing notifications",
+      "Message history with pagination",
+      "User authentication and profiles",
+      "Chat room creation and management"
+    ],
+    "challenges": [
+      "Implementing WebSocket connections",
+      "Managing real-time state synchronization",
+      "Scaling for multiple concurrent users",
+      "Message persistence and retrieval"
+    ],
+    "solutions": [
+      "Socket.io for real-time bidirectional communication",
+      "Redux for state management",
+      "MongoDB for efficient message storage",
+      "Connection pooling for database efficiency"
+    ],
+    "liveUrl": "https://example.com/chat",
+    "githubUrl": "https://github.com/example/real-time-chat",
+    "images": [
+      "/projects/chat-1.jpg",
+      "/projects/chat-2.jpg"
+    ]
+  },
+  {
+    "id": 6,
+    "slug": "task-manager",
+    "title": "Task Manager Pro",
+    "category": "Productivity",
+    "shortDescription": "Collaborative task management with drag-and-drop interface",
+    "fullDescription": "A powerful task management application with drag-and-drop functionality, real-time collaboration, team management, and beautiful animations for an excellent user experience.",
+    "image": "from-yellow-400 to-orange-500",
+    "color": "#fbbf24",
+    "tags": ["React", "Firebase", "Tailwind"],
+    "technologies": {
+      "frontend": ["React", "React Beautiful DnD", "TypeScript"],
+      "backend": ["Firebase", "Firestore"],
+      "realtime": ["Firebase Realtime Database"]
+    },
+    "features": [
+      "Drag-and-drop task management",
+      "Real-time collaboration with team members",
+      "Task categories and priorities",
+      "Due date reminders",
+      "Progress tracking with statistics",
+      "File attachments to tasks"
+    ],
+    "challenges": [
+      "Implementing smooth drag-and-drop",
+      "Real-time data synchronization across devices",
+      "Performance with large task lists",
+      "Handling concurrent edits"
+    ],
+    "solutions": [
+      "React Beautiful DnD for smooth drag-and-drop",
+      "Firebase Firestore for real-time sync",
+      "Virtual scrolling for large lists",
+      "Operational transformation for conflict resolution"
+    ],
+    "liveUrl": "https://example.com/task-manager",
+    "githubUrl": "https://github.com/example/task-manager",
+    "images": [
+      "/projects/task-1.jpg",
+      "/projects/task-2.jpg"
+    ]
+  }
+]

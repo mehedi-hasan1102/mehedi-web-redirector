@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './works.module.css';
@@ -9,45 +10,45 @@ gsap.registerPlugin(ScrollTrigger);
 
 interface Work {
   id: number;
+  slug: string;
   title: string;
   category: string;
-  description: string;
+  shortDescription: string;
   image: string;
+  color: string;
   tags: string[];
+  liveUrl: string;
+  githubUrl: string;
 }
-
-const works: Work[] = [
-  {
-    id: 1,
-    title: 'Digital Canvas',
-    category: 'Web Design',
-    description: 'Interactive art gallery with GSAP animations and smooth scrolling',
-    image: 'from-cyan-400 to-blue-500',
-    tags: ['GSAP', 'ScrollTrigger', 'React'],
-  },
-  {
-    id: 2,
-    title: 'Motion Studio',
-    category: 'Animation',
-    description: 'Full-stack animation framework for modern web applications',
-    image: 'from-purple-400 to-pink-500',
-    tags: ['GSAP', 'TypeScript', 'Performance'],
-  },
-  {
-    id: 3,
-    title: 'Creative Agency',
-    category: 'Development',
-    description: 'Award-nominated agency portfolio with cinematic transitions',
-    image: 'from-orange-400 to-red-500',
-    tags: ['Next.js', 'Tailwind', 'GSAP'],
-  },
-];
 
 export default function Works() {
   const sectionRef = useRef<HTMLElement>(null);
+  const router = useRouter();
+  const [works, setWorks] = useState<Work[]>([]);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
 
+  // Load projects from JSON
   useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch('/data/projects.json');
+        const data = await response.json();
+        setWorks(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error loading projects:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
+  // GSAP animations
+  useEffect(() => {
+    if (works.length === 0) return;
+
     const ctx = gsap.context(() => {
       const cards = gsap.utils.toArray('.work-card') as Element[];
 
@@ -68,7 +69,7 @@ export default function Works() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [works]);
 
   const handleHover = (id: number, isHovering: boolean) => {
     setHoveredId(isHovering ? id : null);
@@ -96,6 +97,24 @@ export default function Works() {
       }
     }
   };
+
+  const handleProjectClick = (slug: string) => {
+    router.push(`/projects/${slug}`);
+  };
+
+  if (loading) {
+    return (
+      <section
+        id="works"
+        className="section-padding relative overflow-hidden"
+        style={{ background: 'var(--surface)' }}
+      >
+        <div className="container text-center" style={{ color: 'var(--text)' }}>
+          <p>Loading projects...</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
@@ -133,6 +152,7 @@ export default function Works() {
               className="work-card group relative rounded-2xl overflow-hidden cursor-pointer perspective"
               onMouseEnter={() => handleHover(work.id, true)}
               onMouseLeave={() => handleHover(work.id, false)}
+              onClick={() => handleProjectClick(work.slug)}
               style={{
                 background: 'var(--bg)',
                 border: `1px solid rgba(34, 211, 238, 0.3)`,
@@ -155,16 +175,16 @@ export default function Works() {
               <div className="relative h-48 overflow-hidden bg-gradient-to-br from-slate-700 to-slate-900">
                 <div
                   data-work-image
-                  className={`bg-linear-to-br ${work.image} h-full w-full opacity-80 group-hover:opacity-100`}
+                  className={`h-full w-full opacity-80 group-hover:opacity-100`}
                   style={{
-                    background: `linear-gradient(135deg, var(--accent), #06b6d4)`,
+                    background: `linear-gradient(135deg, ${work.color}, #06b6d4)`,
                   }}
                 />
                 {/* Index badge */}
                 <div
                   className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs"
                   style={{
-                    background: 'var(--accent)',
+                    background: work.color,
                     color: 'var(--bg)',
                   }}
                 >
@@ -176,7 +196,7 @@ export default function Works() {
               <div className="p-6 relative z-10">
                 <div
                   className="text-sm font-semibold mb-2 uppercase tracking-widest"
-                  style={{ color: 'var(--accent)' }}
+                  style={{ color: work.color }}
                 >
                   {work.category}
                 </div>
@@ -190,7 +210,7 @@ export default function Works() {
                   className="text-sm mb-4 line-clamp-2"
                   style={{ color: 'var(--text-secondary)' }}
                 >
-                  {work.description}
+                  {work.shortDescription}
                 </p>
 
                 {/* Tags with animation */}
@@ -200,13 +220,13 @@ export default function Works() {
                       key={idx}
                       className="px-3 py-1 text-xs rounded-full border transition-all duration-300"
                       style={{
-                        borderColor: 'var(--accent)',
+                        borderColor: work.color,
                         color:
                           hoveredId === work.id
                             ? 'var(--bg)'
-                            : 'var(--accent)',
+                            : work.color,
                         background:
-                          hoveredId === work.id ? 'var(--accent)' : 'transparent',
+                          hoveredId === work.id ? work.color : 'transparent',
                         transition: 'all 0.3s ease',
                       }}
                     >
