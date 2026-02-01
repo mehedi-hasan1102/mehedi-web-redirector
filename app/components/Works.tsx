@@ -136,7 +136,7 @@ export default function Works() {
 
       // Animate border glow
       tl.to(card, {
-        borderColor: isHovering ? 'rgba(6, 182, 212, 0.5)' : 'rgba(34, 211, 238, 0.1)',
+        borderColor: isHovering ? 'rgba(6, 182, 212, 0.3)' : 'rgba(6, 182, 212, 0.1)',
         duration: 0.4,
         ease: 'power2.out',
       }, 0);
@@ -181,13 +181,9 @@ export default function Works() {
       <div className="container">
         {/* Animated heading */}
         <div className={styles.worksHeader}>
-          <h2 className={styles.worksTitle}
-            style={{ 
-              background: 'linear-gradient(135deg, var(--text) 0%, var(--accent) 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}>
-            Selected Works
+          <span className={styles.worksLabel}>FEATURED PROJECTS</span>
+          <h2 className={styles.worksTitle}>
+            SELECTED <span style={{ color: 'var(--accent)' }}>WORKS</span>
           </h2>
           <p className={styles.worksDescription}
             style={{ color: 'var(--text-secondary)' }}
@@ -208,7 +204,7 @@ export default function Works() {
               onMouseLeave={() => handleHover(work.id, false)}
               onClick={() => handleProjectClick(work.slug)}
               style={{
-                border: `1px solid rgba(34, 211, 238, 0.3)`,
+                border: `1px solid rgba(6, 182, 212, 0.1)`,
               }}
             >
               {/* Image Section */}
@@ -217,14 +213,14 @@ export default function Works() {
                   data-work-image
                   className={styles.workImageGradient}
                   style={{
-                    background: `linear-gradient(135deg, ${work.color}, #06b6d4)`,
+                    background: `linear-gradient(135deg, rgba(6, 182, 212, 0.4), #06b6d4)`,
                   }}
                 />
                 {/* Index Badge */}
                 <div
                   className={styles.workImageBadge}
                   style={{
-                    background: work.color,
+                    background: 'var(--accent)',
                   }}
                 >
                   {(idx + 1).toString().padStart(2, '0')}
@@ -235,7 +231,7 @@ export default function Works() {
               <div className={styles.workContent}>
                 <div
                   className={styles.workCategory}
-                  style={{ color: work.color }}
+                  style={{ color: 'var(--accent)' }}
                 >
                   {work.category}
                 </div>
@@ -259,13 +255,13 @@ export default function Works() {
                       key={idx}
                       className={styles.workTag}
                       style={{
-                        borderColor: work.color,
+                        borderColor: 'rgba(6, 182, 212, 0.2)',
                         color:
                           hoveredId === work.id
                             ? 'var(--bg)'
-                            : work.color,
+                            : 'var(--accent)',
                         background:
-                          hoveredId === work.id ? work.color : 'transparent',
+                          hoveredId === work.id ? 'var(--accent)' : 'transparent',
                       }}
                     >
                       {tag}
