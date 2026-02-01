@@ -4,8 +4,9 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import gsap from 'gsap';
-import { FiMenu, FiX } from 'react-icons/fi';
+import { FiMenu, FiX, FiCalendar } from 'react-icons/fi';
 import { FaMoon, FaSun } from 'react-icons/fa';
+import BookingModal from './BookingModal';
 import styles from './navbar.module.css';
 
 // Navigation links
@@ -39,6 +40,7 @@ export default function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdownLocked, setIsDropdownLocked] = useState(false);
   const [isMobileMoreOpen, setIsMobileMoreOpen] = useState(false);
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
 
   // ============================================
   // THEME TOGGLE EFFECT
@@ -456,12 +458,7 @@ export default function Navbar() {
             
             {/* Book a Call CTA Button - Inside Pill */}
             <button
-              onClick={() => {
-                const contactSection = document.getElementById('contact');
-                if (contactSection) {
-                  contactSection.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
+              onClick={() => setIsBookingModalOpen(true)}
               className={styles.ctaButton}
               onMouseEnter={(e) => {
                 gsap.to(e.currentTarget, {
@@ -476,6 +473,7 @@ export default function Navbar() {
                 });
               }}
             >
+              <FiCalendar size={18} />
               Book a Call
             </button>
 
@@ -670,6 +668,10 @@ export default function Navbar() {
 
       {/* Padding for fixed navbar */}
       <div className="h-16" />
+      <BookingModal
+        isOpen={isBookingModalOpen}
+        onClose={() => setIsBookingModalOpen(false)}
+      />
     </>
   );
 }

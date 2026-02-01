@@ -120,11 +120,26 @@
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  flex-wrap: nowrap;
+  flex-direction: row;
+}
+
+.ctaButton svg {
+  transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .ctaButton:hover {
   transform: scale(1.05);
   box-shadow: 0 8px 20px rgba(34, 211, 238, 0.4);
+}
+
+.ctaButton:hover svg {
+  transform: rotate(-20deg) scale(1.15);
 }
 
 .ctaButton:active {
