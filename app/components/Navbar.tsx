@@ -2,6 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import gsap from 'gsap';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { FaMoon, FaSun } from 'react-icons/fa';
@@ -277,7 +278,7 @@ export default function Navbar() {
           <Link
             href="/"
             onClick={scrollToTop}
-            className="text-lg md:text-xl font-bold hover:scale-110 active:scale-95 flex-shrink-0 px-4 py-2 rounded-full transition-all"
+            className="flex text-lg md:text-xl font-bold hover:scale-110 active:scale-95 flex-shrink-0 px-4 py-2 rounded-full transition-all"
             style={{
               background: 'rgba(34, 211, 238, 0.1)',
               color: 'var(--accent)',
@@ -291,6 +292,16 @@ export default function Navbar() {
               e.currentTarget.style.background = 'rgba(34, 211, 238, 0.1)';
             }}
           >
+            <Image 
+              src="/profile/profile%20-%20blue.png" 
+              alt="Mehedi's profile logo"
+              width={28}
+              height={28}
+              style={{
+                borderRadius: '50%',
+                marginRight: '8px'
+              }}
+            />
             MEHEDI<span style={{ fontSize: '0.75em', verticalAlign: 'super' }}>®</span>
           </Link>
 
