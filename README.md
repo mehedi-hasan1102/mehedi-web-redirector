@@ -1,9 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio Website
+
+A modern, feature-rich portfolio website built with Next.js 15, TypeScript, and React. This project showcases professional experience, projects, skills, and includes interactive features like a booking modal, blog, and social integrations.
+
+## Features
+
+- **Modern Tech Stack**: Built with Next.js 15 (App Router), TypeScript, and React
+- **Responsive Design**: Fully responsive layout with custom CSS modules
+- **Dark Mode**: Theme toggle functionality for better user experience
+- **Smooth Scrolling**: Enhanced navigation with smooth scroll behavior
+- **Dynamic Pages**:
+  - Home page with Hero section
+  - About page
+  - Blog section
+  - Projects showcase with detailed project pages
+  - Work experience timeline
+  - Skills overview
+  - Feedback system
+  - Code snippets collection
+  - Spotify integration
+  - Social corner
+  - Dashboard
+
+## Project Structure
+
+```
+app/
+├── components/          # Reusable React components
+│   ├── About.tsx
+│   ├── BookingModal.tsx
+│   ├── Contact.tsx
+│   ├── Experience.tsx
+│   ├── Hero.tsx
+│   ├── Navbar.tsx
+│   ├── Projects.tsx
+│   ├── Skills.tsx
+│   ├── SmoothScroll.tsx
+│   └── ThemeToggle.tsx
+├── projects/[slug]/     # Dynamic project detail pages
+├── about/
+├── blog/
+├── dashboard/
+├── feedback/
+├── snippets/
+├── social-corner/
+├── spotify/
+└── work/
+
+public/
+├── assets/             # Images and videos
+│   ├── images/
+│   │   ├── blogs/
+│   │   ├── certificates/
+│   │   └── projects/
+│   └── video/
+└── data/              # JSON data files
+    ├── experience.json
+    ├── projects.json
+    └── skills.json
+```
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+ 
+- npm, yarn, pnpm, or bun
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd www
+```
+
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+3. Run the development server:
 ```bash
 npm run dev
 # or
@@ -14,24 +94,78 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Building for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
+
+## Configuration
+
+- **ESLint**: Configured with `eslint.config.mjs`
+- **TypeScript**: Type checking with `tsconfig.json`
+- **PostCSS**: Styling configuration in `postcss.config.mjs`
+- **Next.js**: App configuration in `next.config.ts`
+
+## Customization
+
+### Update Content
+
+1. **Experience**: Edit `/public/data/experience.json`
+2. **Projects**: Edit `/public/data/projects.json`
+3. **Skills**: Edit `/public/data/skills.json`
+
+### Add Images
+
+Place images in the appropriate directories:
+- Blog images: `/public/assets/images/blogs/`
+- Project images: `/public/assets/images/projects/`
+- Certificates: `/public/assets/images/certificates/`
+
+### Modify Components
+
+All components are located in `/app/components/` with their corresponding CSS modules.
+
+## Deployment
+
+### Deploy on Vercel
+
+The easiest way to deploy this Next.js app is using the [Vercel Platform](https://vercel.com/new):
+
+1. Push your code to GitHub
+2. Import the repository to Vercel
+3. Vercel will automatically detect Next.js and configure the build settings
+4. Deploy!
+
+Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+### Other Platforms
+
+This app can also be deployed to:
+- Netlify
+- AWS Amplify
+- Railway
+- DigitalOcean App Platform
+- Any Node.js hosting service
+
+## Technologies Used
+
+- [Next.js 15](https://nextjs.org/) - React framework
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [React](https://react.dev/) - UI library
+- CSS Modules - Scoped styling
+- [ESLint](https://eslint.org/) - Code linting
+- [PostCSS](https://postcss.org/) - CSS processing
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API
+- [Next.js GitHub repository](https://github.com/vercel/next.js)
+- [Learn Next.js](https://nextjs.org/learn) - interactive tutorial
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# lets-fuck
+This project is open source and available under the [MIT License](LICENSE).
