@@ -271,7 +271,7 @@ export default function Navbar() {
       {/* Main Navbar */}
       <nav
         ref={navRef}
-        className="fixed top-0 left-0 right-0 z-40 h-16"
+        className={`${styles.navbarFont} fixed top-0 left-0 right-0 z-40 h-16`}
         style={{
           transition: 'all 0.3s ease',
         }}
@@ -291,7 +291,7 @@ export default function Navbar() {
           >
             <Image 
               src="/profile/profile%20-%20blue.png" 
-              alt="Mehedi's profile logo"
+              alt="Mehdi Hasan's profile logo"
               width={28}
               height={28}
               style={{
@@ -299,7 +299,7 @@ export default function Navbar() {
                 marginRight: '8px'
               }}
             />
-            MEHEDI<span style={{ fontSize: '0.75em', verticalAlign: 'super' }}>®</span>
+            Mehdi Hasan<span style={{ fontSize: '0.75em', verticalAlign: 'super' }}></span>
           </Link>
 
           {/* Desktop Navigation Links - Right Side with pill background */}
@@ -549,7 +549,7 @@ export default function Navbar() {
       {/* Mobile Menu Overlay */}
       <div
         ref={mobileMenuRef}
-        className="mt-16 m-4 rounded-2xl fixed inset-0 z-30 lg:hidden opacity-0 pointer-events-none transition-opacity duration-300"
+        className={`${styles.navbarFont} mt-16 m-4 rounded-2xl fixed inset-0 z-30 lg:hidden opacity-0 pointer-events-none transition-opacity duration-300`}
         style={{
           background: 'var(--accent)',
           opacity: isOpen ? 1 : 0,

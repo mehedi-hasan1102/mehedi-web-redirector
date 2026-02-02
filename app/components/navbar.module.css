@@ -1,5 +1,7 @@
 /* Navbar Component Styles */
 
+@import url('https://fonts.googleapis.com/css2?family=Staatliches:wght@400&display=swap');
+
 .navbar {
   position: fixed;
   top: 0;
@@ -8,6 +10,10 @@
   z-index: 40;
   height: 4rem;
   transition: all 0.3s ease;
+}
+
+.navbarFont {
+  font-family: 'Staatliches', serif;
 }
 
 .container {
