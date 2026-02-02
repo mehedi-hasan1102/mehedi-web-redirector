@@ -96,51 +96,40 @@ export default function ProjectDetails() {
 
       // Reveal sections with scale
       const sections = gsap.utils.toArray('[data-reveal-section]') as Element[];
-      sections.forEach((section) => {
-        gsap.from(section, {
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 85%',
-            end: 'top 60%',
-            toggleActions: 'play none none reverse',
-          },
-          opacity: 0,
-          y: 60,
-          scale: 0.95,
-          duration: 1,
-          ease: 'power3.out',
+      if (sections.length > 0) {
+        sections.forEach((section) => {
+          gsap.from(section, {
+            scrollTrigger: {
+              trigger: section,
+              start: 'top 85%',
+              end: 'top 60%',
+              toggleActions: 'play none none reverse',
+            },
+            opacity: 0,
+            y: 60,
+            scale: 0.95,
+            duration: 1,
+            ease: 'power3.out',
+          });
         });
-      });
-
-      // Tech cards stagger animation
-      const techCards = gsap.utils.toArray('[data-tech-card]') as Element[];
-      gsap.from(techCards, {
-        scrollTrigger: {
-          trigger: techCards[0],
-          start: 'top 80%',
-        },
-        opacity: 0,
-        y: 50,
-        scale: 0.8,
-        stagger: 0.05,
-        duration: 0.6,
-        ease: 'back.out(1.7)',
-      });
+      }
 
       // Challenge items reveal
       const challengeItems = gsap.utils.toArray('[data-challenge-item]') as Element[];
-      challengeItems.forEach((item) => {
-        gsap.from(item, {
-          scrollTrigger: {
-            trigger: item,
-            start: 'top 90%',
-          },
-          opacity: 0,
-          x: -30,
-          duration: 0.6,
-          ease: 'power2.out',
+      if (challengeItems.length > 0) {
+        challengeItems.forEach((item) => {
+          gsap.from(item, {
+            scrollTrigger: {
+              trigger: item,
+              start: 'top 90%',
+            },
+            opacity: 0,
+            x: -30,
+            duration: 0.6,
+            ease: 'power2.out',
+          });
         });
-      });
+      }
 
     }, pageRef);
 
@@ -183,7 +172,7 @@ export default function ProjectDetails() {
       {/* Project Image Showcase - Top Position */}
       <section className={styles.imageSection} data-reveal-section style={{ paddingTop: '0' }}>
         <div className={styles.imageContainer}>
-          <div className={styles.imageWrapper}>
+          <div className={styles.imageWrapper} >
             <img
               src={project.image}
               alt={project.title}
@@ -294,13 +283,13 @@ export default function ProjectDetails() {
 
       {/* Technologies - Grid Cards */}
       <section className={styles.techSection} data-reveal-section>
-        <div className={styles.contentSection}>
+        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
           <h2 className={styles.sectionTitle}>
             TECH <span className={styles.sectionTitleAccent}>STACK</span>
           </h2>
           <div className={styles.techGrid}>
-            {project.tech.map((tech, index) => (
-              <div key={tech} className={styles.techCard} data-tech-card>
+            {project.tech && project.tech.length > 0 && project.tech.map((tech) => (
+              <div key={tech} className={styles.techCard}>
                 {tech}
               </div>
             ))}
@@ -349,46 +338,7 @@ export default function ProjectDetails() {
       </section>
 
       {/* CTA Section - Grand Finale */}
-      <section className={styles.ctaSection} data-reveal-section>
-        <div className={styles.ctaContent}>
-          <h2 className={styles.ctaTitle}>
-            EXPLORE <span className={styles.heroTitleGradient}>THE PROJECT</span>
-          </h2>
-          <div className={styles.ctaButtons}>
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.primaryButton}
-            >
-              VISIT LIVE SITE
-              <span>🚀</span>
-            </a>
-            {project.frontendUrl && (
-              <a
-                href={project.frontendUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.secondaryButton}
-              >
-                VIEW FRONTEND
-                <span>💻</span>
-              </a>
-            )}
-            {project.backendUrl && (
-              <a
-                href={project.backendUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.secondaryButton}
-              >
-                VIEW BACKEND
-                <span>🔧</span>
-              </a>
-            )}
-          </div>
-        </div>
-      </section>
+     
     </div>
   );
 }
