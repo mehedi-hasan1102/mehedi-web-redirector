@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { FaGithub } from "react-icons/fa";
 import styles from "./projects.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -197,6 +198,19 @@ export default function Projects() {
               index={index}
             />
           ))}
+        </div>
+
+        {/* More Projects Button */}
+        <div className={styles.moreProjectsSection}>
+          <a
+            href="https://github.com/mehedi-hasan1102"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.moreProjectsButton}
+          >
+            <FaGithub size={16} />
+            <span>MORE PROJECTS</span>
+          </a>
         </div>
       </div>
     </section>
