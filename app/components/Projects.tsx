@@ -119,7 +119,7 @@ export default function Projects() {
       try {
         const response = await fetch("/data/projects.json");
         const data = await response.json();
-        setProjects(data.slice(0, 4)); // Show first 4 projects
+        setProjects(data.slice(0, 6)); // Show first 4 projects
       } catch (error) {
         console.error("Error loading projects:", error);
       }
