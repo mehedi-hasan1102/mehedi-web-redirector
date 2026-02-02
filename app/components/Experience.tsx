@@ -88,6 +88,7 @@ export default function Experience() {
           end: 'bottom 50%',
           scrub: 1,
           markers: false, // Set to true for debugging
+          invalidateOnRefresh: true,
         },
       });
     }
@@ -152,6 +153,11 @@ export default function Experience() {
         });
       }
     });
+
+    // Cleanup function
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
   }, []);
 
   return (
