@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import gsap from 'gsap';
-import { FiMenu, FiX, FiCalendar } from 'react-icons/fi';
+import { FiMenu, FiX, FiMessageCircle } from 'react-icons/fi';
 import { FaMoon, FaSun } from 'react-icons/fa';
 import BookingModal from './BookingModal';
 import styles from './navbar.module.css';
@@ -487,7 +487,7 @@ export default function Navbar() {
             {/* Divider */}
             <div style={{ width: '1px', height: '24px', background: 'rgba(34, 211, 238, 0.2)' }} />
             
-            {/* Book a Call CTA Button - Inside Pill */}
+            {/* Let's Talk CTA Button - Inside Pill */}
             <button
               onClick={() => setIsBookingModalOpen(true)}
               className={styles.ctaButton}
@@ -504,8 +504,8 @@ export default function Navbar() {
                 });
               }}
             >
-              <FiCalendar size={18} />
-              Book a Call
+              <FiMessageCircle size={18} />
+              Let's Talk
             </button>
 
             {/* Theme Toggle on Mobile Only */}
@@ -546,7 +546,7 @@ export default function Navbar() {
 
           {/* Mobile Controls - Right Side (Hamburger + Theme) */}
           <div className="lg:hidden flex items-center gap-2">
-            {/* Book a Call Icon Button - Mobile Only */}
+            {/* Let's Talk Icon Button - Mobile Only */}
             <button
               onClick={() => setIsBookingModalOpen(true)}
               className="p-2 rounded-full"
@@ -555,9 +555,9 @@ export default function Navbar() {
                 color: 'var(--accent)',
                 transition: 'all 0.3s ease',
               }}
-              aria-label="Book a call"
+              aria-label="Let's talk"
             >
-              <FiCalendar size={20} />
+              <FiMessageCircle size={20} />
             </button>
 
             {/* Mobile Menu Button - Hamburger */}
