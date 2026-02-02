@@ -77,6 +77,9 @@ export default function Hero() {
             <h1 className={styles.heroTitleAccent}>
               DEVELOPER
             </h1>
+            <p className="mt-8 text-lg tracking-[0.3em] opacity-60 uppercase">
+            Scroll down to explore
+          </p>
           </div>
 
           <div
