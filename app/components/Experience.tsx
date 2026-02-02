@@ -252,6 +252,7 @@ export default function Experience() {
                   {/* Card Number */}
                   <div className={styles.cardNumber}>{String(exp.id).padStart(2, '0')}</div>
                 </div>
+                <div className={styles.cardBorder} />
               </div>
             </div>
           ))}
