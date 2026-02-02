@@ -3,7 +3,17 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { FiX } from 'react-icons/fi';
+import emailjs from '@emailjs/browser';
 import styles from './bookingModal.module.css';
+
+/* ------------------ ENV ------------------ */
+const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
+const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
+const USER_ID = process.env.NEXT_PUBLIC_EMAILJS_USER_ID!;
+const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
+
+// Initialize EmailJS
+emailjs.init(PUBLIC_KEY);
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -74,8 +84,10 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
     setSubmitStatus('idle');
 
     try {
-      // Simulate form submission (replace with actual API call)
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      if (!formRef.current) return;
+
+      // Send email using EmailJS
+      await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, USER_ID);
 
       // Success
       setSubmitStatus('success');
@@ -88,6 +100,7 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
       }, 2000);
     } catch (error) {
       setSubmitStatus('error');
+      console.error('Email send error:', error);
     } finally {
       setIsSubmitting(false);
     }
@@ -144,6 +157,8 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
             className={styles.textarea}
           />
         </div>
+
+        <input type="hidden" name="time" value={new Date().toLocaleString()} />
 
         {/* Status Messages */}
         {submitStatus === 'success' && (
