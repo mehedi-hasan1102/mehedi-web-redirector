@@ -431,6 +431,7 @@ export default function Navbar() {
       }
 
       // Regular link items
+      const isActive = pathname === item.href;
       return (
         <Link
           key={item.href || 'theme-toggle'}
@@ -438,6 +439,10 @@ export default function Navbar() {
           role="menuitem"
           tabIndex={isDropdownOpen ? 0 : -1}
           className={styles.dropdownItem}
+          style={{
+            color: isActive ? 'var(--accent)' : 'var(--text)',
+            background: isActive ? 'rgba(34, 211, 238, 0.1)' : 'transparent',
+          }}
           onClick={() => {
             // Close dropdown and unlock when clicking a menu item
             setIsDropdownOpen(false);
@@ -452,13 +457,27 @@ export default function Navbar() {
           }
           onMouseLeave={(e) =>
             gsap.to(e.currentTarget, {
-              background: 'transparent',
-              color: 'var(--text)',
+              background: isActive ? 'rgba(34, 211, 238, 0.1)' : 'transparent',
+              color: isActive ? 'var(--accent)' : 'var(--text)',
               duration: 0.2,
             })
           }
         >
-          {item.label}
+          <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            {item.label}
+            {isActive && (
+              <span
+                style={{
+                  width: '4px',
+                  height: '4px',
+                  borderRadius: '50%',
+                  background: 'var(--accent)',
+                  boxShadow: '0 0 8px var(--accent)',
+                  display: 'inline-block',
+                }}
+              />
+            )}
+          </span>
         </Link>
       );
     })}
@@ -653,6 +672,7 @@ export default function Navbar() {
                       </button>
                     );
                   }
+                  const isActive = pathname === item.href;
                   return (
                     <Link
                       key={item.href || 'theme-toggle'}
@@ -660,10 +680,25 @@ export default function Navbar() {
                       className="text-lg font-bold block hover:scale-105 cursor-pointer transition-transform origin-left"
                       style={{
                         color: 'var(--bg)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
                       }}
                       onClick={() => setIsOpen(false)}
                     >
                       {item.label}
+                      {isActive && (
+                        <span
+                          style={{
+                            width: '6px',
+                            height: '6px',
+                            borderRadius: '50%',
+                            background: 'var(--bg)',
+                            boxShadow: '0 0 10px var(--bg)',
+                            display: 'inline-block',
+                          }}
+                        />
+                      )}
                     </Link>
                   );
                 })}
