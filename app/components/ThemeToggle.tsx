@@ -16,8 +16,6 @@ export default function ThemeToggle() {
 
     // Check if theme is stored in localStorage
     const stored = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
     if (stored === 'light') {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsDark(false);
@@ -26,11 +24,9 @@ export default function ThemeToggle() {
       setIsDark(true);
       document.documentElement.classList.remove('light-mode');
     } else {
-      // Use system preference
-      setIsDark(prefersDark);
-      if (!prefersDark) {
-        document.documentElement.classList.add('light-mode');
-      }
+      // Default to dark mode for first-time visitors
+      setIsDark(true);
+      document.documentElement.classList.remove('light-mode');
     }
   }, []);
 
@@ -62,7 +58,7 @@ export default function ThemeToggle() {
     <button
       data-theme-toggle
       onClick={toggleTheme}
-      className="fixed top-6 right-6 z-50 p-3 rounded-full bg-[var(--surface)] border border-[var(--accent)] text-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--bg)] transition-colors duration-300"
+         className="fixed top-6 right-6 z-50 p-3 rounded-full bg-(--surface) border border-(--accent) text-(--accent) hover:bg-(--accent) hover:text-(--bg) transition-colors duration-300"
       aria-label="Toggle theme"
     >
       {isDark ? <FaSun size={20} /> : <FaMoon size={20} />}

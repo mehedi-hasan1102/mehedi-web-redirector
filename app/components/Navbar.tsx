@@ -305,7 +305,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Navigation Links - Right Side with pill background */}
-          <div className="hidden lg:flex items-center gap-6 px-6 py-2 rounded-full flex-shrink-0" style={{
+          <div className="hidden lg:flex items-center gap-6 px-6 py-2 rounded-full shrink-0" style={{
             background: 'rgba(34, 211, 238, 0.08)',
             backdropFilter: 'blur(10px)',
             border: '1px solid rgba(34, 211, 238, 0.15)',
