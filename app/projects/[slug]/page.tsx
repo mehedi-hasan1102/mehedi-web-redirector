@@ -26,36 +26,14 @@ interface Project {
   futurePlans?: string[];
 }
 
-export default function ProjectDetails() {
-  const params = useParams();
-  const router = useRouter();
-  const pageRef = useRef<HTMLDivElement>(null);
-  const [project, setProject] = useState<Project | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const fetchProject = async () => {
-      try {
-        const response = await fetch('/data/projects.json');
-        const projects = await response.json();
-        const foundProject = projects.find((p: Project) => p.slug === params.slug);
-        
-        if (foundProject) {
-          setProject(foundProject);
-        } else {
-          setNotFound(true);
-        }
-      } catch (error) {
-        console.error('Error loading project:', error);
-        setNotFound(true);
-      } finally {
-        setLoading(false);
-      }
-    };
+    setMounted(true);
+  }, []);
 
-    fetchProject();
-  }, [params.slug]);
+  if (loading) {
+    const isDarkMode = mounted ? !document.documentElement.classList.contains('light-mode') : true;
 
   // GSAP animations
   useEffect(() => {
