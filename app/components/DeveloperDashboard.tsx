@@ -354,16 +354,14 @@ const DeveloperDashboard = () => {
             <h2 className={styles.sectionTitle}>🎵 My Playlist</h2>
             <span style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>What I listen to while coding</span>
           </div>
-          <div className={`${styles.card}`} style={{ padding: 0, overflow: 'hidden' }}>
+          <div className={`${styles.card} ${styles.playlistCard}`}>
             <iframe
-              style={{ borderRadius: '12px' }}
+              className={styles.playlistEmbed}
               src="https://open.spotify.com/embed/playlist/19V2ZdQ8FFZbw7Xu00Eoii?utm_source=generator&theme=0"
-              width="100%"
-              height="352"
-              frameBorder="0"
               allowFullScreen
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               loading="lazy"
+              title="Spotify playlist"
             ></iframe>
           </div>
         </div>
