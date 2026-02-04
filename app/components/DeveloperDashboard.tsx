@@ -59,16 +59,23 @@ const ProjectCardItem = ({ project }: { project: Project }) => {
     });
   };
 
+  const handleClick = () => {
+    if (project.url) {
+      window.open(project.url, '_blank');
+    }
+  };
+
   return (
     <div
       ref={cardRef}
       className={styles.projectCard}
       onMouseMove={handleMouseMove}
+      onClick={handleClick}
     >
       <div ref={glowRef} className={styles.projectGlow} />
-      <a href={project.url} target="_blank" rel="noopener noreferrer" className={styles.projectName}>
+      <h3 className={styles.projectName}>
         {project.name}
-      </a>
+      </h3>
       <p className={styles.projectDescription}>{project.description}</p>
       <div className={styles.projectMeta}>
         <span className={styles.metaItem}>
