@@ -30,6 +30,15 @@ const DiagonalMarquee = () => {
     { label: 'Full Stack', icon: FaDatabase },
   ];
 
+  const items2 = [
+    { label: 'React.js', icon: FaReact },
+    { label: 'Clean Code', icon: FaCode },
+    { label: 'JavaScript', icon: FaJs },
+    { label: 'Web Design', icon: FaPalette },
+    { label: 'Figma', icon: FaFigma },
+    { label: 'Node.js', icon: FaDatabase },
+  ];
+
   useEffect(() => {
     if (!contentRef.current || !contentRef2.current) return;
 
@@ -112,7 +121,7 @@ const DiagonalMarquee = () => {
             {Array(4)
               .fill(null)
               .map((_, idx) =>
-                items.map((item, i) => {
+                items2.map((item, i) => {
                   const IconComponent = item.icon;
                   return (
                     <div key={`${idx}-${i}`} className={styles.itemRow}>
