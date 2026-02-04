@@ -9,8 +9,16 @@ import {
   FaCode,
   FaPalette,
 } from 'react-icons/fa';
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const DiagonalMarquee = () => {
+  const marqueeRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
   const items = [
     { label: 'Frontend Developer', icon: FaReact },
     { label: 'Creative Coder', icon: FaCode },
@@ -20,12 +28,16 @@ const DiagonalMarquee = () => {
     { label: 'Full Stack', icon: FaDatabase },
   ];
 
+  useEffect(() => {
+    // Marquee animation handled by CSS
+  }, []);
+
   return (
-    <section className={styles.section}>
+    <section className={styles.section} ref={marqueeRef}>
       <div className={styles.marqueeContainer}>
         {/* Single Horizontal Marquee */}
         <div className={styles.marqueeTrack1}>
-          <div className={styles.marqueeContent1}>
+          <div className={styles.marqueeContent1} ref={contentRef}>
             {Array(4)
               .fill(null)
               .map((_, idx) =>
