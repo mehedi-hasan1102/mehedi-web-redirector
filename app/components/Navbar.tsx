@@ -221,8 +221,12 @@ export default function Navbar() {
   // LOGO SCROLL TO TOP
   // ============================================
   const scrollToTop = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Only scroll to top if already on home page
+    if (pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    // Otherwise allow normal navigation
   };
 
   const openDropdown = () => {
