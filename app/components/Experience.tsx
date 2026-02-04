@@ -19,6 +19,112 @@ interface ExperienceItem {
   tech?: string[];
 }
 
+// Experience Skeleton Loader
+const ExperienceSkeleton = () => {
+  const isDarkMode = typeof document !== 'undefined' ? !document.documentElement.classList.contains('light-mode') : true;
+  const shimmerBg = isDarkMode ? '#2a2a2a' : '#d1d5db';
+  const shimmerAnimation = `
+    @keyframes shimmer {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+  `;
+
+  return (
+    <div style={{ padding: '4rem 2rem' }}>
+      <style>{shimmerAnimation}</style>
+      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+        {/* Header Skeleton */}
+        <div style={{ marginBottom: '4rem', textAlign: 'center' }}>
+          <div
+            style={{
+              height: '48px',
+              background: shimmerBg,
+              borderRadius: '8px',
+              marginBottom: '1rem',
+              animation: 'shimmer 1.5s infinite',
+              width: '70%',
+              margin: '0 auto',
+            }}
+          />
+        </div>
+
+        {/* Timeline Items Skeleton */}
+        <div style={{ position: 'relative', paddingLeft: '3rem' }}>
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div
+              key={i}
+              style={{
+                marginBottom: '3rem',
+                paddingLeft: '2rem',
+                position: 'relative',
+              }}
+            >
+              {/* Timeline Dot Skeleton */}
+              <div
+                style={{
+                  position: 'absolute',
+                  left: '-32px',
+                  top: '0',
+                  width: '16px',
+                  height: '16px',
+                  borderRadius: '50%',
+                  background: shimmerBg,
+                  animation: 'shimmer 1.5s infinite',
+                }}
+              />
+
+              {/* Content Skeleton */}
+              <div style={{ padding: '1.5rem', background: 'rgba(34, 211, 238, 0.1)', borderRadius: '12px' }}>
+                <div
+                  style={{
+                    height: '24px',
+                    background: shimmerBg,
+                    borderRadius: '6px',
+                    marginBottom: '0.75rem',
+                    animation: 'shimmer 1.5s infinite',
+                    width: '70%',
+                  }}
+                />
+                <div
+                  style={{
+                    height: '18px',
+                    background: shimmerBg,
+                    borderRadius: '6px',
+                    marginBottom: '0.75rem',
+                    animation: 'shimmer 1.5s infinite',
+                    width: '50%',
+                  }}
+                />
+                <div
+                  style={{
+                    height: '16px',
+                    background: shimmerBg,
+                    borderRadius: '6px',
+                    marginBottom: '1rem',
+                    animation: 'shimmer 1.5s infinite',
+                    width: '100%',
+                  }}
+                />
+                <div
+                  style={{
+                    height: '16px',
+                    background: shimmerBg,
+                    borderRadius: '6px',
+                    animation: 'shimmer 1.5s infinite',
+                    width: '90%',
+                  }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function Experience() {
   const [experiences, setExperiences] = useState<ExperienceItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -176,9 +282,7 @@ export default function Experience() {
         </div>
 
         {loading ? (
-          <div style={{ textAlign: 'center', padding: '4rem 0', color: 'var(--text-secondary)' }}>
-            Loading experience...
-          </div>
+          <ExperienceSkeleton />
         ) : (
           /* Timeline */
           <div ref={timelineRef} className={styles.timeline}>
