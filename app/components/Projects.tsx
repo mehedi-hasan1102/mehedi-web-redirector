@@ -6,6 +6,7 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FaGithub } from "react-icons/fa";
+import { FiExternalLink } from "react-icons/fi";
 import styles from "./projects.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -90,6 +91,9 @@ const ProjectCard = ({
         onMouseMove={handleMouseMove}
       >
         <div ref={glowRef} className={styles.projectGlow} />
+        <span className={styles.projectLinkIcon} aria-hidden="true">
+          <FiExternalLink size={18} />
+        </span>
         
         {/* Project Image */}
         <div className={styles.projectImageContainer}>
