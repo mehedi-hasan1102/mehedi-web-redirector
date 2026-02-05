@@ -157,58 +157,34 @@ export default function SocialCorner() {
             const Icon = profile.icon;
 
             return (
-              <div
+              <Link
                 key={profile.name}
-                ref={(el) => {
-                  if (el) cardsRef.current[index] = el;
-                }}
-                className={styles.card}
-                onMouseMove={(e) => handleCardMouseMove(e, index)}
-                onMouseLeave={() => handleCardMouseLeave(index)}
+                href={profile.url}
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                {/* Glow Effect */}
                 <div
-                  data-glow
-                  className={styles.cardGlow}
-                  style={{
-                    background: `radial-gradient(circle, ${profile.color}40, transparent 60%)`,
+                  ref={(el) => {
+                    if (el) cardsRef.current[index] = el;
                   }}
-                />
-
-                {/* Border Overlay */}
-                <div className={styles.cardBorder} />
-
-                {/* Content */}
-                <div className={styles.cardContent}>
-                  {/* Icon */}
-                  <div className={styles.iconWrapper}>
-                    <Icon size={32} />
-                  </div>
-
-                  {/* Info */}
-                  <div className={styles.info}>
-                    <h3 className={styles.name}>{profile.name}</h3>
+                  className={styles.card}
+                  onMouseMove={(e) => handleCardMouseMove(e, index)}
+                  onMouseLeave={() => handleCardMouseLeave(index)}
+                >
+                  <div data-glow className={styles.cardGlow} />
+                  <span className={styles.projectLinkIcon} aria-hidden="true">
+                    <FiExternalLink size={18} />
+                  </span>
+                  <div className={styles.cardContent}>
+                    <div className={styles.projectHeader}>
+                      <span className={styles.projectNumber}>{String(index + 1).padStart(2, "0")}</span>
+                      <h3 className={styles.name}>{profile.name}</h3>
+                    </div>
                     <p className={styles.username}>{profile.username}</p>
                   </div>
-
-                  {/* Followers Count */}
-                  <div className={styles.followers}>
-                    <span className={styles.count}>{profile.followers}</span>
-                    <span className={styles.label}>followers</span>
-                  </div>
-
-                  {/* Link Button */}
-                  <a
-                    href={profile.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.linkButton}
-                    title={`Visit ${profile.name}`}
-                  >
-                    <FiExternalLink size={18} />
-                  </a>
+                  <div className={styles.cardBorder} />
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
