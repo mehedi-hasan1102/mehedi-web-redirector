@@ -194,7 +194,6 @@ export default function SocialCorner() {
         {/* Header */}
         <div className={styles.header}>
           <h1 className={styles.title}>Social Corner</h1>
-          <p className={styles.subtitle}>Connect with me across different platforms and follow my journey</p>
         </div>
 
         {/* Social Cards Grid */}
