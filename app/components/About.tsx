@@ -122,14 +122,7 @@ export default function About() {
       style={{ background: 'var(--bg)' }}
     >
       {/* Decorative elements */}
-      <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full opacity-10" style={{
-        background: 'radial-gradient(circle, var(--accent) 0%, transparent 70%)',
-        filter: 'blur(60px)',
-      }} />
-      <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full opacity-10" style={{
-        background: 'radial-gradient(circle, var(--accent) 0%, transparent 70%)',
-        filter: 'blur(60px)',
-      }} />
+     
 
       <div className="container relative z-10">
         <div className="grid md:grid-cols-2 gap-16 items-center">

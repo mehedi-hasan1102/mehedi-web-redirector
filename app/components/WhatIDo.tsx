@@ -166,10 +166,7 @@ export default function WhatIDo() {
 
   return (
     <section ref={sectionRef} className={styles.whatidoSection} id="what-i-do">
-      {/* Gradient Orbs Background */}
-      <div className={`${styles.whatidoOrb} ${styles.whatidoOrb1}`} />
-      <div className={`${styles.whatidoOrb} ${styles.whatidoOrb2}`} />
-      <div className={`${styles.whatidoOrb} ${styles.whatidoOrb3}`} />
+      
 
       <div className={styles.whatidoContainer}>
         {/* Section Header */}

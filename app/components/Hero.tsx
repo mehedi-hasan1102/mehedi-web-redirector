@@ -59,11 +59,7 @@ export default function Hero() {
       ref={heroRef}
       className={styles.hero}
     >
-      {/* Animated gradient blobs */}
-      <div className={styles.heroBackground}>
-        <div className={styles.heroBlob1} />
-        <div className={styles.heroBlob2} />
-      </div>
+    
 
       <div className="container relative z-10">
         <div className={styles.heroContainer}>
@@ -72,7 +68,7 @@ export default function Hero() {
             className={styles.heroTitle}
           >
             <h1 className={styles.heroTitleMain}>
-              FULL-STACK
+              CREATIVE
             </h1>
             <h1 className={styles.heroTitleAccent}>
               DEVELOPER

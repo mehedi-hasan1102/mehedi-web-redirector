@@ -140,10 +140,8 @@ export default function GitHubActivity() {
 
   return (
     <section ref={sectionRef} className={styles.section}>
-      {/* Gradient Orbs Background */}
-      <div className={`${styles.orb} ${styles.orb1}`} />
-      <div className={`${styles.orb} ${styles.orb2}`} />
-      <div className={`${styles.orb} ${styles.orb3}`} />
+    
+    
 
       <div className={styles.container}>
         {/* Header */}

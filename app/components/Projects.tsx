@@ -180,10 +180,7 @@ export default function Projects() {
 
   return (
     <section ref={sectionRef} className={styles.projectsSection} id="projects">
-      {/* Gradient Orbs Background */}
-      <div className={`${styles.projectsOrb} ${styles.projectsOrb1}`} />
-      <div className={`${styles.projectsOrb} ${styles.projectsOrb2}`} />
-      <div className={`${styles.projectsOrb} ${styles.projectsOrb3}`} />
+    
 
       <div className={styles.projectsContainer}>
         {/* Section Header */}

@@ -17,31 +17,8 @@
   overflow: hidden;
 }
 
-.heroBlob1 {
-  position: absolute;
-  top: 5rem;
-  left: 2.5rem;
-  width: 18rem;
-  height: 18rem;
-  border-radius: 9999px;
-  opacity: 0.2;
-  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
-  filter: blur(60px);
-  animation: float 8s ease-in-out infinite;
-}
 
-.heroBlob2 {
-  position: absolute;
-  bottom: -5rem;
-  right: -5rem;
-  width: 24rem;
-  height: 24rem;
-  border-radius: 9999px;
-  opacity: 0.15;
-  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
-  filter: blur(80px);
-  animation: float 8s ease-in-out infinite;
-}
+
 
 @keyframes float {
   0%, 100% {

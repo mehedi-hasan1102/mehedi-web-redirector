@@ -400,10 +400,7 @@ export default function Skills() {
       {loading && <SkillsSkeleton />}
       {!loading && (
         <>
-          {/* Gradient Orbs Background */}
-          <div className={`${styles.skillsOrb} ${styles.skillsOrb1}`} />
-          <div className={`${styles.skillsOrb} ${styles.skillsOrb2}`} />
-          <div className={`${styles.skillsOrb} ${styles.skillsOrb3}`} />
+        
 
       <div className={styles.skillsContainer}>
         {/* Section Header */}

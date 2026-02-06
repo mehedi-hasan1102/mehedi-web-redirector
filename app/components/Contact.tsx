@@ -60,7 +60,7 @@ export default function Contact() {
 
   const socials = [
     { label: 'GitHub', href: 'https://github.com/mehedi-hasan1102' },
-    { label: 'Twitter', href: 'https://x.com/mehedihasan1102' },
+    { label: 'X', href: 'https://x.com/mehedihasan1102' },
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/mehedi-hasan1102' },
   ];
 

@@ -20,29 +20,6 @@
   pointer-events: none;
 }
 
-.skillsOrb1 {
-  top: 10%;
-  left: -10%;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(6, 182, 212, 0.15), transparent 70%);
-}
-
-.skillsOrb2 {
-  top: 50%;
-  right: -15%;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(6, 182, 212, 0.2), transparent 70%);
-}
-
-.skillsOrb3 {
-  bottom: 0;
-  left: 30%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(6, 182, 212, 0.15), transparent 70%);
-}
 
 .skillsContainer {
   max-width: 1400px;
