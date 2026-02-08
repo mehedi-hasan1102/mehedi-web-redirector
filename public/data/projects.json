@@ -198,5 +198,28 @@
       "Create seller dashboard for auction management",
       "Add payment processing integration"
     ]
+  },
+  {
+    "id": 9,
+    "slug": "frontend-developer-portfolio",
+    "title": "Frontend Developer Portfolio",
+    "category": "FRONTEND",
+    "description": "Personal portfolio website showcasing projects and skills.",
+    "image": "/assets/images/projects/port.png",
+    "tech": ["Next.js", "Tailwind CSS", "DaisyUI"],
+    "liveUrl": "https://mehedi-h.vercel.app",
+    "frontendUrl": "https://github.com/mehedi-hasan1102/mehedi-hasan-personal-portfoliyo",
+    "backendUrl": "",
+    "year": "2024",
+    "challenges": [
+      "Showcasing projects effectively",
+      "Implementing responsive design",
+      "Optimizing performance for fast loading",
+      "Ensuring accessibility across devices"
+    ],
+    "futurePlans": [
+      "Add automated email notifications for outbids",
+      "Add payment processing integration"
+    ]
   }
 ]
