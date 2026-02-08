@@ -6,6 +6,7 @@ import About from './components/About';
 import Skills from './components/Skills';
 import Experience from './components/Experience';
 import Projects from './components/Projects';
+import Certificates from './components/Certificates';
 import DiagonalMarquee from './components/DiagonalMarquee';
 import WhatIDo from './components/WhatIDo';
 import GitHubActivity from './components/GitHubActivity';
@@ -20,6 +21,7 @@ export default function Home() {
 
   <WhatIDo />
   <Projects />
+  <Certificates />
 
   <Skills />
   <Experience />
