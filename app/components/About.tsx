@@ -134,7 +134,7 @@ export default function About() {
                 className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl cursor-pointer"
               >
                 <Image
-                  src="/profile/profile - blue.png"
+                  src="/profile/profile.png"
                   alt="Profile"
                   fill
                   className="object-cover"

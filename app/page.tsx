@@ -18,14 +18,16 @@ export default function Home() {
   <Hero />
   <DiagonalMarquee />
 <About />
-
-  <WhatIDo />
+ <Skills />
   <Projects />
-  <Certificates />
-
-  <Skills />
   <Experience />
+  <WhatIDo />
 
+  
+
+ 
+  
+<Certificates />
   <GitHubActivity />
   
 </main>

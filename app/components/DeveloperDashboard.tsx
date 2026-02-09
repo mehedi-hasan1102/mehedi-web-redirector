@@ -294,7 +294,7 @@ const ProfileCardItem = ({ userProfile }: { userProfile: UserProfile }) => {
       <div ref={glowRef} className={styles.cardGlow} />
       <div className={styles.profileContent} style={{ position: 'relative', zIndex: 1 }}>
         <Image 
-          src="/profile/profile - blue.png" 
+          src="/profile/profile.png" 
           alt={userProfile.name}
           width={48}
           height={48}
