@@ -14,7 +14,7 @@ import {
 } from 'react-icons/fi';
 import { SiDribbble, SiX, SiDevdotto, SiCodepen, SiTelegram, SiBluesky, SiMedium } from 'react-icons/si';
 import { FaWhatsapp } from 'react-icons/fa';
-import styles from './social.module.css';
+import styles from './links.module.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
