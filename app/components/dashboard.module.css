@@ -26,19 +26,7 @@
   overflow: hidden;
 }
 
-.headerTitle {
-  font-family: 'Staatliches', serif;
-  font-size: clamp(4rem, 10vw, 8rem);
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  line-height: 1;
-  color: var(--text);
-  margin-bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 0.5rem;
-}
+
 
 .titleAccent {
   color: var(--accent);

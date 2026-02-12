@@ -253,7 +253,7 @@ export default function SocialCorner() {
       <div ref={containerRef} className={styles.container}>
         {/* Header */}
         <div className={styles.header}>
-          <h1 className={styles.title}>
+          <h1 className="sectionTitleGlobal">
             Social <span style={{ color: "var(--accent)" }}>CORNER</span>
           </h1>
         </div>

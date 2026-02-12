@@ -54,16 +54,7 @@
   overflow: hidden;
 }
 
-.title {
-  font-family: 'Staatliches', serif;
-  font-size: clamp(4rem, 10vw, 8rem);
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  line-height: 1;
-  color: var(--text);
-  margin-bottom: 1rem;
-  transition: color 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-}
+
 
 .subtitle {
   font-family: 'Inter', sans-serif;

@@ -544,7 +544,7 @@ const DeveloperDashboard = () => {
       <div className={styles.dashboardContainer}>
         {/* Header */}
         <div className={styles.header}>
-          <h1 className={styles.headerTitle}>
+          <h1 className="sectionTitleGlobal">
             Developer <span className={styles.titleAccent}>Dashboard</span>
           </h1>
         </div>
