@@ -254,7 +254,7 @@ export default function SocialCorner() {
         {/* Header */}
         <div className={styles.header}>
           <h1 className="sectionTitleGlobal">
-            Social <span style={{ color: "var(--accent)" }}>CORNER</span>
+            Connect <span style={{ color: "var(--accent)" }}>With Me</span>
           </h1>
         </div>
 
