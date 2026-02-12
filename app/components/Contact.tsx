@@ -69,7 +69,7 @@ export default function Contact() {
       <section
         id="contact"
         ref={sectionRef}
-        className={`relative overflow-hidden py-20 md:py-32 px-4 md:px-8 ${styles.contactSection}`}
+        className={`relative overflow-hidden py-4 md:py-12 px-4 md:px-8 ${styles.contactSection}`}
         style={{ background: 'var(--bg)' }}
       >
         
