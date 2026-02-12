@@ -72,9 +72,7 @@ export default function Contact() {
         className={`relative overflow-hidden py-20 md:py-32 px-4 md:px-8 ${styles.contactSection}`}
         style={{ background: 'var(--bg)' }}
       >
-        {/* Background Gradient Orbs */}
-        <div className={styles.contactDecor1} />
-        <div className={styles.contactDecor2} />
+        
 
         <div className="container relative z-10 max-w-7xl">
           {/* Main Heading */}

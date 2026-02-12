@@ -1,39 +1,9 @@
-
 .contactSection {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-}
-
-/* Decorative Background Orbs */
-.contactDecor1 {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--accent), transparent);
-  opacity: 0.08;
-  filter: blur(120px);
-  top: 10%;
-  left: -10%;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.contactDecor2 {
-  position: absolute;
-  width: 600px;
-  height: 600px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--accent), transparent);
-  opacity: 0.08;
-  filter: blur(120px);
-  bottom: -15%;
-  right: -10%;
-  pointer-events: none;
-  z-index: 1;
 }
 
 /* Main Heading */
@@ -44,7 +14,7 @@
   font-style: normal;
   line-height: 1;
   letter-spacing: 0.03em;
-  color: var(--text);
+  color: var(--text); /* Theme-aware */
   text-align: center;
   margin-bottom: clamp(1rem, 2vw, 2rem);
   white-space: normal;
@@ -170,13 +140,6 @@
   margin-top: clamp(0.25rem, 0.5vw, 0.5rem);
 }
 
-/* Time Info */
-.timeInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
 /* Availability Status */
 .availabilityStatus {
   display: flex;
@@ -196,12 +159,8 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
 }
 
 .availabilityText {
@@ -243,18 +202,12 @@
 }
 
 @media (max-width: 480px) {
-  .bigTextScroll span {
-    letter-spacing: 0.12em;
-  }
+  .bigTextScroll span { letter-spacing: 0.12em; }
 }
 
 @keyframes scrollText {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 :global(.light-mode) .footerBigTextWrapper {
@@ -281,337 +234,64 @@
     padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 3vw, 2rem);
   }
 
-  .contactDecor1 {
-    width: 400px;
-    height: 400px;
-    top: 15%;
-    left: -15%;
-  }
-
-  .contactDecor2 {
-    width: 450px;
-    height: 450px;
-    bottom: -10%;
-    right: -10%;
-  }
-
   .footerHeading {
-    font-family: 'Staatliches', 'Staatliches Fallback', sans-serif;
     font-size: 64px;
-    font-weight: 400;
-    color: rgb(255, 255, 255);
     line-height: 64px;
     margin-bottom: clamp(0.875rem, 2vw, 1.5rem);
+    color: var(--text);
   }
 
-  .emailDisplay {
-    font-size: 24px;
-    line-height: 36px;
-    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
-  }
-
-  .footerGrid {
-    gap: clamp(2rem, 3vw, 3rem);
-    padding: clamp(1.5rem, 2vw, 2.5rem) 0;
-  }
-
-  .columnLabel {
-    font-size: clamp(0.7rem, 1vw, 0.8rem);
-    margin-bottom: clamp(0.875rem, 1.5vw, 1.25rem);
-  }
-
-  .socialButtons {
-    gap: clamp(1rem, 1.5vw, 1.75rem);
-  }
-
-  .socialLink {
-    font-size: clamp(0.8rem, 1.2vw, 0.95rem);
-  }
-
-  .downloadButton {
-    padding: 1.25rem 2.5rem;
-    font-size: 0.95rem;
-  }
-
-  .downloadButton svg {
-    width: 20px;
-    height: 20px;
-  }
+  .emailDisplay { font-size: 24px; line-height: 36px; margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+  .footerGrid { gap: clamp(2rem, 3vw, 3rem); padding: clamp(1.5rem, 2vw, 2.5rem) 0; }
+  .columnLabel { font-size: clamp(0.7rem, 1vw, 0.8rem); margin-bottom: clamp(0.875rem, 1.5vw, 1.25rem); }
+  .socialButtons { gap: clamp(1rem, 1.5vw, 1.75rem); }
+  .socialLink { font-size: clamp(0.8rem, 1.2vw, 0.95rem); }
 }
 
 /* Tablet - 768px and below */
 @media (max-width: 768px) {
-  .contactSection {
-    min-height: auto;
-    padding: clamp(1.5rem, 3vw, 3rem) clamp(1rem, 2.5vw, 1.5rem);
-  }
-
-  .footerHeading {
-    font-family: 'Staatliches', 'Staatliches Fallback', sans-serif;
-    font-size: 64px;
-    font-weight: 400;
-    color: rgb(255, 255, 255);
-    line-height: 64px;
-    margin-bottom: clamp(0.75rem, 1.5vw, 1.25rem);
-    white-space: normal;
-  }
-
-  .emailDisplay {
-    font-size: 24px;
-    line-height: 36px;
-    margin-bottom: clamp(1.25rem, 2.5vw, 2rem);
-    overflow-wrap: break-word;
-  }
-
-  .footerGrid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: clamp(1.5rem, 2.5vw, 2rem);
-    padding: clamp(1.25rem, 1.8vw, 1.75rem) 0;
-  }
-
-  .columnLabel {
-    font-size: clamp(0.9rem, 1.3vw, 1.1rem);
-    margin-bottom: clamp(0.75rem, 1.2vw, 1rem);
-    letter-spacing: 0.12em;
-  }
-
-  .socialButtons {
-    gap: clamp(0.875rem, 1.5vw, 1.25rem);
-  }
-
-  .socialLink {
-    font-size: clamp(1.05rem, 1.35vw, 1.25rem);
-  }
-
-  .locationCity {
-    font-size: clamp(1.2rem, 1.6vw, 1.35rem);
-  }
-
-  .locationCountry {
-    font-size: clamp(0.95rem, 1.3vw, 1.1rem);
-  }
-
-  .currentTime {
-    font-size: clamp(0.95rem, 1.3vw, 1.1rem);
-  }
-
-  .availabilityDot {
-    width: clamp(0.5rem, 1vw, 0.75rem);
-    height: clamp(0.5rem, 1vw, 0.75rem);
-  }
-
-  .availabilityText {
-    font-size: clamp(0.95rem, 1.3vw, 1.05rem);
-  }
+  .contactSection { padding: clamp(1.5rem, 3vw, 3rem) clamp(1rem, 2.5vw, 1.5rem); }
+  .footerHeading { font-size: 64px; line-height: 64px; margin-bottom: clamp(0.75rem, 1.5vw, 1.25rem); color: var(--text); }
+  .footerGrid { grid-template-columns: repeat(2, 1fr); gap: clamp(1.5rem, 2.5vw, 2rem); padding: clamp(1.25rem, 1.8vw, 1.75rem) 0; }
+  .columnLabel { font-size: clamp(0.9rem, 1.3vw, 1.1rem); margin-bottom: clamp(0.75rem, 1.2vw, 1rem); }
+  .socialButtons { gap: clamp(0.875rem, 1.5vw, 1.25rem); }
+  .socialLink { font-size: clamp(1.05rem, 1.35vw, 1.25rem); }
+  .locationCity { font-size: clamp(1.2rem, 1.6vw, 1.35rem); }
+  .locationCountry { font-size: clamp(0.95rem, 1.3vw, 1.1rem); }
+  .currentTime { font-size: clamp(0.95rem, 1.3vw, 1.1rem); }
+  .availabilityDot { width: clamp(0.5rem, 1vw, 0.75rem); height: clamp(0.5rem, 1vw, 0.75rem); }
+  .availabilityText { font-size: clamp(0.95rem, 1.3vw, 1.05rem); }
 }
 
 /* Mobile - 600px and below */
 @media (max-width: 600px) {
-  .contactSection {
-    min-height: auto;
-    padding: clamp(1.25rem, 2.5vw, 2.5rem) clamp(0.875rem, 2vw, 1rem);
-  }
-
-  .contactDecor1 {
-    width: 300px;
-    height: 300px;
-    top: 20%;
-    left: -20%;
-    filter: blur(80px);
-  }
-
-  .contactDecor2 {
-    width: 350px;
-    height: 350px;
-    bottom: 0%;
-    right: -15%;
-    filtefamily: 'Staatliches', 'Staatliches Fallback', sans-serif;
-    font-size: 64px;
-    font-weight: 400;
-    color: rgb(255, 255, 255);
-    line-height: 64px
-  }
-
-  .footerHeading {
-    font-family: 'Staatliches', 'Staatliches Fallback', sans-serif;
-    font-size: 64px;
-    font-weight: 400;
-    color: rgb(255, 255, 255);
-    line-height: 64px;
-    margin-bottom: clamp(0.625rem, 1.2vw, 1rem);
-    letter-spacing: 0.025em;
-  }
-
-  .emailDisplay {
-    font-size: 24px;
-    line-height: 36px;
-    margin-bottom: clamp(1rem, 2vw, 1.75rem);
-    letter-spacing: 0.03em;
-    word-break: break-word;
-  }
-
-  .footerGrid {
-    grid-template-columns: 1fr;
-    gap: clamp(1.25rem, 2vw, 1.75rem);
-    padding: clamp(1rem, 1.5vw, 1.5rem) 0;
-  }
-
-  .columnLabel {
-    font-size: clamp(0.9rem, 1.25vw, 1rem);
-    margin-bottom: clamp(0.625rem, 1vw, 0.875rem);
-    letter-spacing: 0.12em;
-  }
-
-  .socialButtons {
-    gap: clamp(0.75rem, 1.3vw, 1rem);
-  }
-
-  .socialLink {
-    font-size: clamp(1rem, 1.3vw, 1.1rem);
-  }
-
-  .locationCity {
-    font-size: clamp(1.1rem, 1.5vw, 1.2rem);
-  }
-
-  .locationCountry {
-    font-size: clamp(0.95rem, 1.25vw, 1.05rem);
-  }
-
-  .currentTime {
-    font-size: clamp(0.95rem, 1.25vw, 1.05rem);
-    margin-top: clamp(0.2rem, 0.4vw, 0.375rem);
-  }
-
-  .availabilityDot {
-    width: clamp(0.45rem, 0.8vw, 0.6rem);
-    height: clamp(0.45rem, 0.8vw, 0.6rem);
-  }
-
-  .availabilityText {
-    font-size: clamp(0.9rem, 1.25vw, 1rem);
-    letter-spacing: 0.12em;
-  }
-
-  .downloadSection {
-    margin-top: 2rem;
-  }
-
+  .contactSection { padding: clamp(1.25rem, 2.5vw, 2.5rem) clamp(0.875rem, 2vw, 1rem); }
+  .footerHeading { font-size: 64px; line-height: 64px; margin-bottom: clamp(0.625rem, 1.2vw, 1rem); letter-spacing: 0.025em; color: var(--text); }
+  .footerGrid { grid-template-columns: 1fr; gap: clamp(1.25rem, 2vw, 1.75rem); padding: clamp(1rem, 1.5vw, 1.5rem) 0; }
+  .availabilityDot { width: clamp(0.45rem, 0.8vw, 0.6rem); height: clamp(0.45rem, 0.8vw, 0.6rem); }
+  .availabilityText { font-size: clamp(0.9rem, 1.25vw, 1rem); }
 }
 
 /* Mobile Small - 480px and below */
 @media (max-width: 480px) {
-  .contactSection {
-    padding: clamp(1rem, 2vw, 2rem) clamp(0.75rem, 1.5vw, 0.875rem);
-  }
-
-  .contactDecor1 {
-    width: 250px;
-    height: 250px;
-    top: 25%;
-    left: -25%;
-    opacity: 0.06;
-  }
-
-  .contactDecor2 {
-    width: 300px;
-    height: 300px;
-    bottom: 5%;
-    right: -20%;
-    opacity: 0.06;
-  }
-
-  .footerHeading {
-    font-family: 'Staatliches', 'Staatliches Fallback', sans-serif;
-    font-size: 64px;
-    font-weight: 400;
-    color: rgb(255, 255, 255);
-    line-height: 64px;
-    margin-bottom: clamp(0.5rem, 1vw, 0.875rem);
-    letter-spacing: 0.02em;
-  }
-
-  .emailDisplay {
-    font-size: 24px;
-    line-height: 36px;
-    margin-bottom: clamp(0.875rem, 1.8vw, 1.5rem);
-    letter-spacing: 0.02em;
-  }
-
-  .footerGrid {
-    gap: clamp(1rem, 1.8vw, 1.5rem);
-    padding: clamp(0.875rem, 1.3vw, 1.25rem) 0;
-  }
-
-  .columnLabel {
-    font-size: clamp(0.85rem, 1.1vw, 0.95rem);
-    margin-bottom: clamp(0.5rem, 0.9vw, 0.75rem);
-    letter-spacing: 0.1em;
-  }
-
-  .socialButtons {
-    gap: clamp(0.65rem, 1.1vw, 0.875rem);
-    flex-wrap: wrap;
-  }
-
-  .socialLink {
-    font-size: clamp(0.95rem, 1.15vw, 1.05rem);
-    letter-spacing: 0.03em;
-  }
-
-  .socialLink:hover {
-    transform: translateY(-1px);
-  }
-
-  .locationCity {
-    font-size: clamp(1.1rem, 1.4vw, 1.2rem);
-    letter-spacing: 0.08em;
-  }
-
-  .locationCountry {
-    font-size: clamp(0.9rem, 1.15vw, 1rem);
-    letter-spacing: 0.08em;
-  }
-
-  .currentTime {
-    font-size: clamp(0.9rem, 1.15vw, 1rem);
-    letter-spacing: 0.02em;
-    margin-top: clamp(0.15rem, 0.3vw, 0.25rem);
-  }
-
-  .availabilityText {
-    font-size: clamp(0.85rem, 1.1vw, 0.95rem);
-    letter-spacing: 0.08em;
-  }
+  .contactSection { padding: clamp(1rem, 2vw, 2rem) clamp(0.75rem, 1.5vw, 0.875rem); }
+  .footerHeading { font-size: 64px; line-height: 64px; margin-bottom: clamp(0.5rem, 1vw, 0.875rem); letter-spacing: 0.02em; color: var(--text); }
+  .socialButtons { gap: clamp(0.65rem, 1.1vw, 0.875rem); flex-wrap: wrap; }
 }
 
 /* Ultra Small - 360px and below */
 @media (max-width: 360px) {
-  .contactSection {
-    padding: 1.75rem 0.75rem;
-  }
+  .contactSection { padding: 1.75rem 0.75rem; }
+  .footerHeading { font-size: 64px; line-height: 64px; margin-bottom: 0.75rem; color: var(--text); }
+  .columnLabel { font-size: 0.6rem; margin-bottom: 0.625rem; }
+  .socialLink { font-size: 0.7rem; }
+}
 
-  .footerHeading {
-    font-family: 'Staatliches', 'Staatliches Fallback', sans-serif;
-    font-size: 64px;
-    font-weight: 400;
-    color: rgb(255, 255, 255);
-    line-height: 64px;
-    margin-bottom: 0.75rem;
-  }
+/* Optional: Theme-specific tweaks */
+:global(.light-mode) .footerHeading {
+  color: var(--text-light);
+}
 
-  .emailDisplay {
-    font-size: 24px;
-    line-height: 36px;
-    margin-bottom: 1.25rem;
-  }
-
-  .columnLabel {
-    font-size: 0.6rem;
-    margin-bottom: 0.625rem;
-  }
-
-  .socialLink {
-    font-size: 0.7rem;
-  }
+:global(.dark-mode) .footerHeading {
+  color: var(--text-dark);
 }
