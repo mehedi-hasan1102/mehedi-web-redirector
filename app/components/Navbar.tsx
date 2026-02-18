@@ -41,6 +41,12 @@ export default function Navbar() {
   const [isDropdownLocked, setIsDropdownLocked] = useState(false);
   const [isMobileMoreOpen, setIsMobileMoreOpen] = useState(false);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const clearDropdownCloseTimeout = () => {
+    if (dropdownTimeoutRef.current) {
+      clearTimeout(dropdownTimeoutRef.current);
+      dropdownTimeoutRef.current = null;
+    }
+  };
   const mobileMainItemClass =
     'group relative flex w-full cursor-pointer items-center gap-6 text-[var(--bg)] transition-all';
   const mobileMainNumberClass =
@@ -107,43 +113,11 @@ export default function Navbar() {
   // LINK HOVER EFFECT
   // ============================================
   const handleLinkHover = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const link = e.currentTarget;
-    const underline = link.querySelector('[data-underline]');
-
-    gsap.to(link, {
-      y: -4,
-      duration: 0.3,
-      ease: 'power2.out',
-    });
-
-    if (underline) {
-      gsap.to(underline, {
-        scaleX: 1,
-        duration: 0.4,
-        ease: 'power2.out',
-        transformOrigin: 'left',
-      });
-    }
+    gsap.to(e.currentTarget, { y: -4, duration: 0.3, ease: 'power2.out' });
   };
 
   const handleLinkHoverEnd = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const link = e.currentTarget;
-    const underline = link.querySelector('[data-underline]');
-
-    gsap.to(link, {
-      y: 0,
-      duration: 0.3,
-      ease: 'power2.out',
-    });
-
-    if (underline) {
-      gsap.to(underline, {
-        scaleX: 0,
-        duration: 0.3,
-        ease: 'power2.out',
-        transformOrigin: 'left',
-      });
-    }
+    gsap.to(e.currentTarget, { y: 0, duration: 0.3, ease: 'power2.out' });
   };
 
   // ============================================
@@ -159,19 +133,22 @@ export default function Navbar() {
   };
 
   const openDropdown = () => {
-    if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+    clearDropdownCloseTimeout();
     setIsDropdownOpen(true);
   };
 
   const closeDropdownWithDelay = () => {
     // Only auto-close if not locked by click
     if (isDropdownLocked) return;
+    clearDropdownCloseTimeout();
     dropdownTimeoutRef.current = setTimeout(() => {
       setIsDropdownOpen(false);
+      dropdownTimeoutRef.current = null;
     }, 3000);
   };
 
   const toggleDropdownLock = () => {
+    clearDropdownCloseTimeout();
     setIsDropdownLocked((prev) => {
       const newLocked = !prev;
       setIsDropdownOpen(newLocked ? true : false);
@@ -179,10 +156,17 @@ export default function Navbar() {
     });
   };
 
+  useEffect(() => {
+    return () => {
+      clearDropdownCloseTimeout();
+    };
+  }, []);
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        clearDropdownCloseTimeout();
         setIsDropdownOpen(false);
         setIsDropdownLocked(false);
       }
@@ -236,21 +220,6 @@ export default function Navbar() {
                 Mehedi Hasan<span style={{ fontSize: '0.75em', verticalAlign: 'super' }}></span>
               </span>
             </Link>
-            <button
-              type="button"
-              onClick={handleToggleTheme}
-              className="hidden rounded-full bg-[rgba(34,211,238,0.1)] p-2 text-[var(--accent)] transition-all duration-300 hover:bg-[rgba(34,211,238,0.15)]"
-              aria-label="Toggle theme"
-              title="Toggle theme"
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(34, 211, 238, 0.15)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(34, 211, 238, 0.1)';
-              }}
-            >
-              {isDark ? <FaSun size={16} /> : <FaMoon size={16} />}
-            </button>
           </div>
 
           {/* Desktop Navigation Links - Right Side with pill background */}
@@ -271,7 +240,7 @@ export default function Navbar() {
               {isDark ? <FaSun size={16} /> : <FaMoon size={16} />}
             </button>
 
- <div className="h-6 w-px bg-[rgba(34,211,238,0.2)]" />
+            <div className="h-6 w-px bg-[rgba(34,211,238,0.2)]" />
 
             {NAV_LINKS.map((link) => {
               const isActive = pathname === link.href;
@@ -420,14 +389,6 @@ export default function Navbar() {
               Let&apos;s Talk
             </button>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="rounded-lg bg-[rgba(34,211,238,0.1)] p-2 text-[var(--accent)] transition-all duration-300 lg:hidden"
-              aria-label="Toggle menu"
-            >
-              {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-            </button>
           </div>
 
           {/* Mobile Controls - Right Side (Hamburger + Theme) */}
