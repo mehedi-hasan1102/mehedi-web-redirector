@@ -9,12 +9,11 @@ import { FiMenu, FiX, FiMessageCircle, FiChevronDown } from 'react-icons/fi';
 import { FaMoon, FaSun } from 'react-icons/fa';
 import BookingModal from './BookingModal';
 import { useTheme } from '../../lib/useTheme';
-import styles from './navbar.module.css';
 
 // Navigation links
 const NAV_LINKS = [
   { label: 'Home', href: '/' },
-  // { label: 'About', href: '/about' },
+  { label: 'About', href: '/about' },
   { label: 'Portfolyio', href: '/portfolyio' },
   { label: 'Blog', href: '/blog' },
 ];
@@ -26,7 +25,6 @@ const MORE_ITEMS = [
   // { label: 'Feedback', href: '/feedback' },
   // { label: 'Snippets', href: '/snippets' },
   { label: 'Links', href: '/links' },
-  { label: 'Light Mode', isThemeToggle: true },
 ];
 
 export default function Navbar() {
@@ -36,34 +34,21 @@ export default function Navbar() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   
-  const { isDark, toggleTheme: handleToggleTheme, isLoading: isThemeLoading } = useTheme();
+  const { isDark, toggleTheme: handleToggleTheme } = useTheme();
   
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdownLocked, setIsDropdownLocked] = useState(false);
   const [isMobileMoreOpen, setIsMobileMoreOpen] = useState(false);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const mobileMainItemClass =
+    'group relative flex w-full cursor-pointer items-center gap-6 text-[var(--bg)] transition-all';
+  const mobileMainNumberClass =
+    'w-10 text-left text-3xl leading-none font-black opacity-40 transition-opacity group-hover:opacity-100';
+  const mobileMainLabelClass =
+    'flex items-center gap-3 text-3xl leading-none font-bold transition-transform origin-left group-hover:scale-105';
 
   // Theme toggle now handled by useTheme hook
-
-  // ============================================
-  // NAVBAR ALWAYS VISIBLE (FIXED)
-  // ============================================
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const isScrolling = currentScrollY > 50;
-
-      // Set background style only
-      setScrolled(isScrolling);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   // ============================================
   // INITIAL ANIMATION
@@ -97,6 +82,8 @@ export default function Navbar() {
 
       // Stagger animate menu links
       const links = mobileMenuRef.current.querySelectorAll('[data-menu-link]');
+      gsap.killTweensOf(links);
+      gsap.set(links, { opacity: 1, y: 0 });
       gsap.from(links, {
         opacity: 0,
         y: 20,
@@ -160,21 +147,6 @@ export default function Navbar() {
   };
 
   // ============================================
-  // HANDLE NAVIGATION CLICK
-  // ============================================
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    setIsOpen(false);
-
-    const targetId = href.replace('#', '');
-    const element = document.getElementById(targetId);
-
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
-  // ============================================
   // LOGO SCROLL TO TOP
   // ============================================
   const scrollToTop = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -234,43 +206,71 @@ export default function Navbar() {
       {/* Main Navbar */}
       <nav
         ref={navRef}
-        className={`${styles.navbarFont} fixed top-0 left-0 right-0 z-40 h-16`}
+        className="fixed left-0 right-0 top-0 z-40 h-16 [font-family:'Staatliches',serif]"
         style={{
           transition: 'all 0.3s ease',
         }}
       >
         <div className="container h-full flex items-center justify-between px-4 md:px-6">
-          {/* Logo - Left Side with Pill Background */}
-          <Link
-            href="/"
-            onClick={scrollToTop}
-            className={styles.logo}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(34, 211, 238, 0.15)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(34, 211, 238, 0.1)';
-            }}
-          >
-            <Image 
-              src="/profile/profile.png" 
-              alt="Mehedi Hasan's profile logo"
-              width={28}
-              height={28}
-              style={{
-                borderRadius: '50%',
-                marginRight: '8px'
+          <div className="flex items-center gap-2">
+            {/* Logo - Left Side with Pill Background */}
+            <Link
+              href="/"
+              onClick={scrollToTop}
+              className="flex shrink-0 cursor-pointer items-center gap-2 rounded-full bg-[rgba(34,211,238,0.1)] px-2.5 py-1.5 text-base font-bold tracking-[0.05em] text-[var(--accent)] transition-all duration-300 hover:bg-[rgba(34,211,238,0.2)] hover:shadow-[0_0_20px_rgba(34,211,238,0.2),inset_0_0_10px_rgba(34,211,238,0.1)] active:opacity-85 sm:px-4 sm:py-2 sm:text-lg"
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(34, 211, 238, 0.15)';
               }}
-            />
-            Mehedi Hasan<span style={{ fontSize: '0.75em', verticalAlign: 'super' }}></span>
-          </Link>
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(34, 211, 238, 0.1)';
+              }}
+            >
+              <Image
+                src="/profile/profile.png"
+                alt="Mehedi Hasan's profile logo"
+                width={28}
+                height={28}
+                className="rounded-full sm:mr-2"
+              />
+              <span className="hidden sm:inline">
+                Mehedi Hasan<span style={{ fontSize: '0.75em', verticalAlign: 'super' }}></span>
+              </span>
+            </Link>
+            <button
+              type="button"
+              onClick={handleToggleTheme}
+              className="hidden rounded-full bg-[rgba(34,211,238,0.1)] p-2 text-[var(--accent)] transition-all duration-300 hover:bg-[rgba(34,211,238,0.15)]"
+              aria-label="Toggle theme"
+              title="Toggle theme"
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(34, 211, 238, 0.15)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(34, 211, 238, 0.1)';
+              }}
+            >
+              {isDark ? <FaSun size={16} /> : <FaMoon size={16} />}
+            </button>
+          </div>
 
           {/* Desktop Navigation Links - Right Side with pill background */}
-          <div className="hidden lg:flex items-center gap-6 px-6 py-2 rounded-full shrink-0" style={{
-            background: 'rgba(34, 211, 238, 0.08)',
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(34, 211, 238, 0.15)',
-          }}>
+          <div className="hidden shrink-0 items-center rounded-full border border-[rgba(34,211,238,0.15)] bg-[rgba(34,211,238,0.08)] py-2 backdrop-blur-[10px] lg:flex lg:gap-4 lg:px-4 xl:gap-6 xl:px-6">
+            <button
+              type="button"
+              onClick={handleToggleTheme}
+              className="inline-flex rounded-full bg-[rgba(34,211,238,0.1)] p-2 text-[var(--accent)] transition-all duration-300 hover:bg-[rgba(34,211,238,0.15)]"
+              aria-label="Toggle theme"
+              title="Toggle theme"
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(34, 211, 238, 0.15)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(34, 211, 238, 0.1)';
+              }}
+            >
+              {isDark ? <FaSun size={16} /> : <FaMoon size={16} />}
+            </button>
+
             {NAV_LINKS.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -279,24 +279,15 @@ export default function Navbar() {
                   href={link.href}
                   onMouseEnter={handleLinkHover}
                   onMouseLeave={handleLinkHoverEnd}
-                  className={styles.navLink}
-                  style={{
-                    color: isActive ? 'var(--accent)' : 'var(--text)',
-                  }}
+                  className={`relative cursor-pointer whitespace-nowrap text-sm font-medium uppercase tracking-[0.025em] transition-all duration-300 ${
+                    isActive ? 'text-[var(--accent)]' : 'text-[var(--text)]'
+                  }`}
                 >
                   {link.label}
                   {/* Active indicator dot */}
                   {isActive && (
                     <span
-                      className="absolute -bottom-2 left-1/2"
-                      style={{
-                        width: '4px',
-                        height: '4px',
-                        borderRadius: '50%',
-                        background: 'var(--accent)',
-                        transform: 'translateX(-50%)',
-                        boxShadow: '0 0 8px var(--accent)',
-                      }}
+                      className="absolute -bottom-2 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-[var(--accent)] shadow-[0_0_8px_var(--accent)]"
                     />
                   )}
                 </Link>
@@ -304,154 +295,109 @@ export default function Navbar() {
             })}
 
             {/* More Dropdown */}
-<div
-  ref={dropdownRef}
-  className="relative"
-  onMouseEnter={openDropdown}
-  onMouseLeave={closeDropdownWithDelay}
->
-  {/* Trigger Button */}
-  <button
-    type="button"
-    aria-haspopup="true"
-    aria-expanded={isDropdownOpen}
-    className={styles.dropdownTrigger}
-    style={{
-      color: isDropdownOpen ? 'var(--accent)' : 'var(--text)',
-    }}
-    onClick={toggleDropdownLock}
-    onFocus={openDropdown}
-    onBlur={closeDropdownWithDelay}
-    onMouseEnter={(e) =>
-      gsap.to(e.currentTarget, { color: 'var(--accent)', duration: 0.3 })
-    }
-    onMouseLeave={(e) => {
-      if (!isDropdownOpen) {
-        gsap.to(e.currentTarget, { color: 'var(--text)', duration: 0.3 });
-      }
-    }}
-  >
-    More
-    <span
-      aria-hidden
-      style={{
-        display: 'inline-block',
-        transition: 'transform 0.3s ease',
-        transform: isDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-      }}
-    >
-      <FiChevronDown size={16} />
-    </span>
-  </button>
-
-  {/* Menu */}
-  <div
-    role="menu"
-    onMouseEnter={openDropdown}
-    onMouseLeave={closeDropdownWithDelay}
-    className="absolute top-full left-0 mt-2 w-48 rounded-lg border"
-    style={{
-      background: 'var(--bg)',
-      borderColor: 'rgba(34, 211, 238, 0.2)',
-      opacity: isDropdownOpen ? 1 : 0,
-      pointerEvents: isDropdownOpen ? 'auto' : 'none',
-      transition: 'opacity 0.3s ease',
-      boxShadow: '0 10px 30px rgba(34, 211, 238, 0.15)',
-    }}
-  >
-    {MORE_ITEMS.map((item, idx) => {
-      // Theme toggle item
-      if (item.isThemeToggle) {
-        return (
-          <button
-            key="theme-toggle"
-            onClick={() => {
-              handleToggleTheme();
-              setIsDropdownOpen(false);
-              setIsDropdownLocked(false);
-            }}
-            className={styles.dropdownItem}
-            onMouseEnter={(e) => {
-              gsap.to(e.currentTarget, {
-                background: 'rgba(34, 211, 238, 0.1)',
-                color: 'var(--accent)',
-                duration: 0.2,
-              });
-            }}
-            onMouseLeave={(e) => {
-              gsap.to(e.currentTarget, {
-                background: 'transparent',
-                color: 'var(--text)',
-                duration: 0.2,
-              });
-            }}
-          >
-            {isDark ? 'Light Mode' : 'Dark Mode'}
-          </button>
-        );
-      }
-
-      // Regular link items
-      const isActive = pathname === item.href;
-      return (
-        <Link
-          key={item.href || 'theme-toggle'}
-          href={item.href || '#'}
-          role="menuitem"
-          tabIndex={isDropdownOpen ? 0 : -1}
-          className={styles.dropdownItem}
-          style={{
-            color: isActive ? 'var(--accent)' : 'var(--text)',
-            background: isActive ? 'rgba(34, 211, 238, 0.1)' : 'transparent',
-          }}
-          onClick={() => {
-            // Close dropdown and unlock when clicking a menu item
-            setIsDropdownOpen(false);
-            setIsDropdownLocked(false);
-          }}
-          onMouseEnter={(e) =>
-            gsap.to(e.currentTarget, {
-              background: 'rgba(34, 211, 238, 0.1)',
-              color: 'var(--accent)',
-              duration: 0.2,
-            })
-          }
-          onMouseLeave={(e) =>
-            gsap.to(e.currentTarget, {
-              background: isActive ? 'rgba(34, 211, 238, 0.1)' : 'transparent',
-              color: isActive ? 'var(--accent)' : 'var(--text)',
-              duration: 0.2,
-            })
-          }
-        >
-          <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            {item.label}
-            {isActive && (
-              <span
-                style={{
-                  width: '4px',
-                  height: '4px',
-                  borderRadius: '50%',
-                  background: 'var(--accent)',
-                  boxShadow: '0 0 8px var(--accent)',
-                  display: 'inline-block',
+            <div
+              ref={dropdownRef}
+              className="relative"
+              onMouseEnter={openDropdown}
+              onMouseLeave={closeDropdownWithDelay}
+            >
+              {/* Trigger Button */}
+              <button
+                type="button"
+                aria-haspopup="true"
+                aria-expanded={isDropdownOpen}
+                className={`flex cursor-pointer items-center gap-1 whitespace-nowrap bg-transparent p-0 text-sm font-medium uppercase tracking-[0.025em] transition-all duration-300 hover:scale-105 ${
+                  isDropdownOpen ? 'text-[var(--accent)]' : 'text-[var(--text)]'
+                }`}
+                onClick={toggleDropdownLock}
+                onFocus={openDropdown}
+                onBlur={closeDropdownWithDelay}
+                onMouseEnter={(e) =>
+                  gsap.to(e.currentTarget, { color: 'var(--accent)', duration: 0.3 })
+                }
+                onMouseLeave={(e) => {
+                  if (!isDropdownOpen) {
+                    gsap.to(e.currentTarget, { color: 'var(--text)', duration: 0.3 });
+                  }
                 }}
-              />
-            )}
-          </span>
-        </Link>
-      );
-    })}
-  </div>
-</div>
+              >
+                More
+                <span
+                  aria-hidden
+                  className={`inline-block transition-transform duration-300 ${
+                    isDropdownOpen ? 'rotate-180' : 'rotate-0'
+                  }`}
+                >
+                  <FiChevronDown size={16} />
+                </span>
+              </button>
+
+              {/* Menu */}
+              <div
+                role="menu"
+                onMouseEnter={openDropdown}
+                onMouseLeave={closeDropdownWithDelay}
+                className={`absolute left-0 top-full mt-2 w-48 rounded-lg border border-[rgba(34,211,238,0.2)] bg-[var(--bg)] shadow-[0_10px_30px_rgba(34,211,238,0.15)] transition-opacity duration-300 ${
+                  isDropdownOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+                }`}
+              >
+                {MORE_ITEMS.map((item, idx) => {
+                  const isLastItem = idx === MORE_ITEMS.length - 1;
+                  const dropdownItemBaseClass =
+                    'block w-full cursor-pointer bg-transparent px-4 py-3 text-left text-sm transition-all duration-200';
+
+                  // Regular link items
+                  const isActive = pathname === item.href;
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      role="menuitem"
+                      tabIndex={isDropdownOpen ? 0 : -1}
+                      className={`${dropdownItemBaseClass} ${
+                        isLastItem ? 'border-none' : 'border-b border-[rgba(34,211,238,0.1)]'
+                      } ${isActive ? 'bg-[rgba(34,211,238,0.1)] text-[var(--accent)]' : 'text-[var(--text)]'}`}
+                      onClick={() => {
+                        // Close dropdown and unlock when clicking a menu item
+                        setIsDropdownOpen(false);
+                        setIsDropdownLocked(false);
+                      }}
+                      onMouseEnter={(e) =>
+                        gsap.to(e.currentTarget, {
+                          background: 'rgba(34, 211, 238, 0.1)',
+                          color: 'var(--accent)',
+                          paddingLeft: '1.25rem',
+                          duration: 0.2,
+                        })
+                      }
+                      onMouseLeave={(e) =>
+                        gsap.to(e.currentTarget, {
+                          background: isActive ? 'rgba(34, 211, 238, 0.1)' : 'transparent',
+                          color: isActive ? 'var(--accent)' : 'var(--text)',
+                          paddingLeft: '1rem',
+                          duration: 0.2,
+                        })
+                      }
+                    >
+                      <span className="flex items-center gap-2">
+                        {item.label}
+                        {isActive && (
+                          <span className="inline-block h-1 w-1 rounded-full bg-[var(--accent)] shadow-[0_0_8px_var(--accent)]" />
+                        )}
+                      </span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
 
             {/* Divider */}
-            <div style={{ width: '1px', height: '24px', background: 'rgba(34, 211, 238, 0.2)' }} />
+            <div className="h-6 w-px bg-[rgba(34,211,238,0.2)]" />
             
             {/* Let's Talk CTA Button - Inside Pill */}
             <button
               onClick={() => setIsBookingModalOpen(true)}
-              className={styles.ctaButton}
+              className="group inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-full bg-[var(--accent)] px-5 py-1.5 text-sm font-semibold text-[var(--bg)] transition-all duration-300 hover:scale-105 active:scale-95"
               onMouseEnter={(e) => {
                 gsap.to(e.currentTarget, {
                   boxShadow: '0 8px 20px rgba(34, 211, 238, 0.4)',
@@ -465,40 +411,17 @@ export default function Navbar() {
                 });
               }}
             >
-              <FiMessageCircle size={18} />
+              <FiMessageCircle
+                size={18}
+                className="shrink-0 transition-all duration-300 group-hover:scale-[1.15] group-hover:-rotate-20"
+              />
               Let&apos;s Talk
-            </button>
-
-            {/* Theme Toggle on Mobile Only */}
-            <button
-              data-theme-toggle-mobile
-              onClick={handleToggleTheme}
-              className="p-2 rounded-lg lg:hidden"
-              style={{
-                background: 'rgba(34, 211, 238, 0.1)',
-                color: 'var(--accent)',
-                transition: 'transform 0.3s ease, background 0.3s ease',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(34, 211, 238, 0.15)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(34, 211, 238, 0.1)';
-              }}
-              aria-label="Toggle theme"
-            >
-              {isDark ? <FaSun size={18} /> : <FaMoon size={18} />}
             </button>
 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden p-2 rounded-lg"
-              style={{
-                background: 'rgba(34, 211, 238, 0.1)',
-                color: 'var(--accent)',
-                transition: 'all 0.3s ease',
-              }}
+              className="rounded-lg bg-[rgba(34,211,238,0.1)] p-2 text-[var(--accent)] transition-all duration-300 lg:hidden"
               aria-label="Toggle menu"
             >
               {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
@@ -506,33 +429,33 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Controls - Right Side (Hamburger + Theme) */}
-          <div className="lg:hidden flex items-center gap-2">
+          <div className="flex items-center gap-1.5 lg:hidden sm:gap-2">
             {/* Let's Talk Icon Button - Mobile Only */}
             <button
               onClick={() => setIsBookingModalOpen(true)}
-              className="p-2 rounded-full"
-              style={{
-                background: 'rgba(6, 182, 212, 0.2)',
-                color: 'var(--accent)',
-                transition: 'all 0.3s ease',
-              }}
+              className="rounded-full bg-[rgba(6,182,212,0.2)] p-1.5 text-[var(--accent)] transition-all duration-300 hover:scale-110 sm:p-2"
               aria-label="Let's talk"
             >
-              <FiMessageCircle size={20} />
+              <FiMessageCircle size={18} />
+            </button>
+
+            <button
+              type="button"
+              onClick={handleToggleTheme}
+              className="rounded-full bg-[rgba(34,211,238,0.1)] p-1.5 text-[var(--accent)] transition-all duration-300 hover:scale-110 sm:p-2"
+              aria-label="Toggle theme"
+              title="Toggle theme"
+            >
+              {isDark ? <FaSun size={18} /> : <FaMoon size={18} />}
             </button>
 
             {/* Mobile Menu Button - Hamburger */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-full"
-              style={{
-                background: 'rgba(34, 211, 238, 0.1)',
-                color: 'var(--accent)',
-                transition: 'all 0.3s ease',
-              }}
+              className="rounded-full bg-[rgba(34,211,238,0.1)] p-1.5 text-[var(--accent)] transition-all duration-300 hover:scale-110 sm:p-2"
               aria-label="Toggle menu"
             >
-              {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+              {isOpen ? <FiX size={22} /> : <FiMenu size={22} />}
             </button>
           </div>
         </div>
@@ -541,12 +464,9 @@ export default function Navbar() {
       {/* Mobile Menu Overlay */}
       <div
         ref={mobileMenuRef}
-        className={`${styles.navbarFont} mt-16 m-4 rounded-2xl fixed inset-0 z-30 lg:hidden opacity-0 pointer-events-none transition-opacity duration-300`}
-        style={{
-          background: 'var(--accent)',
-          opacity: isOpen ? 1 : 0,
-          pointerEvents: isOpen ? 'auto' : 'none',
-        }}
+        className={`fixed inset-0 z-30 m-4 mt-16 rounded-2xl bg-[var(--accent)] [font-family:'Staatliches',serif] transition-opacity duration-300 lg:hidden ${
+          isOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+        }`}
         onClick={(e) => {
           if (e.target === mobileMenuRef.current) {
             setIsOpen(false);
@@ -554,39 +474,28 @@ export default function Navbar() {
         }}
       >
         {/* Menu Content */}
-        <div className="h-full flex flex-col px-6 pt-6 pb-12" onClick={(e) => e.stopPropagation()}>
+        <div className="h-full flex flex-col overflow-y-auto px-6 pt-6 pb-12" onClick={(e) => e.stopPropagation()}>
           {/* Top Bar - Profile + Close */}
          
           {/* Navigation Items with Numbers */}
-          <div className="flex-1 space-y-3 mt-12">
+          <div className="mt-8 flex-1 min-h-0 space-y-3 overflow-y-auto pb-6 sm:mt-12">
             {NAV_LINKS.map((link, idx) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="flex items-baseline gap-6 group cursor-pointer transition-all relative"
-                  style={{
-                    color: 'var(--bg)',
-                  }}
+                  className={mobileMainItemClass}
+                  data-menu-link
                   onClick={() => setIsOpen(false)}
                 >
-                  <span className="text-3xl font-black opacity-40 group-hover:opacity-100 transition-opacity">
+                  <span className={mobileMainNumberClass}>
                     {String(idx + 1).padStart(2, '0')}
                   </span>
-                  <span className="text-3xl font-bold group-hover:scale-105 transition-transform origin-left flex items-center gap-3">
+                  <span className={mobileMainLabelClass}>
                     {link.label}
                     {isActive && (
-                      <span
-                        className="inline-block"
-                        style={{
-                          width: '8px',
-                          height: '8px',
-                          borderRadius: '50%',
-                          background: 'var(--bg)',
-                          boxShadow: '0 0 12px var(--bg)',
-                        }}
-                      />
+                      <span className="inline-block h-2 w-2 rounded-full bg-[var(--bg)] shadow-[0_0_12px_var(--bg)]" />
                     )}
                   </span>
                 </Link>
@@ -595,81 +504,46 @@ export default function Navbar() {
             
             {/* More Item */}
             <button
+              type="button"
               onClick={() => setIsMobileMoreOpen(!isMobileMoreOpen)}
-              className="flex items-baseline gap-6 group w-full text-left cursor-pointer transition-all"
-              style={{
-                color: 'var(--bg)',
-                background: 'transparent',
-                border: 'none',
-              }}
+              className={`${mobileMainItemClass} border-none bg-transparent text-left`}
+              data-menu-link
             >
-              <span className="text-3xl font-black opacity-40 group-hover:opacity-100 transition-opacity">
-                05
+              <span className={mobileMainNumberClass}>
+                {String(NAV_LINKS.length + 1).padStart(2, '0')}
               </span>
-              <span className="text-3xl font-bold group-hover:scale-105 transition-transform origin-left flex items-center gap-3">
+              <span className={mobileMainLabelClass}>
                 More
                 <span
                   aria-hidden
-                  style={{
-                    display: 'inline-block',
-                    transition: 'transform 0.3s ease',
-                    transform: isMobileMoreOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                  }}
+                  className={`inline-block transition-transform duration-300 ${
+                    isMobileMoreOpen ? 'rotate-180' : 'rotate-0'
+                  }`}
                 >
                   <FiChevronDown size={20} />
                 </span>
-              </span>
-            </button>
+                </span>
+              </button>
 
             {/* More Dropdown */}
             {isMobileMoreOpen && (
               <div className="pl-20 space-y-1">
                 {MORE_ITEMS.map((item) => {
-                  if (item.isThemeToggle) {
-                    return (
-                      <button
-                        key="theme-toggle-mobile"
-                        onClick={() => {
-                          handleToggleTheme();
-                        }}
-                        className="text-lg  font-bold block hover:scale-105 cursor-pointer transition-transform origin-left"
-                        style={{
-                          color: 'var(--bg)',
-                          background: 'transparent',
-                          border: 'none',
-                        }}
-                      >
-                        {isDark ? 'Light Mode' : 'Dark Mode'}
-                      </button>
-                    );
-                  }
                   const isActive = pathname === item.href;
                   return (
                     <Link
-                      key={item.href || 'theme-toggle'}
-                      href={item.href || '#'}
-                      className="text-lg font-bold block hover:scale-105 cursor-pointer transition-transform origin-left"
-                      style={{
-                        color: 'var(--bg)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                      }}
+                      key={item.href}
+                      href={item.href}
+                      className="block cursor-pointer text-lg font-bold text-[var(--bg)] transition-transform origin-left hover:scale-105"
+                      data-menu-link
                       onClick={() => setIsOpen(false)}
                     >
-                      {item.label}
-                      {isActive && (
-                        <span
-                          style={{
-                            width: '6px',
-                            height: '6px',
-                            borderRadius: '50%',
-                            background: 'var(--bg)',
-                            boxShadow: '0 0 10px var(--bg)',
-                            display: 'inline-block',
-                          }}
-                        />
-                      )}
+                      <span className="flex items-center gap-2">
+                        {item.label}
+                        {isActive && (
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--bg)] shadow-[0_0_10px_var(--bg)]" />
+                        )}
+                      </span>
                     </Link>
                   );
                 })}
@@ -683,8 +557,7 @@ export default function Navbar() {
               href="https://github.com/mehedi-hasan1102"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-semibold hover:scale-110 transition-transform"
-              style={{ color: 'var(--bg)' }}
+              className="font-semibold text-[var(--bg)] transition-transform hover:scale-110"
             >
               Github
             </a>
@@ -692,8 +565,7 @@ export default function Navbar() {
               href="https://www.linkedin.com/in/mehedi-hasan1102"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-semibold hover:scale-110 transition-transform"
-              style={{ color: 'var(--bg)' }}
+              className="font-semibold text-[var(--bg)] transition-transform hover:scale-110"
             >
               LinkedIn
             </a>
@@ -701,8 +573,7 @@ export default function Navbar() {
               href="https://x.com/mehedihasan1102"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-semibold hover:scale-110 transition-transform"
-              style={{ color: 'var(--bg)' }}
+              className="font-semibold text-[var(--bg)] transition-transform hover:scale-110"
             >
               X
             </a>
