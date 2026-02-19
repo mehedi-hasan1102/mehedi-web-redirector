@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { FiX } from 'react-icons/fi';
 import emailjs from '@emailjs/browser';
-import styles from './bookingModal.module.css';
 
 /* ------------------ ENV ------------------ */
 const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
@@ -109,32 +108,38 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
   return (
     <div
       ref={modalRef}
-      className={styles.modalOverlay}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(0,0,0,0.7)] p-4 opacity-0 [backdrop-filter:blur(4px)] pointer-events-none transition-opacity duration-300 [transition-timing-function:ease] max-[480px]:px-2 max-[480px]:py-4"
       onClick={(e) => {
         if (e.target === modalRef.current) {
           onClose();
         }
       }}
     >
-      <form ref={formRef} className={styles.modalContent} onSubmit={handleSubmit}>
+      <form
+        ref={formRef}
+        className="relative w-full max-w-[500px] rounded-[12px] border border-[rgba(6,182,212,0.2)] bg-[var(--bg)] p-10 shadow-[0_20px_60px_rgba(6,182,212,0.15)] [animation:bookingModalSlideIn_0.4s_ease-out] max-[600px]:rounded-[10px] max-[600px]:px-6 max-[600px]:py-8 max-[480px]:rounded-[8px] max-[480px]:px-5 max-[480px]:py-7"
+        onSubmit={handleSubmit}
+      >
         {/* Close Button */}
         <button
           type="button"
           onClick={onClose}
-          className={styles.closeButton}
+          className="absolute right-6 top-6 flex cursor-pointer items-center justify-center border-none bg-transparent p-2 text-[var(--text-secondary)] transition-all duration-300 [transition-timing-function:ease] hover:rotate-90 hover:scale-110 hover:text-[var(--accent)] max-[480px]:right-4 max-[480px]:top-4"
           aria-label="Close modal"
         >
           <FiX size={24} />
         </button>
 
         {/* Heading */}
-        <h2 className={styles.modalHeading}>Get in Touch</h2>
-        <p className={styles.modalSubheading}>
+        <h2 className="mb-2 font-['Staatliches',serif] text-[2rem] font-normal leading-none tracking-[0.05em] text-[var(--text)] max-[600px]:mb-1.5 max-[600px]:text-[1.75rem] max-[480px]:mb-1 max-[480px]:text-[1.5rem]">
+          Get in Touch
+        </h2>
+        <p className="mb-8 font-['Inter',monospace] text-[0.875rem] tracking-[0.02em] text-[var(--text-secondary)] max-[600px]:mb-6 max-[600px]:text-[0.8rem] max-[480px]:mb-5 max-[480px]:text-[0.75rem]">
           I&apos;m open to job opportunities and collaborations. Let&apos;s connect!
         </p>
 
         {/* Form Fields */}
-        <div className={styles.formGroup}>
+        <div className="mb-6 max-[600px]:mb-5 max-[480px]:mb-4">
           <input
             type="email"
             name="email"
@@ -142,19 +147,19 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
             value={formData.email}
             onChange={handleInputChange}
             required
-            className={styles.input}
+            className="w-full rounded-[8px] border border-[rgba(6,182,212,0.3)] bg-[rgba(6,182,212,0.05)] px-4 py-3.5 font-['Inter',monospace] text-[0.95rem] tracking-[0.02em] text-[var(--text)] outline-none transition-all duration-300 [transition-timing-function:ease] placeholder:text-[var(--text-secondary)] placeholder:opacity-60 focus:border-[var(--accent)] focus:bg-[rgba(6,182,212,0.08)] focus:shadow-[0_0_0_3px_rgba(6,182,212,0.1)] max-[600px]:px-[0.875rem] max-[600px]:py-3 max-[600px]:text-[0.9rem] max-[480px]:px-3 max-[480px]:py-2.5 max-[480px]:text-[0.85rem]"
           />
         </div>
 
-        <div className={styles.formGroup}>
+        <div className="mb-6 max-[600px]:mb-5 max-[480px]:mb-4">
           <textarea
             name="message"
-            placeholder="Tell me about the opportunity or just say hi..."
+            placeholder="Tell me about the opportunity or just say Hey... "
             value={formData.message}
             onChange={handleInputChange}
             required
             rows={4}
-            className={styles.textarea}
+            className="min-h-[120px] w-full resize-y rounded-[8px] border border-[rgba(6,182,212,0.3)] bg-[rgba(6,182,212,0.05)] px-4 py-3.5 font-['Inter',monospace] text-[0.95rem] tracking-[0.02em] text-[var(--text)] outline-none transition-all duration-300 [transition-timing-function:ease] placeholder:text-[var(--text-secondary)] placeholder:opacity-60 focus:border-[var(--accent)] focus:bg-[rgba(6,182,212,0.08)] focus:shadow-[0_0_0_3px_rgba(6,182,212,0.1)] max-[600px]:px-[0.875rem] max-[600px]:py-3 max-[600px]:text-[0.9rem] max-[480px]:min-h-[100px] max-[480px]:px-3 max-[480px]:py-2.5 max-[480px]:text-[0.85rem]"
           />
         </div>
 
@@ -162,13 +167,13 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
 
         {/* Status Messages */}
         {submitStatus === 'success' && (
-          <div className={styles.successMessage}>
+          <div className="mb-6 rounded-[8px] border border-[rgba(34,211,238,0.3)] bg-[rgba(34,211,238,0.1)] p-4 text-center font-['Inter',monospace] text-[0.9rem] text-[#22c55e] [animation:bookingModalSlideDown_0.3s_ease-out]">
             ✓ Message sent successfully! I&apos;ll get back to you soon.
           </div>
         )}
 
         {submitStatus === 'error' && (
-          <div className={styles.errorMessage}>
+          <div className="mb-6 rounded-[8px] border border-[rgba(239,68,68,0.3)] bg-[rgba(239,68,68,0.1)] p-4 text-center font-['Inter',monospace] text-[0.9rem] text-[#ef4444] [animation:bookingModalSlideDown_0.3s_ease-out]">
             ✗ Something went wrong. Please try again.
           </div>
         )}
@@ -177,7 +182,7 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
         <button
           type="submit"
           disabled={isSubmitting}
-          className={styles.submitButton}
+          className="relative w-full overflow-hidden rounded-[8px] border-2 border-[var(--accent)] bg-[var(--accent)] p-4 font-['Staatliches',serif] text-[1rem] font-normal tracking-[0.1em] text-[var(--bg)] transition-all duration-300 [transition-timing-function:ease] before:absolute before:left-[-100%] before:top-0 before:h-full before:w-full before:bg-[rgba(255,255,255,0.1)] before:transition-[left] before:duration-500 before:[transition-timing-function:ease] before:content-[''] hover:not-disabled:-translate-y-0.5 hover:not-disabled:shadow-[0_8px_20px_rgba(6,182,212,0.4)] hover:not-disabled:before:left-full disabled:cursor-not-allowed disabled:opacity-70 active:not-disabled:translate-y-0 max-[600px]:p-3.5 max-[600px]:text-[0.95rem] max-[480px]:p-3 max-[480px]:text-[0.9rem]"
         >
           {isSubmitting ? 'Sending...' : 'Send Message'}
         </button>
