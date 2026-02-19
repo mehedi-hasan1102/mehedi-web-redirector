@@ -14,19 +14,56 @@ export default function InfiniteMarquee() {
     if (!track) return;
 
     const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (media.matches) return;
+    let tween: gsap.core.Tween | null = null;
 
-    const tween = gsap.to(track, {
-      xPercent: -50,
-      duration: 56,
-      ease: 'none',
-      repeat: -1,
-    });
+    const startTween = () => {
+      if (tween) return;
+      tween = gsap.to(track, {
+        xPercent: -50,
+        duration: 56,
+        ease: 'none',
+        repeat: -1,
+      });
+    };
+
+    const stopTween = () => {
+      tween?.kill();
+      tween = null;
+      gsap.set(track, { xPercent: 0 });
+    };
+
+    const syncMotionPreference = () => {
+      if (media.matches) {
+        stopTween();
+        return;
+      }
+      startTween();
+    };
+
+    syncMotionPreference();
+
+    const handleChange = () => {
+      syncMotionPreference();
+    };
+
+    if (typeof media.addEventListener === 'function') {
+      media.addEventListener('change', handleChange);
+    } else {
+      media.addListener(handleChange);
+    }
 
     return () => {
-      tween.kill();
+      stopTween();
+      if (typeof media.removeEventListener === 'function') {
+        media.removeEventListener('change', handleChange);
+      } else {
+        media.removeListener(handleChange);
+      }
     };
   }, []);
+
+  const groupClassName =
+    'flex items-center gap-5 whitespace-nowrap pr-5 max-[768px]:gap-[0.85rem] max-[768px]:pr-[0.85rem]';
 
   const items = Array.from({ length: REPEAT_COUNT }, (_, index) => (
     <span
@@ -38,15 +75,11 @@ export default function InfiniteMarquee() {
   ));
 
   return (
-    <div className="relative overflow-hidden py-5 max-[768px]:py-4" aria-label={TEXT}>
-      <div className="flex w-max [will-change:transform]" ref={trackRef}>
-        <div className="flex items-center gap-5 whitespace-nowrap pr-5 max-[768px]:gap-[0.85rem] max-[768px]:pr-[0.85rem]">
-          {items}
-        </div>
-        <div
-          className="flex items-center gap-5 whitespace-nowrap pr-5 max-[768px]:gap-[0.85rem] max-[768px]:pr-[0.85rem]"
-          aria-hidden="true"
-        >
+    <div className="relative overflow-hidden py-5 max-[768px]:py-4">
+      <span className="sr-only">{TEXT}</span>
+      <div className="flex w-max [will-change:transform]" ref={trackRef} aria-hidden="true">
+        <div className={groupClassName}>{items}</div>
+        <div className={groupClassName}>
           {items}
         </div>
       </div>
