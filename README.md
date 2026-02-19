@@ -2,9 +2,6 @@
 
 A modern, feature-rich portfolio website built with Next.js 15, TypeScript, and React. This project showcases professional experience, projects, skills, and includes interactive features like a booking modal, blog, and social integrations.
 
-## Recent Changes
-
-- **Blog Redirect** (Feb 3, 2026): Blog route now redirects to external blog at https://blog.mehedi-hasan.me/
 
 ## Features
 
