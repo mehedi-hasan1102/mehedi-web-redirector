@@ -14,7 +14,6 @@ import {
 } from 'react-icons/fi';
 import { SiDribbble, SiX, SiDevdotto, SiCodepen, SiTelegram, SiBluesky, SiMedium } from 'react-icons/si';
 import { FaWhatsapp } from 'react-icons/fa';
-import styles from './links.module.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -91,29 +90,44 @@ const SocialCard = ({
     <Link href={profile.url} target="_blank" rel="noopener noreferrer">
       <div
         ref={cardRef}
-        className={styles.socialCard}
+        className="group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-3xl border border-[rgba(6,182,212,0.1)] [perspective:1000px] [transform-style:preserve-3d] transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.34,1.56,0.64,1)] will-change-transform"
         onMouseMove={handleMouseMove}
       >
-        <div ref={glowRef} className={styles.socialGlow} />
-        <span className={styles.socialLinkIcon} aria-hidden="true">
+        <div
+          ref={glowRef}
+          className="pointer-events-none absolute left-0 top-0 z-[1] h-[100px] w-[100px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(6,182,212,0.4),transparent_50%)] opacity-0 blur-[20px] mix-blend-screen transition-opacity duration-300 ease-in-out will-change-transform group-hover:opacity-100"
+        />
+        <span
+          className="absolute right-4 top-4 z-[2] grid h-9 w-9 -translate-y-1.5 scale-95 place-items-center rounded-[10px] border border-[var(--accent)] bg-[var(--accent)] text-[var(--bg)] opacity-0 transition-all duration-300 ease-in-out group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100"
+          aria-hidden="true"
+        >
           <FiExternalLink size={18} />
         </span>
         
         {/* Social Icon Background */}
-        <div className={styles.socialIconContainer}>
-          <div className={styles.socialIconWrapper}>
-            <Icon size={48} />
+        <div className="relative flex h-[140px] w-full flex-shrink-0 items-center justify-center overflow-hidden bg-[linear-gradient(135deg,rgba(6,182,212,0.05),rgba(6,182,212,0.02))] transition-all duration-300 group-hover:bg-[linear-gradient(135deg,rgba(6,182,212,0.1),rgba(6,182,212,0.05))] max-[480px]:h-[120px]">
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[rgba(6,182,212,0.1)] text-[var(--accent)] transition-all duration-300 ease-in-out group-hover:scale-110 group-hover:bg-[rgba(6,182,212,0.2)] group-hover:[transform:scale(1.1)_rotateY(10deg)] max-[480px]:h-14 max-[480px]:w-14 [&>svg]:h-12 [&>svg]:w-12 max-[480px]:[&>svg]:h-7 max-[480px]:[&>svg]:w-7">
+            <Icon />
           </div>
         </div>
         
-        <div ref={contentRef} className={styles.socialContent}>
-          <div className={styles.socialHeader}>
-            <span className={styles.socialNumber}>{String(index + 1).padStart(2, "0")}</span>
-            <h3 className={styles.socialName}>{profile.name}</h3>
+        <div
+          ref={contentRef}
+          className="relative z-[2] flex flex-1 flex-col justify-between bg-[var(--card-bg,transparent)] p-5 md:p-6 lg:p-8"
+        >
+          <div className="mb-3 flex items-start gap-4">
+            <span className="min-w-20 font-['Staatliches'] text-[2rem] leading-none text-[rgba(6,182,212,0.08)] md:text-[2.5rem] lg:text-[3rem]">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <h3 className="m-0 flex-1 font-['Staatliches'] text-[1.125rem] tracking-[0.15em] text-[var(--accent)] md:text-[1.25rem] lg:text-[1.5rem]">
+              {profile.name}
+            </h3>
           </div>
-          <p className={styles.socialUsername}>{profile.username}</p>
+          <p className="mb-4 mt-2 font-['Inter'] text-sm uppercase tracking-[0.1em] text-[var(--text-secondary)]">
+            {profile.username}
+          </p>
         </div>
-        <div className={styles.socialBorder} />
+        <div className="pointer-events-none absolute inset-0 rounded-3xl border border-[rgba(6,182,212,0.1)] transition-colors duration-[400ms] ease-in-out group-hover:border-[rgba(6,182,212,0.4)]" />
       </div>
     </Link>
   );
@@ -249,17 +263,20 @@ export default function SocialCorner() {
   }, []);
 
   return (
-    <main className={styles.main}>
-      <div ref={containerRef} className={styles.container}>
+    <main className="relative overflow-hidden bg-[var(--bg)] px-4 py-16 transition-colors duration-[600ms] [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] md:px-10 md:py-20 max-[768px]:px-5 max-[768px]:py-[5rem] max-[480px]:px-4 max-[480px]:py-16">
+      <div
+        ref={containerRef}
+        className="relative z-[1] mx-auto max-w-[1400px] px-[clamp(1rem,4vw,4rem)]"
+      >
         {/* Header */}
-        <div className={styles.header}>
+        <div className="mb-[clamp(2.5rem,5vw,5rem)] overflow-hidden text-center max-[768px]:mb-12">
           <h1 className="sectionTitleGlobal">
             Connect <span style={{ color: "var(--accent)" }}>With Me</span>
           </h1>
         </div>
 
         {/* Social Cards Grid */}
-        <div className={styles.grid}>
+        <div className="mb-[clamp(2rem,4vw,4rem)] grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
           {SOCIAL_PROFILES.map((profile, index) => (
             <SocialCard key={profile.name} profile={profile} index={index} />
           ))}
