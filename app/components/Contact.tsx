@@ -71,8 +71,11 @@ export default function Contact() {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)');
     let splitHeading: ReturnType<typeof SplitType.create> | null = null;
     let headingTween: gsap.core.Tween | null = null;
+    let headingTrigger: ScrollTrigger | null = null;
 
     const clearHeadingAnimation = () => {
+      headingTrigger?.kill();
+      headingTrigger = null;
       headingTween?.kill();
       headingTween = null;
       splitHeading?.revert();
@@ -89,15 +92,28 @@ export default function Contact() {
       if (!splitHeading.words) return;
 
       headingTween = gsap.from(splitHeading.words, {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-          end: 'top 60%',
-          scrub: 0.5,
-        },
         opacity: 0.2,
         y: 50,
         stagger: 0.1,
+        duration: 0.8,
+        ease: 'power3.out',
+        immediateRender: false,
+      });
+
+      headingTween.pause(0);
+
+      headingTrigger = ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: 'top 80%',
+        once: true,
+        invalidateOnRefresh: true,
+        onEnter: () => {
+          headingTween?.play(0);
+        },
+      });
+
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
       });
     };
 

@@ -38,7 +38,7 @@ const CertificateCard = ({
     gsap.set(card, { opacity: 0, y: 40, rotateX: -10, scale: 0.9 });
     gsap.set(content, { opacity: 0 });
 
-    ScrollTrigger.create({
+    const revealTrigger = ScrollTrigger.create({
       trigger: card,
       start: "top 85%",
       onEnter: () => {
@@ -69,6 +69,10 @@ const CertificateCard = ({
         );
       },
     });
+
+    return () => {
+      revealTrigger.kill();
+    };
   }, [index]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -188,7 +192,7 @@ export default function Certificates() {
 
     gsap.set(header.children, { y: 80, opacity: 0 });
 
-    ScrollTrigger.create({
+    const headerTrigger = ScrollTrigger.create({
       trigger: header,
       start: "top 80%",
       onEnter: () => {
@@ -203,7 +207,7 @@ export default function Certificates() {
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      headerTrigger.kill();
     };
   }, []);
 

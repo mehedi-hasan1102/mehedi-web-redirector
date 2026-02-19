@@ -123,7 +123,7 @@ const MagneticSkillTag = ({
 
     gsap.set(tagRef.current, { opacity: 0, y: 20, scale: 0.8 });
 
-    ScrollTrigger.create({
+    const tagTrigger = ScrollTrigger.create({
       trigger: tagRef.current,
       start: "top 85%",
       onEnter: () => {
@@ -137,6 +137,10 @@ const MagneticSkillTag = ({
         });
       },
     });
+
+    return () => {
+      tagTrigger.kill();
+    };
   }, [index]);
 
   return (
@@ -181,7 +185,7 @@ const BentoCard = ({
     });
     gsap.set(content, { opacity: 0 });
 
-    ScrollTrigger.create({
+    const cardTrigger = ScrollTrigger.create({
       trigger: card,
       start: "top 80%",
       onEnter: () => {
@@ -206,6 +210,10 @@ const BentoCard = ({
         }, 0.2);
       },
     });
+
+    return () => {
+      cardTrigger.kill();
+    };
   }, [index]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -281,12 +289,16 @@ const OrbitingSkill = ({ skill, index, total }: { skill: string; index: number; 
     });
 
     // Continuous orbit animation
-    gsap.to(el.parentElement, {
+    const orbitTween = gsap.to(el.parentElement, {
       rotation: "+=360",
       duration: 40,
       repeat: -1,
       ease: "none",
     });
+
+    return () => {
+      orbitTween.kill();
+    };
   }, [angle]);
 
   return (
@@ -338,7 +350,7 @@ export default function Skills() {
 
     gsap.set(header.children, { y: 80, opacity: 0 });
 
-    ScrollTrigger.create({
+    const headerTrigger = ScrollTrigger.create({
       trigger: header,
       start: "top 80%",
       onEnter: () => {
@@ -353,8 +365,9 @@ export default function Skills() {
     });
 
     // Orbit animation
+    let orbitTween: gsap.core.Tween | null = null;
     if (orbitContainer) {
-      gsap.to(orbitContainer, {
+      orbitTween = gsap.to(orbitContainer, {
         rotation: 360,
         duration: 60,
         repeat: -1,
@@ -363,7 +376,8 @@ export default function Skills() {
     }
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      headerTrigger.kill();
+      orbitTween?.kill();
     };
   }, []);
 
@@ -380,43 +394,6 @@ export default function Skills() {
       ease: "power2.out",
     });
   };
-
-  useEffect(() => {
-    const header = headerRef.current;
-    const orbitContainer = orbitContainerRef.current;
-
-    if (!header) return;
-
-    gsap.set(header.children, { y: 80, opacity: 0 });
-
-    ScrollTrigger.create({
-      trigger: header,
-      start: "top 80%",
-      onEnter: () => {
-        gsap.to(header.children, {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          stagger: 0.15,
-          ease: "power3.out",
-        });
-      },
-    });
-
-    // Orbit animation
-    if (orbitContainer) {
-      gsap.to(orbitContainer, {
-        rotation: 360,
-        duration: 60,
-        repeat: -1,
-        ease: "none",
-      });
-    }
-
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
-  }, []);
 
   return (
     <section

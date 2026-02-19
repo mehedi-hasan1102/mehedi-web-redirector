@@ -42,7 +42,7 @@ const DiagonalMarquee = () => {
     if (!contentRef.current || !contentRef2.current) return;
 
     // First marquee animation - responds to page scroll
-    gsap.fromTo(
+    const marqueeTween1 = gsap.fromTo(
       contentRef.current,
       { x: 0 },
       {
@@ -61,7 +61,7 @@ const DiagonalMarquee = () => {
     );
 
     // Second marquee animation - responds to page scroll in opposite direction
-    gsap.fromTo(
+    const marqueeTween2 = gsap.fromTo(
       contentRef2.current,
       { x: 0 },
       {
@@ -80,13 +80,10 @@ const DiagonalMarquee = () => {
     );
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      marqueeTween1.scrollTrigger?.kill();
+      marqueeTween2.scrollTrigger?.kill();
+      marqueeTween1.kill();
+      marqueeTween2.kill();
     };
   }, []);
 

@@ -70,13 +70,15 @@ const ServiceCard = ({
     });
     gsap.set(content, { opacity: 0 });
 
-    ScrollTrigger.create({
+    let revealTimeline: gsap.core.Timeline | null = null;
+
+    const revealTrigger = ScrollTrigger.create({
       trigger: card,
       start: 'top 80%',
       onEnter: () => {
-        const tl = gsap.timeline();
+        revealTimeline = gsap.timeline();
 
-        tl.to(card, {
+        revealTimeline.to(card, {
           opacity: 1,
           y: 0,
           rotateX: 0,
@@ -86,7 +88,7 @@ const ServiceCard = ({
           ease: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
         }, 0);
 
-        tl.to(content, {
+        revealTimeline.to(content, {
           opacity: 1,
           duration: 0.6,
           delay: index * 0.1 + 0.2,
@@ -95,7 +97,8 @@ const ServiceCard = ({
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      revealTimeline?.kill();
+      revealTrigger.kill();
     };
   }, [index]);
 
@@ -153,7 +156,7 @@ export default function WhatIDo() {
 
     gsap.set(header.children, { y: 80, opacity: 0 });
 
-    ScrollTrigger.create({
+    const headerTrigger = ScrollTrigger.create({
       trigger: header,
       start: 'top 80%',
       onEnter: () => {
@@ -168,7 +171,7 @@ export default function WhatIDo() {
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      headerTrigger.kill();
     };
   }, []);
 

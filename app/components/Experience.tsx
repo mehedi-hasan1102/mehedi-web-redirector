@@ -172,101 +172,102 @@ export default function Experience() {
     // Don't run animations until data is loaded
     if (loading || experiences.length === 0) return;
 
-    // Animate header
-    if (headerRef.current) {
-      const children = headerRef.current.children;
-      gsap.from(children, {
-        y: 80,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.15,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: headerRef.current,
-          start: 'top 80%',
-        },
-      });
-    }
-
-    // Progress bar animation - fills on scroll
-    if (progressFillRef.current && timelineRef.current) {
-      gsap.to(progressFillRef.current, {
-        scaleY: 1,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: timelineRef.current,
-          start: 'top 50%',
-          end: 'bottom 50%',
-          scrub: 1,
-          markers: false, // Set to true for debugging
-          invalidateOnRefresh: true,
-        },
-      });
-    }
-
-    // Animate each timeline item
-    itemsRef.current.forEach((item) => {
-      if (!item) return;
-
-      const line = item.querySelector('.timeline-line');
-      const dot = item.querySelector('.timeline-dot');
-      const content = item.querySelector('.timeline-content');
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: item,
-          start: 'top 75%',
-        },
-      });
-
-      if (line) {
-        tl.to(line, {
-          scaleY: 1,
-          duration: 0.6,
+    const ctx = gsap.context(() => {
+      // Animate header
+      if (headerRef.current) {
+        const children = headerRef.current.children;
+        gsap.from(children, {
+          y: 80,
+          opacity: 0,
+          duration: 1,
+          stagger: 0.15,
           ease: 'power3.out',
+          scrollTrigger: {
+            trigger: headerRef.current,
+            start: 'top 80%',
+          },
         });
       }
 
-      if (dot) {
-        tl.to(
-          dot,
-          {
-            scale: 1,
-            opacity: 1,
-            duration: 0.4,
-            ease: 'back.out(2)',
+      // Progress bar animation - fills on scroll
+      if (progressFillRef.current && timelineRef.current) {
+        gsap.to(progressFillRef.current, {
+          scaleY: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: timelineRef.current,
+            start: 'top 50%',
+            end: 'bottom 50%',
+            scrub: 1,
+            markers: false, // Set to true for debugging
+            invalidateOnRefresh: true,
           },
-          '-=0.3'
-        );
+        });
       }
 
-      if (content) {
-        tl.to(
-          content,
-          {
-            opacity: 1,
-            x: 0,
-            duration: 0.8,
+      // Animate each timeline item
+      itemsRef.current.forEach((item) => {
+        if (!item) return;
+
+        const line = item.querySelector('.timeline-line');
+        const dot = item.querySelector('.timeline-dot');
+        const content = item.querySelector('.timeline-content');
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 75%',
+          },
+        });
+
+        if (line) {
+          tl.to(line, {
+            scaleY: 1,
+            duration: 0.6,
             ease: 'power3.out',
-          },
-          '-=0.2'
-        );
-      }
+          });
+        }
 
-      // Pulsing dot animation
-      if (dot) {
-        gsap.to(dot, {
-          boxShadow: '0 0 0 15px rgba(6, 182, 212, 0)',
-          duration: 2,
-          repeat: -1,
-          ease: 'ease-out',
-        });
-      }
-    });
+        if (dot) {
+          tl.to(
+            dot,
+            {
+              scale: 1,
+              opacity: 1,
+              duration: 0.4,
+              ease: 'back.out(2)',
+            },
+            '-=0.3'
+          );
+        }
 
-    // Cleanup function
+        if (content) {
+          tl.to(
+            content,
+            {
+              opacity: 1,
+              x: 0,
+              duration: 0.8,
+              ease: 'power3.out',
+            },
+            '-=0.2'
+          );
+        }
+
+        // Pulsing dot animation
+        if (dot) {
+          gsap.to(dot, {
+            boxShadow: '0 0 0 15px rgba(6, 182, 212, 0)',
+            duration: 2,
+            repeat: -1,
+            ease: 'ease-out',
+          });
+        }
+      });
+    }, sectionRef);
+
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      ctx.revert();
     };
   }, [loading, experiences]);
 
