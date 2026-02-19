@@ -18,6 +18,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var m=document.cookie.match(/(?:^|; )theme=([^;]+)/);var t=m?decodeURIComponent(m[1]):'dark';if(t==='light'){document.documentElement.classList.add('light-mode');}else{document.documentElement.classList.remove('light-mode');}}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body>
         <Navbar />
         {/* <ThemeToggle /> */}

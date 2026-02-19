@@ -190,7 +190,7 @@ export default function Navbar() {
       {/* Main Navbar */}
       <nav
         ref={navRef}
-        className="fixed left-0 right-0 top-0 z-40 h-16 [font-family:'Staatliches',serif]"
+        className="theme-sync fixed left-0 right-0 top-0 z-40 h-16 [font-family:'Staatliches',serif]"
         style={{
           transition: 'all 0.3s ease',
         }}
@@ -201,12 +201,12 @@ export default function Navbar() {
             <Link
               href="/"
               onClick={scrollToTop}
-              className="flex shrink-0 cursor-pointer items-center gap-2 rounded-full bg-[rgba(34,211,238,0.1)] px-2.5 py-1.5 text-base font-bold tracking-[0.05em] text-[var(--accent)] transition-all duration-300 hover:bg-[rgba(34,211,238,0.2)] hover:shadow-[0_0_20px_rgba(34,211,238,0.2),inset_0_0_10px_rgba(34,211,238,0.1)] active:opacity-85 sm:px-4 sm:py-2 sm:text-lg"
+              className="flex shrink-0 cursor-pointer items-center gap-2 rounded-full bg-[rgba(var(--accent-rgb),0.1)] px-2.5 py-1.5 text-base font-bold tracking-[0.05em] text-[var(--accent)] transition-all duration-300 hover:bg-[rgba(var(--accent-rgb),0.2)] hover:shadow-[0_0_20px_rgba(var(--accent-rgb),0.2),inset_0_0_10px_rgba(var(--accent-rgb),0.1)] active:opacity-85 sm:px-4 sm:py-2 sm:text-lg"
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(34, 211, 238, 0.15)';
+                e.currentTarget.style.background = 'rgba(var(--accent-rgb), 0.15)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(34, 211, 238, 0.1)';
+                e.currentTarget.style.background = 'rgba(var(--accent-rgb), 0.1)';
               }}
             >
               <Image
@@ -223,24 +223,25 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Navigation Links - Right Side with pill background */}
-          <div className="hidden shrink-0 items-center rounded-full border border-[rgba(34,211,238,0.15)] bg-[rgba(34,211,238,0.08)] py-2 backdrop-blur-[10px] lg:flex lg:gap-4 lg:px-4 xl:gap-6 xl:px-6">
+          <div className="hidden shrink-0 items-center rounded-full border border-[rgba(var(--accent-rgb),0.15)] bg-[rgba(var(--accent-rgb),0.08)] py-2 backdrop-blur-[10px] lg:flex lg:gap-4 lg:px-4 xl:gap-6 xl:px-6">
             <button
               type="button"
               onClick={handleToggleTheme}
-              className="inline-flex rounded-full bg-[rgba(34,211,238,0.1)] p-2 text-[var(--accent)] transition-all duration-300 hover:bg-[rgba(34,211,238,0.15)]"
+              className="inline-flex rounded-full bg-[rgba(var(--accent-rgb),0.1)] p-2 text-[var(--accent)] transition-all duration-300 hover:bg-[rgba(var(--accent-rgb),0.15)]"
               aria-label="Toggle theme"
               title="Toggle theme"
+              data-theme-toggle-btn
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(34, 211, 238, 0.15)';
+                e.currentTarget.style.background = 'rgba(var(--accent-rgb), 0.15)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(34, 211, 238, 0.1)';
+                e.currentTarget.style.background = 'rgba(var(--accent-rgb), 0.1)';
               }}
             >
               {isDark ? <FaSun size={16} /> : <FaMoon size={16} />}
             </button>
 
-            <div className="h-6 w-px bg-[rgba(34,211,238,0.2)]" />
+            <div className="h-6 w-px bg-[rgba(var(--accent-rgb),0.2)]" />
 
             {NAV_LINKS.map((link) => {
               const isActive = pathname === link.href;
@@ -308,7 +309,7 @@ export default function Navbar() {
                 role="menu"
                 onMouseEnter={openDropdown}
                 onMouseLeave={closeDropdownWithDelay}
-                className={`absolute left-0 top-full mt-2 w-48 rounded-lg border border-[rgba(34,211,238,0.2)] bg-[var(--bg)] shadow-[0_10px_30px_rgba(34,211,238,0.15)] transition-opacity duration-300 ${
+                className={`absolute left-0 top-full mt-2 w-48 rounded-lg border border-[rgba(var(--accent-rgb),0.2)] bg-[var(--bg)] shadow-[0_10px_30px_rgba(var(--accent-rgb),0.15)] transition-opacity duration-300 ${
                   isDropdownOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
                 }`}
               >
@@ -326,8 +327,8 @@ export default function Navbar() {
                       role="menuitem"
                       tabIndex={isDropdownOpen ? 0 : -1}
                       className={`${dropdownItemBaseClass} ${
-                        isLastItem ? 'border-none' : 'border-b border-[rgba(34,211,238,0.1)]'
-                      } ${isActive ? 'bg-[rgba(34,211,238,0.1)] text-[var(--accent)]' : 'text-[var(--text)]'}`}
+                        isLastItem ? 'border-none' : 'border-b border-[rgba(var(--accent-rgb),0.1)]'
+                      } ${isActive ? 'bg-[rgba(var(--accent-rgb),0.1)] text-[var(--accent)]' : 'text-[var(--text)]'}`}
                       onClick={() => {
                         // Close dropdown and unlock when clicking a menu item
                         setIsDropdownOpen(false);
@@ -335,7 +336,7 @@ export default function Navbar() {
                       }}
                       onMouseEnter={(e) =>
                         gsap.to(e.currentTarget, {
-                          background: 'rgba(34, 211, 238, 0.1)',
+                          background: 'rgba(var(--accent-rgb), 0.1)',
                           color: 'var(--accent)',
                           paddingLeft: '1.25rem',
                           duration: 0.2,
@@ -343,7 +344,7 @@ export default function Navbar() {
                       }
                       onMouseLeave={(e) =>
                         gsap.to(e.currentTarget, {
-                          background: isActive ? 'rgba(34, 211, 238, 0.1)' : 'transparent',
+                          background: isActive ? 'rgba(var(--accent-rgb), 0.1)' : 'transparent',
                           color: isActive ? 'var(--accent)' : 'var(--text)',
                           paddingLeft: '1rem',
                           duration: 0.2,
@@ -363,7 +364,7 @@ export default function Navbar() {
             </div>
 
             {/* Divider */}
-            <div className="h-6 w-px bg-[rgba(34,211,238,0.2)]" />
+            <div className="h-6 w-px bg-[rgba(var(--accent-rgb),0.2)]" />
             
             {/* Let's Talk CTA Button - Inside Pill */}
             <button
@@ -371,13 +372,13 @@ export default function Navbar() {
               className="group inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-full bg-[var(--accent)] px-5 py-1.5 text-sm font-semibold text-[var(--bg)] transition-all duration-300 hover:scale-105 active:scale-95"
               onMouseEnter={(e) => {
                 gsap.to(e.currentTarget, {
-                  boxShadow: '0 8px 20px rgba(34, 211, 238, 0.4)',
+                  boxShadow: '0 8px 20px rgba(var(--accent-rgb), 0.4)',
                   duration: 0.3,
                 });
               }}
               onMouseLeave={(e) => {
                 gsap.to(e.currentTarget, {
-                  boxShadow: '0 0px 0px rgba(34, 211, 238, 0)',
+                  boxShadow: '0 0px 0px rgba(var(--accent-rgb), 0)',
                   duration: 0.3,
                 });
               }}
@@ -396,7 +397,7 @@ export default function Navbar() {
             {/* Let's Talk Icon Button - Mobile Only */}
             <button
               onClick={() => setIsBookingModalOpen(true)}
-              className="rounded-full bg-[rgba(6,182,212,0.2)] p-1.5 text-[var(--accent)] transition-all duration-300 hover:scale-110 sm:p-2"
+              className="rounded-full bg-[rgba(var(--accent-rgb),0.2)] p-1.5 text-[var(--accent)] transition-all duration-300 hover:scale-110 sm:p-2"
               aria-label="Let's talk"
             >
               <FiMessageCircle size={18} />
@@ -405,9 +406,10 @@ export default function Navbar() {
             <button
               type="button"
               onClick={handleToggleTheme}
-              className="rounded-full bg-[rgba(34,211,238,0.1)] p-1.5 text-[var(--accent)] transition-all duration-300 hover:scale-110 sm:p-2"
+              className="rounded-full bg-[rgba(var(--accent-rgb),0.1)] p-1.5 text-[var(--accent)] transition-all duration-300 hover:scale-110 sm:p-2"
               aria-label="Toggle theme"
               title="Toggle theme"
+              data-theme-toggle-btn
             >
               {isDark ? <FaSun size={18} /> : <FaMoon size={18} />}
             </button>
@@ -415,7 +417,7 @@ export default function Navbar() {
             {/* Mobile Menu Button - Hamburger */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="rounded-full bg-[rgba(34,211,238,0.1)] p-1.5 text-[var(--accent)] transition-all duration-300 hover:scale-110 sm:p-2"
+              className="rounded-full bg-[rgba(var(--accent-rgb),0.1)] p-1.5 text-[var(--accent)] transition-all duration-300 hover:scale-110 sm:p-2"
               aria-label="Toggle menu"
             >
               {isOpen ? <FiX size={22} /> : <FiMenu size={22} />}

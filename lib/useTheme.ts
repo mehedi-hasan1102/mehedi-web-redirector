@@ -1,12 +1,13 @@
 'use client';
 
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { getCookie, setCookie } from './cookies';
 
 export function useTheme() {
   const [isDark, setIsDark] = useState<boolean | null>(null);
   const themeInitRef = useRef(false);
+  const themeSwitchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const updateThemeDOM = (dark: boolean) => {
     if (dark) {
@@ -39,15 +40,38 @@ export function useTheme() {
     // Update DOM first (synchronously)
     updateThemeDOM(shouldBeDark);
 
-    // Then update state
-    setIsDark(shouldBeDark);
+    // Then update state on next frame to avoid synchronous setState-in-effect lint issue.
+    requestAnimationFrame(() => {
+      setIsDark(shouldBeDark);
+    });
   }, []);
+
+  useEffect(() => {
+    return () => {
+      if (themeSwitchTimeoutRef.current) {
+        clearTimeout(themeSwitchTimeoutRef.current);
+      }
+      document.documentElement.classList.remove('theme-changing');
+    };
+  }, []);
+
+  const markThemeChanging = () => {
+    document.documentElement.classList.add('theme-changing');
+    if (themeSwitchTimeoutRef.current) {
+      clearTimeout(themeSwitchTimeoutRef.current);
+    }
+    themeSwitchTimeoutRef.current = setTimeout(() => {
+      document.documentElement.classList.remove('theme-changing');
+      themeSwitchTimeoutRef.current = null;
+    }, 650);
+  };
 
   const toggleTheme = () => {
     if (isDark === null) return; // Prevent toggle before initialization
 
     const newIsDark = !isDark;
     setIsDark(newIsDark);
+    markThemeChanging();
 
     // Animate the toggle button
     const button = document.querySelector('[data-theme-toggle-btn]');

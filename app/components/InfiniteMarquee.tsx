@@ -67,7 +67,7 @@ export default function InfiniteMarquee() {
 
   const items = Array.from({ length: REPEAT_COUNT }, (_, index) => (
     <span
-      className="font-['Staatliches',serif] text-[clamp(1.25rem,2.5vw,2.25rem)] tracking-[0.18em] uppercase text-[var(--text)] opacity-[0.92]"
+      className="font-['Staatliches',serif] text-[clamp(1.25rem,2.5vw,2.25rem)] tracking-[0.18em] uppercase text-[var(--text)] opacity-[0.92] transition-colors duration-[600ms] [transition-timing-function:cubic-bezier(0.23,1,0.32,1)]"
       key={`marquee-item-${index}`}
     >
       {TEXT}
@@ -75,7 +75,7 @@ export default function InfiniteMarquee() {
   ));
 
   return (
-    <div className="relative overflow-hidden py-5 max-[768px]:py-4">
+    <div className="theme-sync relative overflow-hidden py-5 max-[768px]:py-4">
       <span className="sr-only">{TEXT}</span>
       <div className="flex w-max [will-change:transform]" ref={trackRef} aria-hidden="true">
         <div className={groupClassName}>{items}</div>
