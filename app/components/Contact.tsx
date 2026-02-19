@@ -70,8 +70,16 @@ export default function Contact() {
   useEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)');
     let splitHeading: ReturnType<typeof SplitType.create> | null = null;
+    let headingTween: gsap.core.Tween | null = null;
 
-    const ctx = gsap.context(() => {
+    const clearHeadingAnimation = () => {
+      headingTween?.kill();
+      headingTween = null;
+      splitHeading?.revert();
+      splitHeading = null;
+    };
+
+    const setupHeadingAnimation = () => {
       if (!headingRef.current || media.matches) return;
 
       splitHeading = SplitType.create(headingRef.current, {
@@ -80,7 +88,7 @@ export default function Contact() {
 
       if (!splitHeading.words) return;
 
-      gsap.from(splitHeading.words, {
+      headingTween = gsap.from(splitHeading.words, {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top 80%',
@@ -91,12 +99,32 @@ export default function Contact() {
         y: 50,
         stagger: 0.1,
       });
-    }, sectionRef);
+    };
+
+    const syncMotionPreference = () => {
+      clearHeadingAnimation();
+      setupHeadingAnimation();
+    };
+
+    syncMotionPreference();
+
+    const handleChange = () => {
+      syncMotionPreference();
+    };
+
+    if (typeof media.addEventListener === 'function') {
+      media.addEventListener('change', handleChange);
+    } else {
+      media.addListener(handleChange);
+    }
 
     return () => {
-      ctx.revert();
-      splitHeading?.revert();
-      splitHeading = null;
+      clearHeadingAnimation();
+      if (typeof media.removeEventListener === 'function') {
+        media.removeEventListener('change', handleChange);
+      } else {
+        media.removeListener(handleChange);
+      }
     };
   }, []);
 
