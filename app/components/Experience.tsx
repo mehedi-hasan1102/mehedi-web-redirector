@@ -343,7 +343,7 @@ export default function Experience() {
                     </div>
 
                     {/* Card Title */}
-                    <h3 className="mb-2 font-['Staatliches',sans-serif] text-[1.5rem] font-bold tracking-[0.05em] text-[var(--text)] transition-colors duration-300 [transition-timing-function:ease] max-[900px]:text-[1.25rem] max-[640px]:text-[1rem]">
+                    <h3 className="mb-2 font-['Staatliches',sans-serif] text-[1.5rem] font-bold tracking-[0.05em] text-[var(--accent)] transition-colors duration-300 [transition-timing-function:ease] max-[900px]:text-[1.25rem] max-[640px]:text-[1rem]">
                       {exp.title}
                     </h3>
 
