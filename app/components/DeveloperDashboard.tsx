@@ -1,6 +1,5 @@
 'use client';
 
-import styles from './dashboard.module.css';
 import Image from 'next/image';
 import { FiGithub, FiStar, FiGitBranch, FiCode, FiExternalLink } from 'react-icons/fi';
 import { useEffect, useState, useRef } from 'react';
@@ -40,14 +39,31 @@ interface GithubRepository {
   html_url: string;
 }
 
+const DASHBOARD = 'relative min-h-screen overflow-hidden bg-[var(--bg)] py-[clamp(4rem,8vw,8rem)]';
+const DASHBOARD_CONTAINER = 'relative z-[2] mx-auto max-w-[1400px] px-[clamp(1rem,4vw,4rem)] max-[768px]:px-8 max-[640px]:px-6';
+const HEADER = 'mb-[clamp(2.5rem,5vw,5rem)] flex flex-col gap-3 overflow-hidden text-left';
+const TITLE_ACCENT = 'text-[var(--accent)]';
+const MAIN_GRID = 'mb-12 grid grid-cols-2 gap-6 max-[768px]:grid-cols-1 max-[768px]:gap-4';
+const CARD = 'group relative overflow-hidden rounded-[24px] border-[1.5px] border-[rgba(6,182,212,0.25)] bg-transparent p-8 transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.34,1.56,0.64,1)] hover:border-[rgba(6,182,212,0.4)] hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] max-[640px]:p-6';
+const CARD_GLOW = 'pointer-events-none absolute left-0 top-0 h-[100px] w-[100px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(6,182,212,0.4),transparent_50%)] opacity-0 blur-[20px] [mix-blend-mode:screen] transition-opacity duration-300 [transition-timing-function:ease] will-change-transform group-hover:opacity-100';
+const PROFILE_CARD = 'col-[1/2] row-[1/2] max-[768px]:col-[1/-1] max-[768px]:row-auto';
+const STATS_CARD = 'col-[2/3] row-[1/2] max-[768px]:col-[1/-1] max-[768px]:row-auto';
+const SECTION_HEADER = 'relative z-[1] mb-6 flex flex-wrap items-center justify-between gap-4 max-[768px]:flex-col max-[768px]:items-start';
+const SECTION_TITLE = 'm-0 flex items-center gap-2 text-[clamp(1rem,2vw,1.25rem)] font-semibold tracking-[-0.01em] text-[var(--text)] max-[640px]:text-[0.95rem]';
+const VIEW_LINK = 'flex items-center gap-1 text-[0.8rem] font-medium text-[var(--accent)] no-underline transition-all duration-200 [transition-timing-function:ease] hover:gap-2';
+const PROJECTS_GRID = 'grid grid-cols-3 gap-6 max-[1200px]:grid-cols-2 max-[768px]:grid-cols-1';
+const PROJECT_CARD = 'group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-[24px] border-[1.5px] border-[rgba(6,182,212,0.25)] bg-transparent p-7 [perspective:1000px] [transform-style:preserve-3d] transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.34,1.56,0.64,1)] will-change-transform hover:border-[rgba(6,182,212,0.4)] hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] max-[640px]:p-6';
+const PROJECT_GLOW = 'pointer-events-none absolute left-0 top-0 h-[100px] w-[100px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(6,182,212,0.4),transparent_50%)] opacity-0 blur-[20px] [mix-blend-mode:screen] transition-opacity duration-300 [transition-timing-function:ease] will-change-transform group-hover:opacity-100';
+const PROJECT_LINK_ICON = 'absolute right-4 top-4 z-[2] grid h-9 w-9 place-items-center rounded-[10px] border border-[var(--accent)] bg-[var(--accent)] text-[var(--bg)] opacity-0 translate-y-[-6px] scale-[0.95] transition-all duration-300 [transition-timing-function:ease] group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100';
+
 // Dashboard Skeleton Loading
 const DashboardSkeleton = () => {
   const isDarkMode = typeof document !== 'undefined' ? !document.documentElement.classList.contains('light-mode') : true;
   const shimmerBg = isDarkMode ? '#2a2a2a' : '#d1d5db';
 
   return (
-    <div className={styles.dashboard}>
-      <div className={styles.dashboardContainer}>
+    <div className={DASHBOARD}>
+      <div className={DASHBOARD_CONTAINER}>
         {/* Header Skeleton */}
         <div style={{ marginBottom: '3rem' }}>
           <div
@@ -62,9 +78,9 @@ const DashboardSkeleton = () => {
         </div>
 
         {/* Main Grid Skeleton */}
-        <div className={styles.mainGrid}>
+        <div className={MAIN_GRID}>
           {[1, 2].map((i) => (
-            <div key={i} className={styles.card}>
+            <div key={i} className={CARD}>
               <div
                 style={{
                   width: '40%',
@@ -94,7 +110,7 @@ const DashboardSkeleton = () => {
 
         {/* Contributions Skeleton */}
         <div style={{ marginBottom: '3rem' }}>
-          <div className={styles.card}>
+          <div className={CARD}>
             <div
               style={{
                 width: '30%',
@@ -129,9 +145,9 @@ const DashboardSkeleton = () => {
               animation: 'shimmer 2s infinite',
             }}
           />
-          <div className={styles.projectsGrid}>
+          <div className={PROJECTS_GRID}>
             {[1, 2, 3].map((i) => (
-              <div key={i} className={styles.projectCard}>
+              <div key={i} className={PROJECT_CARD}>
                 <div
                   style={{
                     width: '70%',
@@ -171,7 +187,7 @@ const DashboardSkeleton = () => {
         </div>
 
         {/* Playlist Skeleton */}
-        <div className={styles.card}>
+        <div className={CARD}>
           <div
             style={{
               width: '40%',
@@ -239,26 +255,26 @@ const ProjectCardItem = ({ project }: { project: Project }) => {
   return (
     <div
       ref={cardRef}
-      className={styles.projectCard}
+      className={PROJECT_CARD}
       onMouseMove={handleMouseMove}
       onClick={handleClick}
     >
-      <div ref={glowRef} className={styles.projectGlow} />
-      <span className={styles.projectLinkIcon} aria-hidden="true">
+      <div ref={glowRef} className={PROJECT_GLOW} />
+      <span className={PROJECT_LINK_ICON} aria-hidden="true">
         <FiExternalLink size={18} />
       </span>
-      <h3 className={styles.projectName}>
+      <h3 className="relative z-[1] mb-2 block font-['Staatliches',serif] text-[1rem] font-semibold tracking-[0.05em] text-[var(--accent)] no-underline">
         {project.name}
       </h3>
-      <p className={styles.projectDescription}>{project.description}</p>
-      <div className={styles.projectMeta}>
-        <span className={styles.metaItem}>
+      <p className="relative z-[1] mb-3 flex-1 text-[0.8rem] leading-[1.5] text-[var(--text-secondary)]">{project.description}</p>
+      <div className="relative z-[1] flex flex-wrap gap-x-4 gap-y-2 border-t border-[rgba(6,182,212,0.15)] pt-3 text-[0.7rem] text-[var(--text-secondary)]">
+        <span className="flex items-center gap-[0.35rem] transition-colors duration-200 [transition-timing-function:ease] group-hover:text-[var(--accent)]">
           <FiCode size={14} /> {project.language}
         </span>
-        <span className={styles.metaItem}>
+        <span className="flex items-center gap-[0.35rem] transition-colors duration-200 [transition-timing-function:ease] group-hover:text-[var(--accent)]">
           <FiStar size={14} /> {project.stars}
         </span>
-        <span className={styles.metaItem}>
+        <span className="flex items-center gap-[0.35rem] transition-colors duration-200 [transition-timing-function:ease] group-hover:text-[var(--accent)]">
           <FiGitBranch size={14} /> {project.forks}
         </span>
       </div>
@@ -288,22 +304,22 @@ const ProfileCardItem = ({ userProfile }: { userProfile: UserProfile }) => {
   return (
     <div
       ref={cardRef}
-      className={`${styles.card} ${styles.profileCard}`}
+      className={`${CARD} ${PROFILE_CARD}`}
       onMouseMove={handleMouseMove}
     >
-      <div ref={glowRef} className={styles.cardGlow} />
-      <div className={styles.profileContent} style={{ position: 'relative', zIndex: 1 }}>
+      <div ref={glowRef} className={CARD_GLOW} />
+      <div className="relative z-[1] flex flex-col gap-4">
         <Image 
           src="/profile/profile.png" 
           alt={userProfile.name}
           width={48}
           height={48}
-          className={styles.profileAvatar}
+          className="h-12 w-12 rounded-full object-cover"
         />
         <div>
-          <div className={styles.profileName}>{userProfile.name}</div>
+          <div className="text-[1.1rem] font-semibold text-[var(--text)]">{userProfile.name}</div>
         </div>
-        <p className={styles.profileBio}>{userProfile.bio}</p>
+        <p className="my-2 text-[0.825rem] leading-[1.5] text-[var(--text-secondary)]">{userProfile.bio}</p>
       </div>
     </div>
   );
@@ -331,33 +347,33 @@ const StatsCardItem = ({ stats }: { stats: GithubStats }) => {
   return (
     <div
       ref={cardRef}
-      className={`${styles.card} ${styles.statsCard}`}
+      className={`${CARD} ${STATS_CARD}`}
       onMouseMove={handleMouseMove}
     >
-      <div ref={glowRef} className={styles.cardGlow} />
-      <h3 className={styles.sectionTitle} style={{ marginBottom: '1.5rem', position: 'relative', zIndex: 1 }}>
+      <div ref={glowRef} className={CARD_GLOW} />
+      <h3 className={`${SECTION_TITLE} relative z-[1] mb-6`}>
         <FiGithub /> GitHub Stats
       </h3>
-      <div className={styles.statsGrid}>
-        <div className={styles.statItem}>
-          <div className={styles.statIcon}>⭐</div>
-          <div className={styles.statValue}>{stats.stars.toLocaleString()}</div>
-          <div className={styles.statLabel}>Stars</div>
+      <div className="grid grid-cols-4 gap-3 max-[768px]:grid-cols-2 max-[640px]:grid-cols-1">
+        <div className="flex flex-col items-center rounded-[8px] bg-[rgba(34,211,238,0.08)] px-2 py-3 text-center">
+          <div className="mb-[0.35rem] text-[1.25rem] text-[var(--accent)]">⭐</div>
+          <div className="text-[1.1rem] font-bold leading-[1.2] text-[var(--text)]">{stats.stars.toLocaleString()}</div>
+          <div className="mt-1 text-[0.65rem] font-medium uppercase tracking-[0.05em] text-[var(--text-secondary)]">Stars</div>
         </div>
-        <div className={styles.statItem}>
-          <div className={styles.statIcon}>🍴</div>
-          <div className={styles.statValue}>{stats.forks}</div>
-          <div className={styles.statLabel}>Forks</div>
+        <div className="flex flex-col items-center rounded-[8px] bg-[rgba(34,211,238,0.08)] px-2 py-3 text-center">
+          <div className="mb-[0.35rem] text-[1.25rem] text-[var(--accent)]">🍴</div>
+          <div className="text-[1.1rem] font-bold leading-[1.2] text-[var(--text)]">{stats.forks}</div>
+          <div className="mt-1 text-[0.65rem] font-medium uppercase tracking-[0.05em] text-[var(--text-secondary)]">Forks</div>
         </div>
-        <div className={styles.statItem}>
-          <div className={styles.statIcon}>👥</div>
-          <div className={styles.statValue}>{stats.followers.toLocaleString()}</div>
-          <div className={styles.statLabel}>Followers</div>
+        <div className="flex flex-col items-center rounded-[8px] bg-[rgba(34,211,238,0.08)] px-2 py-3 text-center">
+          <div className="mb-[0.35rem] text-[1.25rem] text-[var(--accent)]">👥</div>
+          <div className="text-[1.1rem] font-bold leading-[1.2] text-[var(--text)]">{stats.followers.toLocaleString()}</div>
+          <div className="mt-1 text-[0.65rem] font-medium uppercase tracking-[0.05em] text-[var(--text-secondary)]">Followers</div>
         </div>
-        <div className={styles.statItem}>
-          <div className={styles.statIcon}>📦</div>
-          <div className={styles.statValue}>{stats.repos}</div>
-          <div className={styles.statLabel}>Repos</div>
+        <div className="flex flex-col items-center rounded-[8px] bg-[rgba(34,211,238,0.08)] px-2 py-3 text-center">
+          <div className="mb-[0.35rem] text-[1.25rem] text-[var(--accent)]">📦</div>
+          <div className="text-[1.1rem] font-bold leading-[1.2] text-[var(--text)]">{stats.repos}</div>
+          <div className="mt-1 text-[0.65rem] font-medium uppercase tracking-[0.05em] text-[var(--text-secondary)]">Repos</div>
         </div>
       </div>
     </div>
@@ -386,15 +402,15 @@ const ContributionsCardItem = () => {
   return (
     <div
       ref={cardRef}
-      className={styles.card}
+      className={CARD}
       onMouseMove={handleMouseMove}
     >
-      <div ref={glowRef} className={styles.cardGlow} />
-      <div className={styles.sectionHeader} style={{ position: 'relative', zIndex: 1 }}>
-        <h2 className={styles.sectionTitle}>
+      <div ref={glowRef} className={CARD_GLOW} />
+      <div className={SECTION_HEADER}>
+        <h2 className={SECTION_TITLE}>
           <FiCode /> Contributions
         </h2>
-        <a href={`https://github.com/mehedi-hasan1102`} target="_blank" rel="noopener noreferrer" className={styles.viewLink}>
+        <a href={`https://github.com/mehedi-hasan1102`} target="_blank" rel="noopener noreferrer" className={VIEW_LINK}>
           View on GitHub <span>→</span>
         </a>
       </div>
@@ -434,12 +450,12 @@ const PlaylistCardItem = () => {
   return (
     <div
       ref={cardRef}
-      className={`${styles.card} ${styles.playlistCard}`}
+      className={`${CARD} bg-[rgba(6,182,212,0.03)] after:pointer-events-none after:absolute after:inset-0 after:rounded-[24px] after:border after:border-[rgba(6,182,212,0.18)] after:content-['']`}
       onMouseMove={handleMouseMove}
     >
-      <div ref={glowRef} className={styles.cardGlow} />
+      <div ref={glowRef} className={CARD_GLOW} />
       <iframe
-        className={styles.playlistEmbed}
+        className="relative z-[1] block h-[352px] w-full border-0"
         src="https://open.spotify.com/embed/playlist/19V2ZdQ8FFZbw7Xu00Eoii?utm_source=generator&theme=0"
         allowFullScreen
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
@@ -540,17 +556,17 @@ const DeveloperDashboard = () => {
   }
 
   return (
-    <div className={styles.dashboard}>
-      <div className={styles.dashboardContainer}>
+    <div className={DASHBOARD}>
+      <div className={DASHBOARD_CONTAINER}>
         {/* Header */}
-        <div className={styles.header}>
+        <div className={HEADER}>
           <h1 className="sectionTitleGlobal">
-            Developer <span className={styles.titleAccent}>Dashboard</span>
+            Developer <span className={TITLE_ACCENT}>Dashboard</span>
           </h1>
         </div>
 
         {/* Main Grid with Profile, Stats, and Now Playing */}
-        <div className={styles.mainGrid}>
+        <div className={MAIN_GRID}>
           {/* Profile Card */}
           <ProfileCardItem userProfile={userProfile} />
 
@@ -559,19 +575,19 @@ const DeveloperDashboard = () => {
         </div>
 
         {/* Contributions Section */}
-        <div className={styles.contributionsSection}>
+        <div className="mb-12">
           <ContributionsCardItem />
         </div>
 
         {/* Recent Projects Section */}
-        <div className={styles.projectsSection}>
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Recent Projects</h2>
-            <a href="https://github.com/mehedi-hasan1102" target="_blank" rel="noopener noreferrer" className={styles.viewLink}>
+        <div className="mb-12">
+          <div className={SECTION_HEADER}>
+            <h2 className={SECTION_TITLE}>Recent Projects</h2>
+            <a href="https://github.com/mehedi-hasan1102" target="_blank" rel="noopener noreferrer" className={VIEW_LINK}>
               View all <span>→</span>
             </a>
           </div>
-          <div className={styles.projectsGrid}>
+          <div className={PROJECTS_GRID}>
             {projects.length > 0 ? (
               projects.map((project) => <ProjectCardItem key={project.id} project={project} />)
             ) : (
@@ -585,9 +601,9 @@ const DeveloperDashboard = () => {
         {/* Spotify Section */}
 
 
-         <div className={styles.playlistSection}>
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>🎵 My Playlist</h2>
+         <div className="mb-12">
+          <div className={SECTION_HEADER}>
+            <h2 className={SECTION_TITLE}>🎵 My Playlist</h2>
             <span style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>What I listen to while coding</span>
           </div>
           <PlaylistCardItem />
