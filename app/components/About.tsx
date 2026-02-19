@@ -5,7 +5,6 @@ import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SplitType from 'split-type';
-import styles from './about.module.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -128,7 +127,7 @@ export default function About() {
         <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
           {/* Left side - Profile Image */}
           <div className="flex justify-center md:justify-start">
-            <div className={`${styles.profileWrap} relative w-64 h-80 sm:w-72 sm:h-96 md:w-80 md:h-96`}>
+            <div className="relative h-80 w-64 max-w-full sm:h-96 sm:w-72 md:h-96 md:w-80 max-[360px]:h-72 max-[360px]:w-56">
               <div 
                 ref={profileImageRef}
                 className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl cursor-pointer"
@@ -142,7 +141,10 @@ export default function About() {
                 />
               </div>
               {/* Animated border element */}
-              <div ref={profileBorderRef} className={styles.profileImageBorder} />
+              <div
+                ref={profileBorderRef}
+                className="pointer-events-none absolute bottom-[-1.5rem] left-[1.5rem] right-[-1.5rem] top-[1.5rem] z-[-1] rounded-[8px] border-2 border-[var(--accent)] shadow-[0_0_20px_rgba(var(--accent-rgb,59,130,246),0.3)] transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] before:pointer-events-none before:absolute before:bottom-[-2px] before:left-[-2px] before:right-[-2px] before:top-[-2px] before:z-[-1] before:rounded-[8px] before:bg-[linear-gradient(45deg,var(--accent),transparent)] before:opacity-0 before:content-[''] max-[768px]:bottom-[-1rem] max-[768px]:left-[1rem] max-[768px]:right-[-1rem] max-[768px]:top-[1rem] max-[480px]:bottom-[-0.75rem] max-[480px]:left-[0.75rem] max-[480px]:right-[-0.75rem] max-[480px]:top-[0.75rem] max-[480px]:border-[1.5px]"
+              />
             </div>
           </div>
 
@@ -150,10 +152,11 @@ export default function About() {
           <div className="space-y-6">
             <div
               ref={headingRef}
-              className={styles.aboutHeadingWrap}
-              style={{ color: 'var(--text)' }}
+              className="block max-[768px]:mt-8 max-[768px]:flex max-[768px]:justify-center"
             >
-              <h2 className={styles.aboutHeading}>About <span style={{ color: 'var(--accent)' }}>Me</span></h2>
+              <h2 className="mb-4 font-['Staatliches',serif] text-[3.125rem] font-bold tracking-[0.05em] text-[var(--text)] max-[768px]:text-center max-[768px]:text-[clamp(2.5rem,8vw,6rem)] max-[768px]:font-normal max-[768px]:leading-none max-[768px]:tracking-[0.02em] max-[480px]:text-[clamp(2.1rem,7.5vw,3.2rem)]">
+                About <span style={{ color: 'var(--accent)' }}>Me</span>
+              </h2>
             </div>
             <div
               ref={(el) => {
@@ -162,32 +165,44 @@ export default function About() {
               className="text-lg leading-relaxed"
               style={{ color: 'var(--text-secondary)' }}
             >
-              <ul className={`${styles.aboutList} list-disc pl-5 space-y-4`}>
-                <li>
-                  <strong className={styles.aboutLabel}>NAME:</strong>{' '}
-                  <span className={styles.aboutValueStrong}>Mehedi Hasan</span>
+              <ul className="list-disc space-y-4 pl-5 text-[clamp(1rem,1.8vw,1.125rem)] leading-[1.7] max-[360px]:text-[0.95rem]">
+                <li className="break-words [overflow-wrap:anywhere]">
+                  <strong className="font-['Staatliches',serif] text-[clamp(1.05rem,2.5vw,1.5rem)] font-normal tracking-[0.15em] text-[var(--accent)] max-[480px]:tracking-[0.12em]">
+                    NAME:
+                  </strong>{' '}
+                  <span className="text-[clamp(1.05rem,2.5vw,1.5rem)] text-[var(--text)]">Mehedi Hasan</span>
                 </li>
-                <li>
-                  <strong className={styles.aboutLabel}>LOCATION:</strong>{' '}
-                  <span className={`${styles.aboutValueStrong} ${styles.aboutValuePillGreen}`}>
+                <li className="break-words [overflow-wrap:anywhere]">
+                  <strong className="font-['Staatliches',serif] text-[clamp(1.05rem,2.5vw,1.5rem)] font-normal tracking-[0.15em] text-[var(--accent)] max-[480px]:tracking-[0.12em]">
+                    LOCATION:
+                  </strong>{' '}
+                  <span className="inline-block whitespace-nowrap rounded-[0.4rem] bg-[#0FB57E] px-[0.6rem] py-[0.2rem] text-[clamp(1.05rem,2.5vw,1.5rem)] font-semibold text-[var(--bg)] [overflow-wrap:anywhere] max-[768px]:whitespace-normal max-[768px]:px-[0.5rem] max-[768px]:py-[0.18rem] max-[520px]:whitespace-normal max-[480px]:whitespace-normal">
                     Dhaka, Bangladesh
                   </span>
                 </li>
-                <li>
-                  <strong className={styles.aboutLabel}>EXPERIENCE:</strong>{' '}
-                  <span className={styles.aboutValueStrong}>
+                <li className="break-words [overflow-wrap:anywhere]">
+                  <strong className="font-['Staatliches',serif] text-[clamp(1.05rem,2.5vw,1.5rem)] font-normal tracking-[0.15em] text-[var(--accent)] max-[480px]:tracking-[0.12em]">
+                    EXPERIENCE:
+                  </strong>{' '}
+                  <span className="text-[clamp(1.05rem,2.5vw,1.5rem)] text-[var(--text)]">
                     Passionate Software Developer with 2+ years of experience building personal and open-source projects. Experienced in designing, developing, and deploying applications independently
                   </span>
                 </li>
-                <li className={styles.aboutNoWrapRow}>
-                  <strong className={styles.aboutLabel}>CORE TECH STACK:</strong>{' '}
-                  <span className={`${styles.aboutValueStrong} ${styles.aboutValuePill}`}>
+                <li className="list-item whitespace-nowrap max-[768px]:whitespace-normal max-[520px]:whitespace-normal max-[480px]:whitespace-normal">
+                  <strong className="font-['Staatliches',serif] text-[clamp(1.05rem,2.5vw,1.5rem)] font-normal tracking-[0.15em] text-[var(--accent)] max-[480px]:tracking-[0.12em]">
+                    CORE TECH STACK:
+                  </strong>{' '}
+                  <span className="inline-block whitespace-nowrap rounded-[0.4rem] bg-[var(--accent)] px-[0.6rem] py-[0.2rem] text-[clamp(1.05rem,2.5vw,1.5rem)] font-semibold text-[var(--bg)] [overflow-wrap:anywhere] max-[768px]:whitespace-normal max-[768px]:px-[0.5rem] max-[768px]:py-[0.18rem] max-[520px]:whitespace-normal max-[480px]:whitespace-normal">
                     React, Next.js, TypeScript, Tailwind CSS
                   </span>
                 </li>
-                <li>
-                  <strong className={styles.aboutLabel}>HOBBIES:</strong>{' '}
-                  <span className={styles.aboutValueStrong}>Reading, watching movies, and traveling</span>
+                <li className="break-words [overflow-wrap:anywhere]">
+                  <strong className="font-['Staatliches',serif] text-[clamp(1.05rem,2.5vw,1.5rem)] font-normal tracking-[0.15em] text-[var(--accent)] max-[480px]:tracking-[0.12em]">
+                    HOBBIES:
+                  </strong>{' '}
+                  <span className="text-[clamp(1.05rem,2.5vw,1.5rem)] text-[var(--text)]">
+                    Reading, watching movies, and traveling
+                  </span>
                 </li>
               </ul>
             </div>
