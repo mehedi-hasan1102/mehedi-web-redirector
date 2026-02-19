@@ -6,7 +6,6 @@ import { notFound } from 'next/navigation';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FiDownload } from 'react-icons/fi';
-import styles from './projectDetails.module.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -263,8 +262,9 @@ const ProjectSkeleton = () => {
 
 export default function ProjectPage() {
   const router = useRouter();
-  const params = useParams();
+  const params = useParams<{ slug?: string | string[] }>();
   const pageRef = useRef<HTMLDivElement>(null);
+  const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
   
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
@@ -276,7 +276,7 @@ export default function ProjectPage() {
       try {
         const response = await fetch('/data/projects.json');
         const projects: Project[] = await response.json();
-        const foundProject = projects.find((p) => p.slug === params.slug);
+        const foundProject = projects.find((p) => p.slug === slug);
         
         if (foundProject) {
           setProject(foundProject);
@@ -291,10 +291,10 @@ export default function ProjectPage() {
       }
     };
 
-    if (params.slug) {
+    if (slug) {
       fetchProject();
     }
-  }, [params.slug]);
+  }, [slug]);
 
   // GSAP animations
   useEffect(() => {
@@ -364,9 +364,9 @@ export default function ProjectPage() {
   // Card glow effect
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      const cards = document.querySelectorAll(`.${styles.bottomCard}`);
+      const cards = document.querySelectorAll('.projectDetailsPage .bottomCard');
       cards.forEach((card) => {
-        const glow = card.querySelector(`.${styles.bottomGlow}`) as HTMLElement;
+        const glow = card.querySelector('.bottomGlow') as HTMLElement;
         if (!glow) return;
 
         const rect = card.getBoundingClientRect();
@@ -389,9 +389,9 @@ export default function ProjectPage() {
     };
 
     const handleMouseLeave = () => {
-      const cards = document.querySelectorAll(`.${styles.bottomCard}`);
+      const cards = document.querySelectorAll('.projectDetailsPage .bottomCard');
       cards.forEach((card) => {
-        const glow = card.querySelector(`.${styles.bottomGlow}`) as HTMLElement;
+        const glow = card.querySelector('.bottomGlow') as HTMLElement;
         if (glow) {
           glow.style.opacity = '0';
         }
@@ -416,33 +416,33 @@ export default function ProjectPage() {
   }
 
   return (
-    <div ref={pageRef} className={styles.page}>
+    <div ref={pageRef} className="projectDetailsPage">
       {/* Back Button */}
-      <div className={styles.backSection}>
-        <button onClick={() => router.back()} className={styles.backLink} data-hero-animate>
+      <div className="backSection">
+        <button onClick={() => router.back()} className="backLink" data-hero-animate>
           ← Back to Portfolio
         </button>
       </div>
 
       {/* Hero Section */}
-      <section className={styles.heroSection}>
-        <div className={styles.heroContainer}>
-          <div className={styles.heroLeft}>
-            <h1 className={styles.heroTitle}>
+      <section className="heroSection">
+        <div className="heroContainer">
+          <div className="heroLeft">
+            <h1 className="heroTitle">
               {project.title.split('').map((char, i) => (
                 <span key={i} className="hero-title-char" style={{ display: 'inline-block' }}>
                   {char === ' ' ? '\u00A0' : char}
                 </span>
               ))}
             </h1>
-            <p className={styles.categoryLabel} data-hero-animate>
+            <p className="categoryLabel" data-hero-animate>
               {project.category}
             </p>
-            <p className={styles.heroDescription} data-hero-animate>
+            <p className="heroDescription" data-hero-animate>
               {project.description}
             </p>
 
-            <div className={styles.heroButtons}>
+            <div className="heroButtons">
               <a
                 href={project.liveUrl}
                 target="_blank"
@@ -465,12 +465,12 @@ export default function ProjectPage() {
             </div>
           </div>
 
-          <div className={styles.heroRight} data-hero-animate>
-            <div className={styles.projectPreview}>
+          <div className="heroRight" data-hero-animate>
+            <div className="projectPreview">
               <img
                 src={project.image}
                 alt={project.title}
-                className={styles.previewImage}
+                className="previewImage"
                 data-parallax-image
               />
             </div>
@@ -479,11 +479,11 @@ export default function ProjectPage() {
       </section>
 
       {/* Tech Stack */}
-      <section className={styles.techSection} data-reveal-section>
-        <h2 className={styles.techTitle}>TECH STACK</h2>
-        <div className={styles.techGrid}>
+      <section className="techSection" data-reveal-section>
+        <h2 className="techTitle">TECH STACK</h2>
+        <div className="techGrid">
           {project.tech.map((tech) => (
-            <div key={tech} className={styles.techBadge}>
+            <div key={tech} className="techBadge">
               {tech}
             </div>
           ))}
@@ -491,29 +491,29 @@ export default function ProjectPage() {
       </section>
 
       {/* Screenshots */}
-      <section className={styles.screenshotsSection} data-reveal-section>
-        <h2 className={styles.sectionTitle}>SCREENSHOTS</h2>
-        <div className={styles.screenshotsGrid}>
-          <div className={styles.screenshot}>
+      <section className="screenshotsSection" data-reveal-section>
+        <h2 className="sectionTitle">SCREENSHOTS</h2>
+        <div className="screenshotsGrid">
+          <div className="screenshot">
             <img src={project.image} alt={`${project.title} screenshot 1`} />
           </div>
-          <div className={styles.screenshot}>
+          <div className="screenshot">
             <img src={project.image} alt={`${project.title} screenshot 2`} />
           </div>
-          <div className={styles.screenshot}>
+          <div className="screenshot">
             <img src={project.image} alt={`${project.title} screenshot 3`} />
           </div>
         </div>
       </section>
 
       {/* Challenges & Key Learnings */}
-      <section className={styles.bottomSection} data-reveal-section>
-        <div className={styles.bottomGrid}>
-          <div className={styles.bottomCard}>
-            <div className={styles.bottomGlow}></div>
-            <div className={styles.cardIcon}>💡</div>
-            <h3 className={styles.cardTitle}>Challenges</h3>
-            <ul className={styles.cardList}>
+      <section className="bottomSection" data-reveal-section>
+        <div className="bottomGrid">
+          <div className="bottomCard">
+            <div className="bottomGlow"></div>
+            <div className="cardIcon">💡</div>
+            <h3 className="cardTitle">Challenges</h3>
+            <ul className="cardList">
               {(project.challenges && project.challenges.length > 0
                 ? project.challenges
                 : [
@@ -530,11 +530,11 @@ export default function ProjectPage() {
             </ul>
           </div>
 
-          <div className={styles.bottomCard}>
-            <div className={styles.bottomGlow}></div>
-            <div className={styles.cardIcon}>🎯</div>
-            <h3 className={styles.cardTitle}>Key Learnings</h3>
-            <ul className={styles.cardList}>
+          <div className="bottomCard">
+            <div className="bottomGlow"></div>
+            <div className="cardIcon">🎯</div>
+            <h3 className="cardTitle">Key Learnings</h3>
+            <ul className="cardList">
               {(project.futurePlans && project.futurePlans.length > 0
                 ? project.futurePlans
                 : [
@@ -552,6 +552,322 @@ export default function ProjectPage() {
           </div>
         </div>
       </section>
+      <style jsx global>{`
+        .projectDetailsPage {
+          min-height: 100vh;
+          background: var(--bg);
+          color: var(--text);
+          padding: 2.5rem 0 5rem;
+        }
+
+        .projectDetailsPage .backSection {
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: 0 4rem;
+          margin-bottom: 3rem;
+        }
+
+        .projectDetailsPage .backLink {
+          color: var(--accent);
+          font-size: 0.9rem;
+          font-weight: 600;
+          text-decoration: none;
+          background: none;
+          border: none;
+          cursor: pointer;
+          transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .projectDetailsPage .backLink:hover {
+          color: #22d3ee;
+          transform: translateX(-4px);
+        }
+
+        .projectDetailsPage .heroSection {
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: 0 4rem 4rem;
+        }
+
+        .projectDetailsPage .heroContainer {
+          display: grid;
+          grid-template-columns: 1fr 1.2fr;
+          gap: 4rem;
+          align-items: center;
+        }
+
+        .projectDetailsPage .heroLeft {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+
+        .projectDetailsPage .categoryLabel {
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+          font-size: 0.75rem;
+          font-weight: 600;
+          color: var(--accent);
+        }
+
+        .projectDetailsPage .heroTitle {
+          font-family: 'Staatliches', serif;
+          font-size: clamp(3rem, 5vw, 5rem);
+          font-weight: 400;
+          line-height: 1.05;
+          text-transform: uppercase;
+          margin: 0;
+        }
+
+        .projectDetailsPage .heroDescription {
+          color: var(--text-muted);
+          font-size: 1.05rem;
+          line-height: 1.7;
+          max-width: 540px;
+        }
+
+        .projectDetailsPage .heroButtons {
+          display: flex;
+          gap: 1rem;
+          flex-wrap: wrap;
+        }
+
+        .projectDetailsPage .heroRight {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .projectDetailsPage .projectPreview {
+          width: 100%;
+          aspect-ratio: 16 / 9;
+          max-height: 450px;
+          position: relative;
+          border-radius: 16px;
+          overflow: hidden;
+          border: 1px solid var(--card-border);
+          background: rgba(255, 255, 255, 0.02);
+          box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
+        }
+
+        .projectDetailsPage .previewImage {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+
+        .projectDetailsPage .techSection {
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: 4rem 4rem;
+        }
+
+        .projectDetailsPage .techTitle {
+          font-size: 0.75rem;
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+          color: var(--accent);
+          margin-bottom: 1.5rem;
+          font-weight: 600;
+        }
+
+        .projectDetailsPage .techGrid {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.75rem;
+        }
+
+        .projectDetailsPage .techBadge {
+          display: inline-block;
+          background: rgba(6, 182, 212, 0.1);
+          border: 1px solid rgba(6, 182, 212, 0.3);
+          color: var(--accent);
+          padding: 0.4rem 0.8rem;
+          border-radius: 20px;
+          font-size: 0.75rem;
+          font-weight: 500;
+          letter-spacing: 0.05em;
+          transition: all 0.3s ease;
+          font-family: 'Staatliches', sans-serif;
+        }
+
+        html.light-mode .projectDetailsPage .techBadge {
+          background: rgba(37, 99, 235, 0.1);
+          border-color: rgba(37, 99, 235, 0.3);
+        }
+
+        .projectDetailsPage .sectionTitle {
+          font-size: 0.75rem;
+          letter-spacing: 0.25em;
+          text-transform: uppercase;
+          color: var(--accent);
+          margin-bottom: 2rem;
+          font-weight: 600;
+        }
+
+        .projectDetailsPage .screenshotsSection {
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: 4rem 4rem;
+        }
+
+        .projectDetailsPage .screenshotsGrid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+          gap: 1.4rem;
+        }
+
+        .projectDetailsPage .screenshot {
+          border-radius: 14px;
+          overflow: hidden;
+          border: 1px solid var(--card-border);
+          background: rgba(255, 255, 255, 0.02);
+          transition: transform 0.2s ease;
+        }
+
+        .projectDetailsPage .screenshot:hover {
+          transform: translateY(-6px);
+        }
+
+        .projectDetailsPage .screenshot img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+
+        .projectDetailsPage .bottomSection {
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: 4rem 4rem 6rem;
+        }
+
+        .projectDetailsPage .bottomGrid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          gap: 1.5rem;
+        }
+
+        .projectDetailsPage .bottomCard {
+          padding: 2.2rem;
+          border-radius: 24px;
+          border: 1px solid rgba(6, 182, 212, 0.1);
+          background: transparent;
+          transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+          position: relative;
+        }
+
+        .projectDetailsPage .bottomCard::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border: 1px solid rgba(6, 182, 212, 0.1);
+          border-radius: 24px;
+          pointer-events: none;
+          transition: border-color 0.4s ease;
+        }
+
+        .projectDetailsPage .bottomCard:hover::before {
+          border-color: rgba(6, 182, 212, 0.4);
+        }
+
+        .projectDetailsPage .bottomGlow {
+          position: absolute;
+          width: 120px;
+          height: 120px;
+          background: radial-gradient(circle, rgba(6, 182, 212, 0.5), transparent 60%);
+          border-radius: 50%;
+          pointer-events: none;
+          filter: blur(25px);
+          opacity: 0;
+          mix-blend-mode: screen;
+          will-change: left, top, opacity;
+          top: 0;
+          left: 0;
+        }
+
+        .projectDetailsPage .cardIcon {
+          font-size: 1.8rem;
+          margin-bottom: 0.9rem;
+        }
+
+        .projectDetailsPage .cardTitle {
+          font-size: 1.2rem;
+          font-weight: 600;
+          margin-bottom: 1rem;
+        }
+
+        .projectDetailsPage .cardList {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 0.9rem;
+        }
+
+        .projectDetailsPage .cardList li {
+          padding-left: 1.4rem;
+          position: relative;
+          color: var(--text-muted);
+          line-height: 1.6;
+        }
+
+        .projectDetailsPage .cardList li::before {
+          content: '•';
+          position: absolute;
+          left: 0;
+          color: var(--accent);
+        }
+
+        @media (max-width: 1024px) {
+          .projectDetailsPage .heroContainer {
+            grid-template-columns: 1fr;
+          }
+
+          .projectDetailsPage .heroSection,
+          .projectDetailsPage .techSection,
+          .projectDetailsPage .screenshotsSection,
+          .projectDetailsPage .bottomSection {
+            padding: 3rem 2rem;
+          }
+
+          .projectDetailsPage .projectPreview {
+            max-height: 350px;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .projectDetailsPage .backSection {
+            padding: 0 2rem;
+          }
+
+          .projectDetailsPage .heroSection,
+          .projectDetailsPage .techSection,
+          .projectDetailsPage .screenshotsSection,
+          .projectDetailsPage .bottomSection {
+            padding: 3rem 1.5rem;
+          }
+
+          .projectDetailsPage .projectPreview {
+            max-height: 280px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .projectDetailsPage .heroSection,
+          .projectDetailsPage .techSection,
+          .projectDetailsPage .screenshotsSection,
+          .projectDetailsPage .bottomSection {
+            padding: 1.5rem 1rem;
+          }
+
+          .projectDetailsPage .projectPreview {
+            max-height: 220px;
+          }
+        }
+      `}</style>
     </div>
   );
 }
