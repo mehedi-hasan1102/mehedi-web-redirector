@@ -3,12 +3,12 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import SplitType from 'split-type';
-import styles from './hero.module.css';
 
 export default function Hero() {
   const heroRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const descRef = useRef<HTMLDivElement>(null);
+  const scrollDotRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Animate hero on mount
@@ -49,6 +49,17 @@ export default function Hero() {
           0.4
         );
       }
+
+      // Keep scroll indicator dot bouncing continuously.
+      if (scrollDotRef.current) {
+        gsap.to(scrollDotRef.current, {
+          y: 8,
+          duration: 1,
+          repeat: -1,
+          yoyo: true,
+          ease: 'power1.inOut',
+        });
+      }
     }, heroRef);
 
     return () => ctx.revert();
@@ -57,43 +68,69 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      className={styles.hero}
+      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[var(--bg)]"
     >
     
 
       <div className="container relative z-10">
-        <div className={styles.heroContainer}>
+        <div className="mx-auto max-w-[56rem] text-center">
           <div
             ref={titleRef}
-            className={styles.heroTitle}
+            className="mb-6 flex flex-col text-[var(--text)] max-[768px]:mb-4"
           >
-            <h1 className={styles.heroTitleMain}>
+            <h1
+              className="whitespace-nowrap text-[var(--text)]"
+              style={{
+                fontSize: '12vw',
+                lineHeight: 1,
+                letterSpacing: '-0.025em',
+                fontWeight: 400,
+                textTransform: 'uppercase',
+                fontFamily: "'Staatliches', serif",
+              }}
+            >
               CREATIVE
             </h1>
-            <h1 className={styles.heroTitleAccent}>
+            <h1
+              className="whitespace-nowrap text-[var(--accent)]"
+              style={{
+                fontSize: '12vw',
+                lineHeight: 1,
+                letterSpacing: '-0.025em',
+                fontWeight: 400,
+                textTransform: 'uppercase',
+                fontFamily: "'Staatliches', serif",
+              }}
+            >
               DEVELOPER
             </h1>
-            <p className={styles.scrollHint}>
+            <p className="mt-8 overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(0.75rem,2vw,1.125rem)] uppercase tracking-[0.3em] opacity-60 max-[768px]:text-[clamp(0.65rem,1.8vw,0.9rem)] max-[768px]:tracking-[0.2em] max-[480px]:text-[clamp(0.6rem,1.5vw,0.8rem)] max-[480px]:tracking-[0.15em]">
               Scroll down to explore
             </p>
           </div>
 
           <div
             ref={descRef}
-            className={styles.heroDescription}
+            className="mx-auto mb-12 max-w-[42rem] text-base leading-[1.6] text-[var(--text-secondary)]"
           >
             
           </div>
 
           {/* Scroll indicator with animation */}
-          <div className={styles.heroScroll} onClick={() => {
+          <div
+            className="absolute bottom-[-5rem] left-1/2 z-20 -translate-x-1/2 cursor-pointer transition-all duration-300 [transition-timing-function:ease] hover:scale-[1.2]"
+            onClick={() => {
             const aboutSection = document.getElementById('about');
             if (aboutSection) {
               aboutSection.scrollIntoView({ behavior: 'smooth' });
             }
-          }}>
-            <div className={styles.heroScrollBox}>
-              <div className={styles.heroScrollDot} />
+          }}
+          >
+            <div className="flex h-10 w-6 justify-center rounded-full border-2 border-[var(--accent)] pt-2">
+              <div
+                ref={scrollDotRef}
+                className="h-2 w-1 rounded-full bg-[var(--accent)]"
+              />
             </div>
           </div>
         </div>

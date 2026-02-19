@@ -3,7 +3,6 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import styles from './whatido.module.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -118,18 +117,27 @@ const ServiceCard = ({
   return (
     <div 
       ref={cardRef} 
-      className={styles.bentoCard}
+      className="group relative overflow-hidden rounded-[24px] border border-[rgba(6,182,212,0.1)] bg-transparent [transform-style:preserve-3d] [perspective:1000px] will-change-transform transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.34,1.56,0.64,1)] max-[768px]:min-h-[200px] max-[480px]:min-h-[180px]"
       onMouseMove={handleMouseMove}
     >
-      <div ref={glowRef} className={styles.bentoGlow} />
-      <div ref={contentRef} className={styles.bentoContent}>
-        <div className={styles.bentoHeader}>
-          <div className={styles.bentoNumber}>{service.number}</div>
-          <h3 className={styles.bentoTitle}>{service.title}</h3>
+      <div
+        ref={glowRef}
+        className="pointer-events-none absolute h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(6,182,212,0.15),transparent_60%)] opacity-0 transition-opacity duration-300 [transition-timing-function:ease] group-hover:opacity-100"
+      />
+      <div ref={contentRef} className="relative z-[2] flex h-full min-h-[250px] flex-col p-8 max-[768px]:min-h-0 max-[768px]:p-6 max-[480px]:p-4">
+        <div className="mb-3 flex items-center gap-4 max-[480px]:gap-2">
+          <div className="font-['Staatliches',serif] text-5xl leading-none text-[rgba(6,182,212,0.08)] max-[768px]:text-[2.5rem] max-[480px]:text-[2rem]">
+            {service.number}
+          </div>
+          <h3 className="font-['Staatliches',serif] text-[1.5rem] tracking-[0.15em] text-[var(--accent)] max-[768px]:text-[1.25rem] max-[480px]:text-[1rem]">
+            {service.title}
+          </h3>
         </div>
-        <p className={styles.bentoDescription}>{service.description}</p>
+        <p className="mb-6 grow font-['Inter',sans-serif] text-sm leading-6 text-[var(--text-secondary)] max-[768px]:text-[0.85rem] max-[480px]:text-[0.8rem] max-[480px]:leading-[1.4]">
+          {service.description}
+        </p>
       </div>
-      <div className={styles.bentoBorder} />
+      <div className="pointer-events-none absolute inset-0 rounded-[24px] border border-[rgba(6,182,212,0.1)] transition-colors duration-[400ms] [transition-timing-function:ease] group-hover:border-[rgba(6,182,212,0.4)]" />
     </div>
   );
 };
@@ -165,19 +173,24 @@ export default function WhatIDo() {
   }, []);
 
   return (
-    <section ref={sectionRef} className={styles.whatidoSection} id="what-i-do">
+    <section
+      ref={sectionRef}
+      id="what-i-do"
+      className="relative min-h-screen overflow-hidden py-32 max-[768px]:py-16"
+      style={{ background: 'var(--bg)' }}
+    >
       
 
-      <div className={styles.whatidoContainer}>
+      <div className="relative z-[2] mx-auto max-w-[1400px] px-16 max-[768px]:px-8 max-[480px]:px-4">
         {/* Section Header */}
-        <div ref={headerRef} className={styles.whatidoHeader}>
+        <div ref={headerRef} className="mb-20 overflow-hidden text-center max-[768px]:mb-12">
           <h2 className="sectionTitleGlobal">
             WHAT <span style={{ color: 'var(--accent)' }}>I DO</span>
           </h2>
         </div>
 
         {/* Services Grid */}
-        <div className={styles.bentoGrid}>
+        <div className="mb-16 grid grid-cols-3 gap-6 max-[1024px]:grid-cols-2 max-[768px]:grid-cols-1 max-[768px]:gap-4">
           {services.map((service, index) => (
             <ServiceCard
               key={service.title}
