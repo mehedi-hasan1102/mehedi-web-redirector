@@ -190,7 +190,7 @@ export default function Navbar() {
       {/* Main Navbar */}
       <nav
         ref={navRef}
-        className="theme-sync fixed left-0 right-0 top-0 z-40 h-16 [font-family:'Staatliches',serif]"
+        className=" fixed left-0 right-0 top-0 z-40 h-16 [font-family:'Staatliches',serif]"
         style={{
           transition: 'all 0.3s ease',
         }}
