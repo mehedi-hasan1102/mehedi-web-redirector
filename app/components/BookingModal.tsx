@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import { FiX } from 'react-icons/fi';
+import { FiCalendar, FiX } from 'react-icons/fi';
+import { FaWhatsapp } from 'react-icons/fa';
 import emailjs from '@emailjs/browser';
 
 /* ------------------ ENV ------------------ */
@@ -10,6 +11,10 @@ const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
 const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
 const USER_ID = process.env.NEXT_PUBLIC_EMAILJS_USER_ID!;
 const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
+const WHATSAPP_URL =
+  process.env.NEXT_PUBLIC_WHATSAPP_URL || 'https://wa.me/8801747874773';
+const CALENDLY_URL =
+  process.env.NEXT_PUBLIC_CALENDLY_URL || 'https://calendly.com/mehedi-hasan1102/30min';
 
 // Initialize EmailJS
 emailjs.init(PUBLIC_KEY);
@@ -137,6 +142,38 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
         <p className="mb-8 font-['Inter',monospace] text-[0.875rem] tracking-[0.02em] text-[var(--text-secondary)] max-[600px]:mb-6 max-[600px]:text-[0.8rem] max-[480px]:mb-5 max-[480px]:text-[0.75rem]">
           I&apos;m open to job opportunities and collaborations. Let&apos;s connect!
         </p>
+
+        {/* Quick Actions */}
+        <div className="mb-5 grid grid-cols-2 gap-3 max-[480px]:grid-cols-1">
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onClose}
+            className="flex items-center justify-center gap-2 rounded-[8px] border border-[rgba(37,211,102,0.35)] bg-[rgba(37,211,102,0.1)] px-4 py-3 font-['Inter',monospace] text-[0.85rem] font-medium tracking-[0.02em] text-[#25D366] transition-all duration-300 [transition-timing-function:ease] hover:-translate-y-0.5 hover:bg-[rgba(37,211,102,0.2)]"
+          >
+            <FaWhatsapp size={18} />
+            <span>WhatsApp</span>
+          </a>
+          <a
+            href={CALENDLY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onClose}
+            className="flex items-center justify-center gap-2 rounded-[8px] border border-[rgba(6,182,212,0.35)] bg-[rgba(6,182,212,0.1)] px-4 py-3 font-['Inter',monospace] text-[0.85rem] font-medium tracking-[0.02em] text-[var(--accent)] transition-all duration-300 [transition-timing-function:ease] hover:-translate-y-0.5 hover:bg-[rgba(6,182,212,0.2)]"
+          >
+            <FiCalendar size={16} />
+            <span>Book in Calendly</span>
+          </a>
+        </div>
+
+        <div className="mb-6 flex items-center gap-3 max-[600px]:mb-5 max-[480px]:mb-4">
+          <span className="h-px flex-1 bg-[rgba(6,182,212,0.2)]" />
+          <span className="font-['Inter',monospace] text-[0.72rem] tracking-[0.12em] text-[var(--text-secondary)]">
+            OR SEND A MESSAGE
+          </span>
+          <span className="h-px flex-1 bg-[rgba(6,182,212,0.2)]" />
+        </div>
 
         {/* Form Fields */}
         <div className="mb-6 max-[600px]:mb-5 max-[480px]:mb-4">
