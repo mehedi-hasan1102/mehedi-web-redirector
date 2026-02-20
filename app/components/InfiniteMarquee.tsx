@@ -75,7 +75,7 @@ export default function InfiniteMarquee() {
   ));
 
   return (
-    <div className="theme-sync relative overflow-hidden py-5 max-[768px]:py-4">
+    <div className="bg-[var(--bg)] relative overflow-hidden py-5 max-[768px]:py-4">
       <span className="sr-only">{TEXT}</span>
       <div className="flex w-max [will-change:transform]" ref={trackRef} aria-hidden="true">
         <div className={groupClassName}>{items}</div>
