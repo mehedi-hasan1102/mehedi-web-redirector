@@ -210,9 +210,9 @@ export default function Projects() {
       <div className="relative z-[2] mx-auto max-w-[1400px] px-[clamp(1rem,4vw,4rem)]">
         {/* Section Header */}
         <div ref={headerRef} className="mb-[clamp(2.5rem,5vw,5rem)] overflow-hidden text-center">
-          <h2 className="mb-4 font-['Staatliches',serif] text-[clamp(2.1rem,7.5vw,3.2rem)] font-normal leading-none tracking-[0.015em] text-[var(--text)] transition-colors duration-[600ms] ease-[cubic-bezier(0.23,1,0.32,1)] [word-break:break-word] [overflow-wrap:anywhere] min-[481px]:text-[clamp(2.5rem,8vw,6rem)] min-[481px]:tracking-[0.02em]">
+          <h2 className="sectionTitleGlobal">
             Featured{" "}
-            <span className="text-[var(--accent)] transition-colors duration-[600ms] ease-[cubic-bezier(0.23,1,0.32,1)]">
+            <span style={{ color: "var(--accent)" }}>
               PROJECTS
             </span>
           </h2>
