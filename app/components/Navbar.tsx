@@ -309,7 +309,7 @@ export default function Navbar() {
                 role="menu"
                 onMouseEnter={openDropdown}
                 onMouseLeave={closeDropdownWithDelay}
-                className={`absolute left-0 top-full mt-2 w-48 rounded-lg border border-[rgba(var(--accent-rgb),0.2)] bg-[var(--bg)] shadow-[0_10px_30px_rgba(var(--accent-rgb),0.15)] transition-opacity duration-300 ${
+                className={` absolute left-0 top-full mt-4 w-48 rounded-lg border border-[rgba(var(--accent-rgb),0.2)] bg-[var(--bg)] shadow-[0_10px_30px_rgba(var(--accent-rgb),0.15)] transition-opacity duration-300 ${
                   isDropdownOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
                 }`}
               >
